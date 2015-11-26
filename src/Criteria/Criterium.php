@@ -89,14 +89,13 @@ class Criterium implements CriteriumInterface
     }
 
     /**
-     * @param $column
      * @param $operator
      * @param $value
      *
      * @throws UnknownOperatorTypeException
      * @return OperatorInterface
      */
-    protected function buildOperator($column, $operator, $value)
+    protected function buildOperator($operator, $value)
     {
         $class = Builder::getOperatorClassNameBySqlOperator($operator);
         $Operator = $this->getFactoryWorker()->buildCriteriaOperator($class);
@@ -241,7 +240,7 @@ class Criterium implements CriteriumInterface
     public function getSqlPart()
     {
         if ($this->SqlPart === null) {
-            $Operator = $this->buildOperator($this->getColumn(), $this->getOperatorType(), $this->getValue());
+            $Operator = $this->buildOperator($this->getOperatorType(), $this->getValue());
             list($sql, $parameters) = $Operator->toSqlPartData($this);
             $this->SqlPart = $this->getFactoryWorker()->buildSqlPart($sql, $parameters);
         }
