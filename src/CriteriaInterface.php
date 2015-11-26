@@ -20,7 +20,7 @@ interface CriteriaInterface extends ArrayableInterface
      * @param CriteriumInterface $Criterium
      * @return self
      */
-    function where(CriteriumInterface $Criterium);
+    public function where(CriteriumInterface $Criterium);
 
     /**
      * @param CriteriumInterface $Criterium
@@ -41,21 +41,30 @@ interface CriteriaInterface extends ArrayableInterface
     /**
      * @return CollectionInterface
      */
-    function getCriteriumCollection();
+    public function getCriteriumCollection();
 
     /**
      * @param CollectionInterface $CriteriumCollection
      */
-    function setCriteriumCollection(CollectionInterface $CriteriumCollection);
+    public function setCriteriumCollection(CollectionInterface $CriteriumCollection);
 
     /**
      * @return string
      */
-    function getGlue();
+    public function getGlue();
 
-    function resetGlue();
+    /**
+     * @return void
+     */
+    public function resetGlue();
 
-    function glueByAnd();
+    /**
+     * @return void
+     */
+    public function glueByAnd();
 
-    function glueByOr();
+    /**
+     * @return void
+     */
+    public function glueByOr();
 }

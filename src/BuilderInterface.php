@@ -19,7 +19,7 @@ use Everon\Component\Utils\Text\StringableInterface;
 interface BuilderInterface extends ArrayableInterface, StringableInterface, CriteriaBuilderFactoryWorkerDependencyInterface
 {
     /**
-     * Starts new subquery
+     * Starts new Sub Query
      * 
      * @param $column
      * @param $operator

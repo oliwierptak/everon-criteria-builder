@@ -9,18 +9,13 @@
  */
 namespace Everon\Component\CriteriaBuilder;
 
-use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
-use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\Factory\AbstractWorker;
 use Everon\Component\Factory\Exception\UnableToInstantiateException;
 
 class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBuilderFactoryWorkerInterface
 {
     /**
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     * @return CriteriaInterface
+     * @inheritdoc
      */
     public function buildCriteria($namespace='Everon\Component\CriteriaBuilder')
     {
@@ -37,10 +32,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     }
 
     /**
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     * @return BuilderInterface
+     * @inheritdoc
      */
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
     {
@@ -57,13 +49,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     }
 
     /**
-     * @param $column
-     * @param $operator
-     * @param $value
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     * @return CriteriumInterface
+     * @inheritdoc
      */
     public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria')
     {
@@ -80,12 +66,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     }
 
     /**
-     * @param CriteriaInterface $Criteria
-     * @param $glue
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     * @return ContainerInterface
+     * @inheritdoc
      */
     public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria')
     {
@@ -102,11 +83,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     }
 
     /**
-     * @param $type
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     * @return OperatorInterface
+     * @inheritdoc
      */
     public function buildCriteriaOperator($type, $namespace='Everon\Component\CriteriaBuilder\Operator')
     {
@@ -123,12 +100,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     }
 
     /**
-     * @param $sql
-     * @param array $parameters
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     * @return SqlPartInterface
+     * @inheritdoc
      */
     public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder')
     {

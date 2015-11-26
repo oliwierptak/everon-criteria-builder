@@ -482,7 +482,7 @@ class Builder implements BuilderInterface
     {
         $operator = strtoupper(trim($operator));
         if (static::getOperatorCollection()->has($operator) === false) {
-            throw new UnknownOperatorTypeException('Unknown operator type "%s"', $operator);
+            throw new UnknownOperatorTypeException($operator);
         }
         
         return static::getOperatorCollection()->get($operator);
