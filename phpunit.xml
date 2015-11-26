@@ -1,0 +1,22 @@
+<phpunit
+        colors="true"
+        stopOnError="true"
+        stopOnFailure="true"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        debug="false"
+        >
+
+    <filter>
+        <whitelist>
+            <directory>src</directory>
+        </whitelist>
+    </filter>
+
+    <testsuites>
+        <testsuite name="Everon CriteriaBuilder Unit Test Suite">
+            <directory>./tests/unit/</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

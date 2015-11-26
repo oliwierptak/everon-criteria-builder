@@ -1,0 +1,146 @@
+<?php
+/**
+ * This file is part of the Everon framework.
+ *
+ * (c) Oliwier Ptak <EveronFramework@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Everon\Component\CriteriaBuilder;
+
+use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
+use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
+use Everon\Component\Factory\AbstractWorker;
+use Everon\Component\Factory\Exception\UnableToInstantiateException;
+
+class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBuilderFactoryWorkerInterface
+{
+    /**
+     * @param string $namespace
+     *
+     * @throws UnableToInstantiateException
+     * @return CriteriaInterface
+     */
+    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder')
+    {
+        try {
+            $class_name = $this->getFactory()->getFullClassName($namespace, 'Criteria');
+            $this->getFactory()->classExists($class_name);
+            $Builder = new $class_name();
+            $this->getFactory()->injectDependencies($class_name, $Builder);
+            return $Builder;
+        }
+        catch (\Exception $e) {
+            throw new UnableToInstantiateException($e);
+        }
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @throws UnableToInstantiateException
+     * @return BuilderInterface
+     */
+    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
+    {
+        try {
+            $class_name = $this->getFactory()->getFullClassName($namespace, 'Builder');
+            $this->getFactory()->classExists($class_name);
+            $Builder = new $class_name();
+            $this->getFactory()->injectDependencies($class_name, $Builder);
+            return $Builder;
+        }
+        catch (\Exception $e) {
+            throw new UnableToInstantiateException($e);
+        }
+    }
+
+    /**
+     * @param $column
+     * @param $operator
+     * @param $value
+     * @param string $namespace
+     *
+     * @throws UnableToInstantiateException
+     * @return CriteriumInterface
+     */
+    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria')
+    {
+        try {
+            $class_name = $this->getFactory()->getFullClassName($namespace, 'Criterium');
+            $this->getFactory()->classExists($class_name);
+            $Criterium = new $class_name($column, $operator, $value);
+            $this->getFactory()->injectDependencies($class_name, $Criterium);
+            return $Criterium;
+        }
+        catch (\Exception $e) {
+            throw new UnableToInstantiateException($e);
+        }
+    }
+
+    /**
+     * @param CriteriaInterface $Criteria
+     * @param $glue
+     * @param string $namespace
+     *
+     * @throws UnableToInstantiateException
+     * @return ContainerInterface
+     */
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria')
+    {
+        try {
+            $class_name = $this->getFactory()->getFullClassName($namespace, 'Container');
+            $this->getFactory()->classExists($class_name);
+            $Container = new $class_name($Criteria, $glue);
+            $this->getFactory()->injectDependencies($class_name, $Container);
+            return $Container;
+        }
+        catch (\Exception $e) {
+            throw new UnableToInstantiateException($e);
+        }
+    }
+
+    /**
+     * @param $type
+     * @param string $namespace
+     *
+     * @throws UnableToInstantiateException
+     * @return OperatorInterface
+     */
+    public function buildCriteriaOperator($type, $namespace='Everon\Component\CriteriaBuilder\Operator')
+    {
+        try {
+            $class_name = $this->getFactory()->getFullClassName($namespace, $type);
+            $this->getFactory()->classExists($class_name);
+            $CriteriaOperator = new $class_name();
+            $this->getFactory()->injectDependencies($class_name, $CriteriaOperator);
+            return $CriteriaOperator;
+        }
+        catch (\Exception $e) {
+            throw new UnableToInstantiateException($e);
+        }
+    }
+
+    /**
+     * @param $sql
+     * @param array $parameters
+     * @param string $namespace
+     *
+     * @throws UnableToInstantiateException
+     * @return SqlPartInterface
+     */
+    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder')
+    {
+        try {
+            $class_name = $this->getFactory()->getFullClassName($namespace, 'SqlPart');
+            $this->getFactory()->classExists($class_name);
+            $SqlPart = new $class_name($sql, $parameters);
+            $this->getFactory()->injectDependencies($class_name, $SqlPart);
+            return $SqlPart;
+        }
+        catch (\Exception $e) {
+            throw new UnableToInstantiateException($e);
+        }
+    }
+}
