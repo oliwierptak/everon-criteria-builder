@@ -99,8 +99,19 @@ class Criterium implements CriteriumInterface
     {
         $class = Builder::getOperatorClassNameBySqlOperator($operator);
         $Operator = $this->getFactoryWorker()->buildCriteriaOperator($class);
+        return $this->replaceOperatorForNulLValue($Operator, $value);
+    }
 
-        //replace null values with IS NULL / IS NOT NULL
+    /**
+     * Replaces original Operators with null values by IS NULL / IS NOT NULL Operators
+     *
+     * @param OperatorInterface $Operator
+     * @param $value
+     *
+     * @return OperatorInterface
+     */
+    protected function replaceOperatorForNulLValue(OperatorInterface $Operator, $value)
+    {
         if ($value === null) {
             if ($Operator->getType() === Equal::TYPE_NAME) {
                 $Operator = $this->getFactoryWorker()->buildCriteriaOperator(Is::TYPE_NAME);
