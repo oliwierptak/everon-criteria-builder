@@ -9,9 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
-
 use Everon\Component\CriteriaBuilder\Builder;
-use Everon\Component\CriteriaBuilder\BuilderInterface;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Factory\Dependency\Container;
@@ -35,7 +33,6 @@ class CriteriaBuilderTest extends MockeryTest
 
     protected function setUp()
     {
-        $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
         $Container = new Container();
 
         /** @var ContainerInterface $Container */
@@ -71,7 +68,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertCount(2, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
     }
 
-    public function testWhereRaw()
+    public function test_where_raw_should_use_raw_sql()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -82,7 +79,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertEmpty($SqlPart->getParameters());
     }
 
-    public function testWhereRawWithParameters()
+    public function test_where_raw_with_parameters()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -96,7 +93,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertEquals($parameters['bar'], 'bar_value');
     }
 
-    public function testGlue()
+    public function test_glue()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -140,7 +137,7 @@ class CriteriaBuilderTest extends MockeryTest
          */
     }
 
-    public function testToSqlPartShouldReturnValidSqlPart()
+    public function test_to_sql_part_should_return_valid_sql_part()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -183,21 +180,21 @@ class CriteriaBuilderTest extends MockeryTest
         */
     }
 
-    public function testToString()
+    public function test_to_string()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
         $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()');
         $this->assertEquals('WHERE (foo + bar AND 1=1 OR foo::bar())', (string) $CriteriaBuilder);
     }
 
-    public function testToArray()
+    public function test_to_array()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
         $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()')->orWhere('id', '=', 55);
         $this->assertCount(1, $CriteriaBuilder->toArray());
     }
 
-    public function testLimitOffsetGroupBy()
+    public function test_limit_offset_group_by()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
         $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()');
@@ -213,7 +210,7 @@ class CriteriaBuilderTest extends MockeryTest
 AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPart->getSql());
     }
 
-    public function testMergeContainerCollection()
+    public function test_merge_container_collection()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -224,29 +221,5 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         
         $this->assertCount(2, $CriteriaBuilder->getContainerCollection());
     }
-
-    /*
-    public function dataProvider()
-    {
-        $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
-
-        $Container = new \Everon\Component\Factory\Dependency\Container();
-
-        /** @var ContainerInterface $Container
-        $Factory = new FactoryStub($Container);
-
-        $Container->register('CriteriaBuilderFactoryWorker', function () use ($Factory) {
-            return $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
-        });
-
-        /** @var CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker
-        $CriteriaBuilderFactoryWorker = $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
-
-        $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
-
-        return [
-            [$CriteriaBuilder]
-        ];
-    }*/
 
 }
