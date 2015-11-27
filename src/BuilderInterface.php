@@ -12,7 +12,6 @@ namespace Everon\Component\CriteriaBuilder;
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Dependency\CriteriaBuilderFactoryWorkerDependencyInterface;
-use Everon\Component\CriteriaBuilder\Exception\OperatorTypeAlreadyRegisteredException;
 use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\ArrayableInterface;
 use Everon\Component\Utils\Text\StringableInterface;
