@@ -45,7 +45,7 @@ class Builder implements BuilderInterface
     /**
      * @var CollectionInterface
      */
-    protected $ContainerCollection = null;
+    protected $ContainerCollection;
 
     /**
      * @var string
@@ -73,11 +73,6 @@ class Builder implements BuilderInterface
     protected $group_by = null;
 
     
-    public function __construct()
-    {
-        $this->ContainerCollection = new Collection([]);
-    }
-
     /**
      * @return array
      */
@@ -237,13 +232,13 @@ class Builder implements BuilderInterface
      */
     public function getCurrentContainer()
     {
-        if ($this->ContainerCollection->has($this->current) === false) {
+        if ($this->getContainerCollection()->has($this->current) === false) {
             $Criteria = $this->getFactoryWorker()->buildCriteria();
             $Container = $this->getFactoryWorker()->buildCriteriaContainer($Criteria, null);
-            $this->ContainerCollection[$this->current] = $Container;
+            $this->getContainerCollection()->set($this->current, $Container);
         }
 
-        return $this->ContainerCollection[$this->current];
+        return $this->getContainerCollection()->get($this->current);
     }
 
     /**
@@ -259,6 +254,10 @@ class Builder implements BuilderInterface
      */
     public function getContainerCollection()
     {
+        if ($this->ContainerCollection === null) {
+            $this->ContainerCollection = new Collection([]);
+        }
+
         return $this->ContainerCollection;
     }
 
