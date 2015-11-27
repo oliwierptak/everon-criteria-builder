@@ -1,7 +1,8 @@
 # everon-criteria-builder
+Beta version
 
 # Everon Criteria Builder v0.5
-Beta version
+Library to generate complete SQL WHERE clauses.
 
 ## Requirements
 * Php 5.5+
