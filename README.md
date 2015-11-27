@@ -79,7 +79,7 @@ array(8) [
   'id_895877163' => integer 55
 ```
 
-To connect Criteria with ```OR``` operator use Gluing methods.
+To connect Criteria with ```OR``` operator use ```glueByOr``` or ```glueByAnd``` methods.
 ```php
 $CriteriaBuilder
     ->where('id', 'IN', [1,2,3])
