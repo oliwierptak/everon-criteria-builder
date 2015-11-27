@@ -14,7 +14,6 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 use Everon\Component\CriteriaBuilder\Operator\Equal;
 use Everon\Component\Factory\Dependency\Container;
-use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\Factory\FactoryInterface;
 use Everon\Component\Factory\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Utils\TestCase\MockeryTest;
@@ -22,6 +21,7 @@ use Mockery;
 
 class CriteriaBuilderFactoryWorkerTest extends MockeryTest
 {
+
     /**
      * @var CriteriaBuilderFactoryWorkerInterface
      */
@@ -79,7 +79,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
     public function test_buildCriteriaContainer()
     {
         $Criteria = Mockery::mock('Everon\Component\CriteriaBuilder\CriteriaInterface');
-        /** @var CriteriaInterface  $Criteria */
+        /* @var CriteriaInterface  $Criteria */
         $CriteriaContainer = $this->CriteriaBuilderFactoryWorker->buildCriteriaContainer(
             $Criteria, Builder::GLUE_AND
         );
@@ -98,7 +98,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
     public function test_buildSqlPart()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
-            'foo_value' => 'bar'
+            'foo_value' => 'bar',
         ]);
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\SqlPartInterface', $SqlPart);

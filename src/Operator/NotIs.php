@@ -14,6 +14,8 @@ use Everon\Component\CriteriaBuilder\OperatorInterface;
 
 class NotIs extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'NotIs';
     const TYPE_AS_SQL = 'IS NOT';
+
 }

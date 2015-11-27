@@ -14,6 +14,8 @@ use Everon\Component\CriteriaBuilder\OperatorInterface;
 
 class NotEqual extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'NotEqual';
     const TYPE_AS_SQL = '!=';
+
 }

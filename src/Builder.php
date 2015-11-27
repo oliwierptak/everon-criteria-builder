@@ -12,21 +12,18 @@ namespace Everon\Component\CriteriaBuilder;
 use Everon\Component\Collection\Collection;
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
-use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\CriteriaBuilder\Exception\OperatorTypeAlreadyRegisteredException;
-use Everon\Component\CriteriaBuilder\Operator;
-use Everon\Component\CriteriaBuilder\Dependency;
 use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\MergeDefault;
 use Everon\Component\Utils\Collection\ToArray;
 use Everon\Component\Utils\Popo\Popo;
 use Everon\Component\Utils\Text\ToString;
 
-
 class Builder implements BuilderInterface
 {
+
     use Dependency\Setter\CriteriaBuilderFactoryWorker;
-    
+
     use MergeDefault;
     use ToArray;
     use ToString;
@@ -38,7 +35,7 @@ class Builder implements BuilderInterface
      * @var CollectionInterface
      */
     protected static $OperatorCollection;
-    
+
     /**
      * @var string
      */
@@ -74,7 +71,6 @@ class Builder implements BuilderInterface
      */
     protected $group_by = null;
 
-
     /**
      * @param $type 'SmallerOrEqual'
      * @param $definition ['class' => 'full class name', 'sql' => 'IN']
@@ -90,13 +86,13 @@ class Builder implements BuilderInterface
         ]);
     }
 
-
     /**
      * @return array
      */
     protected function getArrayableData()
     {
         $SqlPart = $this->toSqlPart();
+
         return $SqlPart->getParameters();
     }
 
@@ -106,34 +102,37 @@ class Builder implements BuilderInterface
     protected function getToString()
     {
         $SqlPart = $this->toSqlPart();
+
         return $SqlPart->getSql();
     }
 
     /**
      * @param ContainerInterface $Container
+     *
      * @return string
      */
     protected function criteriaToSql(ContainerInterface $Container)
     {
-        /**
+        /*
          * @var CriteriumInterface $Criterium
          */
         $sql = '';
         foreach ($Container->getCriteria()->getCriteriumCollection() as $Criterium) {
             $SqlPart = $Criterium->getSqlPart();
-            $sql .= ltrim($Criterium->getGlue().' '.$SqlPart->getSql().' ');
+            $sql .= ltrim($Criterium->getGlue() . ' ' . $SqlPart->getSql() . ' ');
         }
 
-        return '('.rtrim($sql).')';
+        return '(' . rtrim($sql) . ')';
     }
 
     /**
      * @param ContainerInterface $Container
+     *
      * @return array
      */
     protected function criteriaToParameters(ContainerInterface $Container)
     {
-        /**
+        /*
          * @var CriteriumInterface $Criterium
          */
         $parameters = [];
@@ -144,7 +143,7 @@ class Builder implements BuilderInterface
 
         return $parameters;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -156,11 +155,10 @@ class Builder implements BuilderInterface
 
         if ($this->current > 0) {
             $this->getCurrentContainer()->setGlue($glue);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->resetGlue(); //reset glue for first item
         }
-        
+
         return $this;
     }
 
@@ -172,8 +170,7 @@ class Builder implements BuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->current < 0) {
             $this->where($column, $operator, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
         }
 
@@ -188,8 +185,7 @@ class Builder implements BuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->current < 0) {
             $this->where($column, $operator, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
         }
 
@@ -199,7 +195,7 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = Builder::GLUE_AND)
+    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = self::GLUE_AND)
     {
         $this->current++;
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
@@ -207,8 +203,7 @@ class Builder implements BuilderInterface
 
         if ($this->current > 0) {
             $this->getCurrentContainer()->setGlue($glue);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->resetGlue(); //reset glue for first item
         }
 
@@ -223,10 +218,10 @@ class Builder implements BuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->current < 0) {
             $this->where($sql, $customType, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
         }
+
         return $this;
     }
 
@@ -238,10 +233,10 @@ class Builder implements BuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, 'raw', $value);
         if ($this->current < 0) {
             $this->where($sql, 'raw', $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
         }
+
         return $this;
     }
 
@@ -301,6 +296,7 @@ class Builder implements BuilderInterface
     public function resetGlue()
     {
         $this->getCurrentContainer()->resetGlue();
+
         return $this;
     }
 
@@ -310,6 +306,7 @@ class Builder implements BuilderInterface
     public function glueByAnd()
     {
         $this->getCurrentContainer()->glueByAnd();
+
         return $this;
     }
 
@@ -319,6 +316,7 @@ class Builder implements BuilderInterface
     public function glueByOr()
     {
         $this->getCurrentContainer()->glueByOr();
+
         return $this;
     }
 
@@ -336,6 +334,7 @@ class Builder implements BuilderInterface
     public function setGroupBy($group_by)
     {
         $this->group_by = $group_by;
+
         return $this;
     }
 
@@ -353,6 +352,7 @@ class Builder implements BuilderInterface
     public function setLimit($limit)
     {
         $this->limit = $limit;
+
         return $this;
     }
 
@@ -370,6 +370,7 @@ class Builder implements BuilderInterface
     public function setOffset($offset)
     {
         $this->offset = $offset;
+
         return $this;
     }
 
@@ -387,6 +388,7 @@ class Builder implements BuilderInterface
     public function setOrderBy(array $order_by)
     {
         $this->order_by = $order_by;
+
         return $this;
     }
 
@@ -400,14 +402,14 @@ class Builder implements BuilderInterface
         }
 
         if ($this->getLimit() === null && ($this->getOffset() !== null && (int) $this->getOffset() !== 0)) {
-            return 'OFFSET '.$this->offset;
+            return 'OFFSET ' . $this->offset;
         }
 
         if ((int) $this->getLimit() !== 0 && $this->getOffset() === null) {
-            return 'LIMIT '.$this->getLimit();
+            return 'LIMIT ' . $this->getLimit();
         }
 
-        return 'LIMIT '.$this->getLimit(). ' OFFSET '.$this->getOffset();
+        return 'LIMIT ' . $this->getLimit() . ' OFFSET ' . $this->getOffset();
     }
 
     /**
@@ -421,12 +423,12 @@ class Builder implements BuilderInterface
 
         $order_by = '';
         foreach ($this->getOrderBy() as $name => $sort) {
-            $order_by .= "${name} ".$sort.',';
+            $order_by .= "${name} " . $sort . ',';
         }
 
         if ($order_by !== '') {
             $order_by = trim($order_by, ',');
-            $order_by = 'ORDER BY '.$order_by;
+            $order_by = 'ORDER BY ' . $order_by;
         }
 
         return $order_by;
@@ -441,7 +443,7 @@ class Builder implements BuilderInterface
             return '';
         }
 
-        return 'GROUP BY '.$this->getGroupBy();
+        return 'GROUP BY ' . $this->getGroupBy();
     }
 
     /**
@@ -454,9 +456,9 @@ class Builder implements BuilderInterface
         $glue = null;
 
         foreach ($this->getContainerCollection() as $Container) {
-            $glue = (count($sql) === 0) ? '' : $Container->getGlue().' '; //reset glue if that's the first iteration
+            $glue = (count($sql) === 0) ? '' : $Container->getGlue() . ' '; //reset glue if that's the first iteration
 
-            $sql[] = $glue.$this->criteriaToSql($Container);
+            $sql[] = $glue . $this->criteriaToSql($Container);
             $criteria_parameters = $this->criteriaToParameters($Container);
             $tmp = [];
 
@@ -468,13 +470,13 @@ class Builder implements BuilderInterface
         }
 
         $sql_query = implode("\n", $sql);
-        $sql_query = rtrim($sql_query, $glue.' ');
+        $sql_query = rtrim($sql_query, $glue . ' ');
 
-        $sql_query .= ' '.trim($this->getGroupBySql().' '.
-                $this->getOrderByAndSortSql().' '.
+        $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' .
+                $this->getOrderByAndSortSql() . ' ' .
                 $this->getOffsetLimitSql());
 
-        $sql_query = empty($sql) === false ? 'WHERE '.$sql_query : $sql_query;
+        $sql_query = empty($sql) === false ? 'WHERE ' . $sql_query : $sql_query;
 
         return $this->getFactoryWorker()->buildSqlPart(trim($sql_query), $parameters);
     }
@@ -485,7 +487,7 @@ class Builder implements BuilderInterface
     public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=self::GLUE_AND)
     {
         /**
-         * @var ContainerInterface $ContainerToMerge
+         * @var ContainerInterface
          */
         foreach ($ContainerCollectionToMerge as $ContainerToMerge) {
             if ($ContainerToMerge->getGlue() === null) {
@@ -526,7 +528,7 @@ class Builder implements BuilderInterface
      */
     public static function randomizeParameterName($name)
     {
-        return $name.'_'.mt_rand(100, time());
+        return $name . '_' . mt_rand(100, time());
     }
 
     /**
@@ -566,5 +568,5 @@ class Builder implements BuilderInterface
     {
         return $this->getCriteriaBuilderFactoryWorker();
     }
-    
+
 }

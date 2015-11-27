@@ -14,6 +14,8 @@ use Everon\Component\CriteriaBuilder\OperatorInterface;
 
 class GreaterOrEqual extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'GreaterOrEqual';
     const TYPE_AS_SQL = '>=';
+
 }

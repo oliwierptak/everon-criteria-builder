@@ -15,6 +15,7 @@ use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 
 class Raw extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'Raw';
     const TYPE_AS_SQL = 'RAW';
 
@@ -23,7 +24,9 @@ class Raw extends AbstractOperator implements OperatorInterface
      */
     public function toSqlPartData(CriteriumInterface $Criterium)
     {
-        $sql = sprintf("%s", $Criterium->getColumn());
+        $sql = sprintf('%s', $Criterium->getColumn());
+
         return [$sql, $Criterium->getValue() ?: []];
     }
+
 }

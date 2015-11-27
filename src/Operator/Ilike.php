@@ -14,6 +14,8 @@ use Everon\Component\CriteriaBuilder\OperatorInterface;
 
 class Ilike extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'Ilike';
     const TYPE_AS_SQL = 'ILIKE';
+
 }

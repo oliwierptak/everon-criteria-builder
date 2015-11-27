@@ -13,5 +13,7 @@ use Everon\Component\Utils\Exception\AbstractException;
 
 class NoSubQueryFoundException extends AbstractException
 {
+
     protected $message = 'No SubQuery found, use where() to start a new SubQuery';
+
 }

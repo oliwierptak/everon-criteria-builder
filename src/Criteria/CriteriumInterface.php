@@ -15,6 +15,7 @@ use Everon\Component\Utils\Collection\ArrayableInterface;
 
 interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryWorkerDependencyInterface
 {
+
     /**
      * @return string
      */
@@ -89,4 +90,5 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
      * @param SqlPartInterface $SqlPart
      */
     public function setSqlPart(SqlPartInterface $SqlPart);
+
 }

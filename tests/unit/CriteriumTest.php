@@ -15,11 +15,11 @@ use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\Factory\FactoryInterface;
 use Everon\Component\Utils\TestCase\MockeryTest;
 use Everon\Component\Utils\Text\StartsWith;
-use Mockery;
 use Everon\Component\Factory\Tests\Unit\Doubles\FactoryStub;
 
 class CriteriumTest extends MockeryTest
 {
+
     use StartsWith;
 
     /**
@@ -36,7 +36,7 @@ class CriteriumTest extends MockeryTest
     {
         $Container = new Container();
 
-        /** @var ContainerInterface $Container */
+        /* @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
     }
@@ -79,4 +79,5 @@ class CriteriumTest extends MockeryTest
 
         $this->assertEquals('bar', current(array_keys(array_flip($SqlPart->getParameters()))));
     }
+
 }

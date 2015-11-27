@@ -14,6 +14,8 @@ use Everon\Component\CriteriaBuilder\OperatorInterface;
 
 class SmallerThen extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'SmallerThen';
     const TYPE_AS_SQL = '<';
+
 }

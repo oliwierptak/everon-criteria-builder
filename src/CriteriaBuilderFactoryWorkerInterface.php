@@ -9,7 +9,6 @@
  */
 namespace Everon\Component\CriteriaBuilder;
 
-
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\Factory\Exception\UnableToInstantiateException;
@@ -17,10 +16,12 @@ use Everon\Component\Factory\FactoryWorkerInterface;
 
 interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
 {
+
     /**
      * @param string $namespace
      *
      * @throws UnableToInstantiateException
+     *
      * @return CriteriaInterface
      */
     public function buildCriteria($namespace='Everon\Component\CriteriaBuilder');
@@ -29,6 +30,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      * @param string $namespace
      *
      * @throws UnableToInstantiateException
+     *
      * @return BuilderInterface
      */
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder');
@@ -40,6 +42,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      * @param string $namespace
      *
      * @throws UnableToInstantiateException
+     *
      * @return CriteriumInterface
      */
     public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria');
@@ -50,6 +53,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      * @param string $namespace
      *
      * @throws UnableToInstantiateException
+     *
      * @return ContainerInterface
      */
     public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria');
@@ -58,6 +62,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      * @param $class_name
      *
      * @throws UnableToInstantiateException
+     *
      * @return OperatorInterface
      */
     public function buildCriteriaOperator($class_name);
@@ -68,6 +73,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      * @param string $namespace
      *
      * @throws UnableToInstantiateException
+     *
      * @return SqlPartInterface
      */
     public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder');

@@ -9,13 +9,13 @@
  */
 namespace Everon\Component\CriteriaBuilder;
 
-
 use Everon\Component\Utils\Collection\ToArray;
 
 class SqlPart implements SqlPartInterface
 {
+
     use ToArray;
-    
+
     /**
      * @var string
      */
@@ -26,7 +26,6 @@ class SqlPart implements SqlPartInterface
      */
     protected $parameters = null;
 
-    
     /**
      * @param $sql
      * @param $parameters
@@ -44,7 +43,7 @@ class SqlPart implements SqlPartInterface
     {
         return [
             'sql' => $this->getSql(),
-            'parameters' => $this->getParameters()
+            'parameters' => $this->getParameters(),
         ];
     }
 
@@ -95,5 +94,5 @@ class SqlPart implements SqlPartInterface
     {
         $this->sql = $sql;
     }
-    
+
 }

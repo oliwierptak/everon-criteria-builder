@@ -13,11 +13,11 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 
 trait CriteriaBuilderFactoryWorker
 {
+
     /**
      * @var CriteriaBuilderFactoryWorkerInterface
      */
     protected $CriteriaBuilderFactoryWorker;
-
 
     /**
      * @return CriteriaBuilderFactoryWorkerInterface

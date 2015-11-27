@@ -17,5 +17,5 @@ class Equal extends AbstractOperator implements OperatorInterface
 
     const TYPE_NAME = 'Equal';
     const TYPE_AS_SQL = '=';
-    
+
 }

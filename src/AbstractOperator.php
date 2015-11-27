@@ -46,16 +46,16 @@ abstract class AbstractOperator implements OperatorInterface
      */
     public function toSqlPartData(CriteriumInterface $Criterium)
     {
-        $sql = sprintf("%s %s %s", $Criterium->getColumn(), $this->getTypeAsSql(), $Criterium->getPlaceholder());
+        $sql = sprintf('%s %s %s', $Criterium->getColumn(), $this->getTypeAsSql(), $Criterium->getPlaceholder());
         $params = [
-            $Criterium->getPlaceholderAsParameter() => $Criterium->getValue() 
+            $Criterium->getPlaceholderAsParameter() => $Criterium->getValue(),
         ];
-        
+
         if ($Criterium->getValue() === null) {
             $params = [];
         }
-        
+
         return [$sql, $params];
     }
-    
+
 }

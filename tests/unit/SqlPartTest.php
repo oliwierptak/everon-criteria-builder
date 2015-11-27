@@ -19,6 +19,7 @@ use Mockery;
 
 class SqlPartTest extends MockeryTest
 {
+
     /**
      * @var CriteriaBuilderFactoryWorkerInterface
      */
@@ -34,7 +35,7 @@ class SqlPartTest extends MockeryTest
         $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
         $Container = new Container();
 
-        /** @var ContainerInterface $Container */
+        /* @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
     }
@@ -42,7 +43,7 @@ class SqlPartTest extends MockeryTest
     public function test_Constructor()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
-            'foo_value' => 'bar'
+            'foo_value' => 'bar',
         ]);
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\SqlPartInterface', $SqlPart);
@@ -51,7 +52,7 @@ class SqlPartTest extends MockeryTest
     public function test_GetSql_should_return_sql_query_string()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
-            'foo_value' => 'bar'
+            'foo_value' => 'bar',
         ]);
 
         $this->assertEquals('foo = :foo_value', $SqlPart->getSql());
@@ -60,7 +61,7 @@ class SqlPartTest extends MockeryTest
     public function test_GetParameters_should_return_associative_array_with_parameters()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
-            'foo_value' => 'bar'
+            'foo_value' => 'bar',
         ]);
 
         $this->assertEquals(['foo_value' => 'bar'], $SqlPart->getParameters());
@@ -69,7 +70,7 @@ class SqlPartTest extends MockeryTest
     public function test_GetParameterByValue_should_return_parameter_value()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
-            'foo_value' => 'bar'
+            'foo_value' => 'bar',
         ]);
 
         $this->assertEquals('bar', $SqlPart->getParameterValue('foo_value'));
@@ -78,14 +79,15 @@ class SqlPartTest extends MockeryTest
     public function test_toArray()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
-            'foo_value' => 'bar'
+            'foo_value' => 'bar',
         ]);
 
         $this->assertEquals([
             'sql' => 'foo = :foo_value',
             'parameters' => [
-                'foo_value' => 'bar'
-            ]
+                'foo_value' => 'bar',
+            ],
         ], $SqlPart->toArray());
     }
+
 }

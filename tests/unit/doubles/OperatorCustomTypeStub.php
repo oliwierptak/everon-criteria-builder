@@ -13,6 +13,8 @@ use Everon\Component\CriteriaBuilder\AbstractOperator;
 
 class OperatorCustomTypeStub extends AbstractOperator
 {
+
     const TYPE_NAME = 'CustomType';
     const TYPE_AS_SQL = '<sql for custom operator>';
+
 }

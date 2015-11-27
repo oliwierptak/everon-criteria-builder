@@ -22,14 +22,14 @@ use Everon\Component\CriteriaBuilder\Dependency;
 use Everon\Component\Utils\Collection\ToArray;
 use Everon\Component\Utils\Text\ToString;
 
-
 class Criterium implements CriteriumInterface
 {
+
     use Dependency\Setter\CriteriaBuilderFactoryWorker;
 
     use ToArray;
     use ToString;
-    
+
     /**
      * @var string
      */
@@ -60,7 +60,6 @@ class Criterium implements CriteriumInterface
      */
     protected $SqlPart = null;
 
-
     /**
      * @param $column
      * @param $value
@@ -84,7 +83,7 @@ class Criterium implements CriteriumInterface
             'operator_type' => $this->getOperatorType(),
             'placeholder' => $this->getPlaceholder(),
             'glue' => $this->getGlue(),
-            'SqlPart' => $this->getSqlPart()
+            'SqlPart' => $this->getSqlPart(),
         ];
     }
 
@@ -93,12 +92,14 @@ class Criterium implements CriteriumInterface
      * @param $value
      *
      * @throws UnknownOperatorTypeException
+     *
      * @return OperatorInterface
      */
     protected function buildOperatorWithValue($operator, $value)
     {
         $className = Builder::getOperatorClassNameBySqlOperator($operator);
         $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
+
         return $this->replaceOperatorForNulLValue($Operator, $value);
     }
 
@@ -116,8 +117,7 @@ class Criterium implements CriteriumInterface
             if ($Operator->getType() === Equal::TYPE_NAME) {
                 $className = Builder::getOperatorClassNameBySqlOperator(Is::TYPE_AS_SQL);
                 $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
-            }
-            else if ($Operator->getType() === NotEqual::TYPE_NAME) {
+            } elseif ($Operator->getType() === NotEqual::TYPE_NAME) {
                 $className = Builder::getOperatorClassNameBySqlOperator(NotIs::TYPE_AS_SQL);
                 $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
             }
@@ -198,12 +198,12 @@ class Criterium implements CriteriumInterface
         if ($this->value === null) {
             return 'NULL';
         }
-        
+
         if ($this->placeholder === null) {
             $column_name = str_replace('.', '_', Builder::randomizeParameterName($this->getColumn()));
-            $this->placeholder = ':'.$column_name;
+            $this->placeholder = ':' . $column_name;
         }
-        
+
         return $this->placeholder;
     }
 
@@ -246,7 +246,7 @@ class Criterium implements CriteriumInterface
     {
         $this->SqlPart = $SqlPart;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -257,7 +257,7 @@ class Criterium implements CriteriumInterface
             list($sql, $parameters) = $Operator->toSqlPartData($this);
             $this->SqlPart = $this->getFactoryWorker()->buildSqlPart($sql, $parameters);
         }
-        
+
         return $this->SqlPart;
     }
 
@@ -268,4 +268,5 @@ class Criterium implements CriteriumInterface
     {
         return $this->getCriteriaBuilderFactoryWorker();
     }
+
 }

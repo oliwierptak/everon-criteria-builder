@@ -13,5 +13,7 @@ use Everon\Component\Utils\Exception\AbstractException;
 
 class ValueMustBeAnArrayException extends AbstractException
 {
+
     protected $message = 'Value must be an array';
+
 }

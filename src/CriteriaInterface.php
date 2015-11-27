@@ -16,8 +16,10 @@ use Everon\Component\Utils\Collection\ArrayableInterface;
 
 interface CriteriaInterface extends ArrayableInterface
 {
+
     /**
      * @param CriteriumInterface $Criterium
+     *
      * @return self
      */
     public function where(CriteriumInterface $Criterium);
@@ -26,6 +28,7 @@ interface CriteriaInterface extends ArrayableInterface
      * @param CriteriumInterface $Criterium
      *
      * @throws NoSubQueryFoundException
+     *
      * @return self
      */
     public function andWhere(CriteriumInterface $Criterium);
@@ -34,12 +37,13 @@ interface CriteriaInterface extends ArrayableInterface
      * @param CriteriumInterface $Criterium
      *
      * @throws NoSubQueryFoundException
+     *
      * @return self
      */
     public function orWhere(CriteriumInterface $Criterium);
 
     /**
-     * @return CollectionInterface
+     * @return CollectionInterface|CriteriumInterface[]
      */
     public function getCriteriumCollection();
 
@@ -67,4 +71,5 @@ interface CriteriaInterface extends ArrayableInterface
      * @return void
      */
     public function glueByOr();
+
 }

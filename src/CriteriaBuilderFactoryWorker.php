@@ -14,13 +14,14 @@ use Everon\Component\Factory\Exception\UnableToInstantiateException;
 
 class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBuilderFactoryWorkerInterface
 {
+
     /**
      * @inheritdoc
      */
     protected function registerBeforeWork()
     {
         $Factory = $this->getFactory();
-        $this->getFactory()->getDependencyContainer()->propose('CriteriaBuilderFactoryWorker', function() use ($Factory) {
+        $this->getFactory()->getDependencyContainer()->propose('CriteriaBuilderFactoryWorker', function () use ($Factory) {
             return $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
         });
     }
@@ -35,9 +36,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             $this->getFactory()->classExists($class_name);
             $Criteria = new $class_name();
             $this->getFactory()->injectDependencies($class_name, $Criteria);
+
             return $Criteria;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
     }
@@ -52,9 +53,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             $this->getFactory()->classExists($class_name);
             $Builder = new $class_name();
             $this->getFactory()->injectDependencies($class_name, $Builder);
+
             return $Builder;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
     }
@@ -69,9 +70,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             $this->getFactory()->classExists($class_name);
             $Criterium = new $class_name($column, $operator, $value);
             $this->getFactory()->injectDependencies($class_name, $Criterium);
+
             return $Criterium;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
     }
@@ -86,9 +87,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             $this->getFactory()->classExists($class_name);
             $Container = new $class_name($Criteria, $glue);
             $this->getFactory()->injectDependencies($class_name, $Container);
+
             return $Container;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
     }
@@ -102,9 +103,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             $this->getFactory()->classExists($class_name);
             $CriteriaOperator = new $class_name();
             $this->getFactory()->injectDependencies($class_name, $CriteriaOperator);
+
             return $CriteriaOperator;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
     }
@@ -119,9 +120,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             $this->getFactory()->classExists($class_name);
             $SqlPart = new $class_name($sql, $parameters);
             $this->getFactory()->injectDependencies($class_name, $SqlPart);
+
             return $SqlPart;
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
     }

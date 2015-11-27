@@ -11,6 +11,8 @@ namespace Everon\Component\CriteriaBuilder\Operator;
 
 class NotIlike extends Ilike
 {
+
     const TYPE_NAME = 'NotIlike';
     const TYPE_AS_SQL = 'NOT ILIKE';
+
 }

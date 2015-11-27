@@ -11,6 +11,8 @@ namespace Everon\Component\CriteriaBuilder\Operator;
 
 class NotIn extends In
 {
+
     const TYPE_NAME = 'NotIn';
     const TYPE_AS_SQL = 'NOT IN';
+
 }

@@ -13,5 +13,7 @@ use Everon\Component\Utils\Exception\AbstractException;
 
 class UnknownOperatorTypeException extends AbstractException
 {
+
     protected $message = 'Unknown operator type "%s"';
+
 }

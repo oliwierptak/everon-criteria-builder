@@ -13,5 +13,4 @@ use Everon\Component\Factory\Factory;
 
 class FactoryStub extends Factory
 {
-
 }

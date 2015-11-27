@@ -13,36 +13,38 @@ use Everon\Component\Utils\Collection\ArrayableInterface;
 
 interface SqlPartInterface extends ArrayableInterface
 {
+
     /**
      * @return array
      */
-    function getParameters();
+    public function getParameters();
 
     /**
      * @param array $parameters
      */
-    function setParameters($parameters);
+    public function setParameters($parameters);
 
     /**
      * @param $name
      * @param $value
      */
-    function setParameterValue($name, $value);
+    public function setParameterValue($name, $value);
 
     /**
      * @param $name
+     *
      * @return mixed
      */
-    function getParameterValue($name);
-    
+    public function getParameterValue($name);
+
     /**
      * @return string
      */
-    function getSql();
+    public function getSql();
 
     /**
      * @param string $sql
      */
-    function setSql($sql);
+    public function setSql($sql);
 
 }

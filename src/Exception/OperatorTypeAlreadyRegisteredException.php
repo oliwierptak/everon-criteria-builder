@@ -13,5 +13,7 @@ use Everon\Component\Utils\Exception\AbstractException;
 
 class OperatorTypeAlreadyRegisteredException extends AbstractException
 {
+
     protected $message = 'Operator type "%s" is alredy registereds';
+
 }

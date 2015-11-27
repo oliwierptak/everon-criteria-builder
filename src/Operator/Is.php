@@ -14,6 +14,8 @@ use Everon\Component\CriteriaBuilder\OperatorInterface;
 
 class Is extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'Is';
     const TYPE_AS_SQL = 'IS';
+
 }

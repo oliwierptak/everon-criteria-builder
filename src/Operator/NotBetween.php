@@ -11,6 +11,8 @@ namespace Everon\Component\CriteriaBuilder\Operator;
 
 class NotBetween extends Between
 {
+
     const TYPE_NAME = 'NotBetween';
     const TYPE_AS_SQL = 'NOT BETWEEN';
+
 }

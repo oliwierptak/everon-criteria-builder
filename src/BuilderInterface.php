@@ -18,6 +18,7 @@ use Everon\Component\Utils\Text\StringableInterface;
 
 interface BuilderInterface extends ArrayableInterface, StringableInterface, CriteriaBuilderFactoryWorkerDependencyInterface
 {
+
     /**
      * Starts new Sub Query
      * 
@@ -25,16 +26,18 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $operator
      * @param $value
      * @param $glue
-     * @return $this
+     *
+     * @return self
      */
     public function where($column, $operator, $value, $glue = Builder::GLUE_AND);
-        
+
     /**
      * Appends to current subquery
      * 
      * @param $column
      * @param $operator
      * @param $value
+     *
      * @return Builder
      */
     public function andWhere($column, $operator, $value);
@@ -45,6 +48,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $column
      * @param $operator
      * @param $value
+     *
      * @return Builder
      */
     public function orWhere($column, $operator, $value);
@@ -54,7 +58,8 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param array|null $value
      * @param string $customType
      * @param string $glue
-     * @return $this
+     *
+     * @return self
      */
     public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = Builder::GLUE_AND);
 
@@ -62,7 +67,8 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $sql
      * @param array|null $value
      * @param string $customType
-     * @return $this
+     *
+     * @return self
      */
     public function andWhereRaw($sql, array $value = null, $customType = 'raw');
 
@@ -70,7 +76,8 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $sql
      * @param array $value
      * @param string $customType
-     * @return $this
+     *
+     * @return self
      */
     public function orWhereRaw($sql, array $value = null, $customType = 'raw');
 
@@ -121,6 +128,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param string $group_by
+     *
      * @return BuilderInterface
      */
     public function setGroupBy($group_by);
@@ -132,6 +140,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param int $limit
+     *
      * @return BuilderInterface
      */
     public function setLimit($limit);
@@ -143,10 +152,11 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param int $offset
+     *
      * @return BuilderInterface
      */
     public function setOffset($offset);
-    
+
     /**
      * @return array
      */
@@ -154,10 +164,11 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param array $order_by
+     *
      * @return BuilderInterface
      */
     public function setOrderBy(array $order_by);
-    
+
     /**
      * @return SqlPartInterface
      */
@@ -171,8 +182,10 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param $operator
-     * @return string
+     *
      * @throws UnknownOperatorTypeException
+     *
+     * @return string
      */
     public static function getOperatorClassNameBySqlOperator($operator);
 
@@ -186,6 +199,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param $name
+     *
      * @return string
      */
     public static function randomizeParameterName($name);
@@ -209,4 +223,5 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @return CollectionInterface
      */
     public static function getOperatorCollection();
+
 }

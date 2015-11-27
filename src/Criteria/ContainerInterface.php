@@ -13,6 +13,7 @@ use Everon\Component\CriteriaBuilder\CriteriaInterface;
 
 interface ContainerInterface
 {
+
     /**
      * @return CriteriaInterface
      */
@@ -47,4 +48,5 @@ interface ContainerInterface
      * @return void
      */
     public function glueByOr();
+
 }

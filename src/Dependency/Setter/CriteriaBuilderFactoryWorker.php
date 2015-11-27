@@ -11,5 +11,7 @@ namespace Everon\Component\CriteriaBuilder\Dependency\Setter;
 
 trait CriteriaBuilderFactoryWorker
 {
+
     use \Everon\Component\CriteriaBuilder\Dependency\CriteriaBuilderFactoryWorker;
+
 }

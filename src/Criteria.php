@@ -9,7 +9,6 @@
  */
 namespace Everon\Component\CriteriaBuilder;
 
-
 use Everon\Component\Collection\Collection;
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
@@ -18,6 +17,7 @@ use Everon\Component\Utils\Collection\ToArray;
 
 class Criteria implements CriteriaInterface
 {
+
     use ToArray;
 
     /**
@@ -30,7 +30,6 @@ class Criteria implements CriteriaInterface
      */
     protected $glue = Builder::GLUE_AND;
 
-    
     /**
      * @return array
      */
@@ -46,6 +45,7 @@ class Criteria implements CriteriaInterface
     {
         $Criterium->resetGlue();
         $this->getCriteriumCollection()->append($Criterium);
+
         return $this;
     }
 
@@ -57,9 +57,10 @@ class Criteria implements CriteriaInterface
         if ($this->getCriteriumCollection()->isEmpty()) {
             throw new NoSubQueryFoundException();
         }
-            
+
         $Criterium->glueByAnd();
         $this->getCriteriumCollection()->append($Criterium);
+
         return $this;
     }
 
@@ -74,6 +75,7 @@ class Criteria implements CriteriaInterface
 
         $Criterium->glueByOr();
         $this->getCriteriumCollection()->append($Criterium);
+
         return $this;
     }
 
@@ -85,7 +87,7 @@ class Criteria implements CriteriaInterface
         if ($this->CriteriumCollection === null) {
             $this->CriteriumCollection = new Collection([]);
         }
-        
+
         return $this->CriteriumCollection;
     }
 
@@ -128,4 +130,5 @@ class Criteria implements CriteriaInterface
     {
         $this->glue = Builder::GLUE_OR;
     }
+
 }

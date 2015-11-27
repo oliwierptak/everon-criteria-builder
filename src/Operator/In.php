@@ -17,6 +17,7 @@ use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 
 class In extends AbstractOperator implements OperatorInterface
 {
+
     const TYPE_NAME = 'In';
     const TYPE_AS_SQL = 'IN';
 
@@ -27,21 +28,23 @@ class In extends AbstractOperator implements OperatorInterface
     {
         $params = [];
         $data = $Criterium->getValue();
-        
+
         if (is_array($data) === false) {
             throw new ValueMustBeAnArrayException('Value must be an array');
         }
 
         /**
-         * @var array $data
+         * @var array
          */
         foreach ($data as $value) {
             $rand = Builder::randomizeParameterName($Criterium->getPlaceholderAsParameter());
             $params[$rand] = $value;
         }
 
-        $placeholder_sql = ':'.rtrim(implode(',:', array_keys($params)), ',');
-        $sql = sprintf("%s %s (%s)", $Criterium->getColumn(), $this->getTypeAsSql(), $placeholder_sql);
+        $placeholder_sql = ':' . rtrim(implode(',:', array_keys($params)), ',');
+        $sql = sprintf('%s %s (%s)', $Criterium->getColumn(), $this->getTypeAsSql(), $placeholder_sql);
+
         return [$sql, $params];
     }
+
 }
