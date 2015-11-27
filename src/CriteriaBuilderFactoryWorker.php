@@ -17,6 +17,17 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
+    protected function registerBeforeWork()
+    {
+        $Factory = $this->getFactory();
+        $this->getFactory()->getDependencyContainer()->register('CriteriaBuilderFactoryWorker', function() use ($Factory) {
+            return $Factory->getWorkerByName('CriteriaBuilderFactoryWorker', 'Everon\Component\CriteriaBuilder');
+        });
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function buildCriteria($namespace='Everon\Component\CriteriaBuilder')
     {
         try {
@@ -115,4 +126,5 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
             throw new UnableToInstantiateException($e);
         }
     }
+
 }
