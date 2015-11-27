@@ -179,12 +179,12 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param $type
-     * @param $operatorClassName
+     * @param $operator_class_name
+     * @return
+     * @internal param $operatorClassName
      *
-     * @throws OperatorTypeAlreadyRegisteredException
-     * @return void
      */
-    public static function registerOperator($type, $operatorClassName);
+    public static function registerOperator($type, $operator_class_name);
 
     /**
      * @param $name

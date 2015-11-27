@@ -270,12 +270,12 @@ You can register your own Operators with:
 ```php
 /**
  * @param $type
- * @param $operatorClassName
+ * @param $operator_class_name
+ * @return
+ * @internal param $operatorClassName
  *
- * @throws OperatorTypeAlreadyRegisteredException
- * @return void
  */
-public static function registerOperator($type, $operatorClassName);
+public static function registerOperator($type, $operator_class_name);
 ```
 
 For example:

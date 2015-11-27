@@ -511,14 +511,14 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public static function registerOperator($type, $operatorClassName)
+    public static function registerOperator($type, $operator_class_name)
     {
         $operator = strtoupper(trim($type));
         if (static::getOperatorCollection()->has($operator)) {
             throw new OperatorTypeAlreadyRegisteredException($operator);
         }
 
-        static::getOperatorCollection()->set($operator, $operatorClassName);
+        static::getOperatorCollection()->set($operator, $operator_class_name);
     }
 
     /**
