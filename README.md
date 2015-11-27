@@ -103,7 +103,7 @@ OR (
 
 
 ### RAW SQL
-RAW SQL is easy to implement.
+RAW SQL is easy to implement with ```whereRaw``` methods.
 ```php
 $CriteriaBuilder
     ->whereRaw('foo + bar')
@@ -118,7 +118,7 @@ WHERE (foo + bar AND 1=1 OR foo::bar())
 
 
 ### Group By
-Group By has simple usage.
+Group By is easily usable with ```setGroupBy``` method
 ```php
 $CriteriaBuilder
     ->where('name', '!=', 'foo')
@@ -141,7 +141,7 @@ array(8) [
 ```
 
 ### Limit and Offset
-Pretty straightforward.
+Pretty straightforward with ```setLimit``` and ```setOffset``` methods.
 ```php
 $CriteriaBuilder
     ->whereRaw('foo + bar')
@@ -158,7 +158,7 @@ LIMIT 10 OFFSET 5
 ```
 
 ### Order By
-Order By is implemented using ```ASC``` and ```DESC``` keywords, in an associative array.
+Order By is implemented using ```ASC``` and ```DESC``` keywords, in an associative array with ```setOrderBy``` method.
 ```php
 $CriteriaBuilder
     ->whereRaw('foo + bar')
@@ -224,7 +224,8 @@ array(10) [
 ```
 
 ### Operators
-There are almost 20 operators ready for use like Equal, NotIn, Between or Is. [Check them all here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator).
+There are almost 20 operators ready for use like Equal, NotIn, Between or Is.
+[Check them all here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator).
 
 #### Equal
 ```php
