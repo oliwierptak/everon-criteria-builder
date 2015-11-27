@@ -217,7 +217,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $this->assertCount(2, $CriteriaBuilder->getContainerCollection());
     }
 
-    public function test_merge_register_operator()
+    public function test_register_custom_operator()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
