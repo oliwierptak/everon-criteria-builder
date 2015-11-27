@@ -2,7 +2,7 @@
 Beta version
 
 # Everon Criteria Builder v0.5
-Library to generate complete ```SQL WHERE``` statements, with simple and intuitive interface.
+Library to generate complete ```SQL WHERE``` statements, with simple, fluid and intuitive interface.
 
 ## Requirements
 * Php 5.5+
@@ -36,9 +36,10 @@ array(8) [
 ### RAW SQL
 RAW SQL is easy to implement.
 ```php
-$CriteriaBuilder->whereRaw('foo + bar')
-    ->andWhereRaw('1=1')
-    ->orWhereRaw('foo::bar()');
+$CriteriaBuilder
+    ->whereRaw('foo + bar')
+        ->andWhereRaw('1=1')
+        ->orWhereRaw('foo::bar()');
 ```
 
 Will be converted into:
@@ -48,19 +49,18 @@ WHERE (foo + bar AND 1=1 OR foo::bar())
 
 
 ### Sub Queries
-Each ```where``` statement creates new Sub Query
+Each ```where``` statement creates new Sub Query. You can append conditions by using ```andWhere``` and ```orWhere``` methods.
+Every time you use ```where``` statement a new Sub Query will be created. By default they will be connected with ```AND``` operator.
+
 
 ```php
 $CriteriaBuilder
-    ->where('id', 'IN', [1,2,3])
+->where('id', 'IN', [1,2,3])
     ->orWhere('id', 'NOT IN', [4,5,6])
     ->andWhere('name', '=', 'foo');
-
-$CriteriaBuilder
-    ->where('modified', 'IS', null)
+->where('modified', 'IS', null)
     ->andWhere('name', '!=', null)
     ->orWhere('id', '=', 55);
-
 ```
 
 Will be converted into:
@@ -70,7 +70,7 @@ WHERE (
     OR id NOT IN (:id_1260952006,:id_519145813,:id_1367241593)
     AND name = :name_1178871152
 )
-OR (
+AND (
     modified IS NULL
     AND name IS NOT NULL
     OR id = :id_895877163
@@ -88,13 +88,41 @@ array(8) [
   'id_897328169' => integer 2
   'id_1377365551' => integer 3
   'id_895877163' => integer 55
-]
 ```
+
+To connect Sub Quries with ```OR``` operator use Gluing methods.
+```php
+$CriteriaBuilder
+->where('id', 'IN', [1,2,3])
+    ->orWhere('id', 'NOT IN', [4,5,6])
+    ->andWhere('name', '=', 'foo');
+->glueByOr()
+->where('modified', 'IS', null)
+    ->andWhere('name', '!=', null)
+    ->orWhere('id', '=', 55);
+
+```
+
+Will be converted into:
+```sql
+WHERE (
+    id IN (:id_843451778,:id_897328169,:id_1377365551)
+    OR id NOT IN (:id_1260952006,:id_519145813,:id_1367241593)
+    AND name = :name_1178871152
+)
+AND (
+    modified IS NULL
+    AND name IS NOT NULL
+    OR id = :id_895877163
+)
+```
+
 
 ### Group By
 Group By has simple usage.
 ```php
-$CriteriaBuilder->where('name', '!=', 'foo')
+$CriteriaBuilder
+->where('name', '!=', 'foo')
     ->andWhere('id', '=', 123)
     ->setGroupBy('name,id');
 ```
@@ -114,14 +142,16 @@ array(8) [
 ```
 
 ### Limit and Offset
-Limit, Offset has a straightforward implementation.
+Pretty straightforward.
 ```php
-$CriteriaBuilder->whereRaw('foo + bar')
+$CriteriaBuilder
+->whereRaw('foo + bar')
     ->andWhereRaw('1=1')
     ->orWhereRaw('foo::bar()');
 
-$CriteriaBuilder->setLimit(10);
-$CriteriaBuilder->setOffset(5);
+$CriteriaBuilder
+    ->setLimit(10)
+    ->setOffset(5);
 ```
 
 Will be converted into:
@@ -133,7 +163,8 @@ LIMIT 10 OFFSET 5
 ### Order By
 Order By is implemented using ```ASC``` and ```DESC``` keywords, in an associative array.
 ```php
-$CriteriaBuilder->whereRaw('foo + bar')
+$CriteriaBuilder
+->whereRaw('foo + bar')
     ->andWhereRaw('1=1')
     ->orWhereRaw('foo::bar()');
 
@@ -150,19 +181,18 @@ ORDER BY name DESC,id ASC
 ```
 
 
-
 ### Custom Gluing
-In general using Sub Queries is easier, but manual Sub Query handling is also possible by using the ```glue``` methods.
+In general using Sub Queries with ```where``` methods is easier, but manual Sub Query handling is also possible by using the ```glue``` methods.
 
 ```php
 $CriteriaBuilder
-    ->where('id', 'IN', [1,2,3])
+->where('id', 'IN', [1,2,3])
     ->orWhere('id', 'NOT IN', [4,5,6])
-    ->glueByOr()
-        ->where('name', '!=', 'foo')
+->glueByOr()
+    ->where('name', '!=', 'foo')
         ->andWhere('email', '!=', 'foo@bar')
-    ->glueByAnd()
-        ->where('bar', '=', 'bar')
+->glueByAnd()
+    ->where('bar', '=', 'bar')
         ->andWhere('name', '=', 'Doe');
 
 $CriteriaBuilder->setLimit(10);
@@ -198,6 +228,43 @@ array(10) [
 ```
 
 ### Operators
+There are almost 20 operators ready for use like Equal, NotIn, Between or Is. [Check them all here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator).
+
+#### Equal
+```php
+$CriteriaBuilder->where('foo', '=', 'bar');
+```
+
+Will output:
+```sql
+WHERE (foo = :foo_1337676681)
+```
+
+#### NotIn
+```php
+$CriteriaBuilder->where('foo', 'NOT IN', ['bar', 'buzz']);
+```
+
+Will output:
+```sql
+WHERE (foo NOT IN [:foo_1337676681, :foo_1337776681)
+```
+
+#### Between
+There must be exactly 2 parameters provided or an exception will be thrown.
+
+```php
+$CriteriaBuilder->where('foo', 'BETWEEN', ['bar', 'buzz']);
+```
+
+Will output:
+```sql
+WHERE (foo BETWEEN :foo_1337676681 AND :foo_1337776681)
+```
+
+There are many more. [See here for more examples](https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator).
+
+### Custom Operators
 You can register your own Operators with:
 ```php
 /**
@@ -236,5 +303,5 @@ WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
 
 
-### More examples
-Check the tests for more examples: https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit
+### Tests Driven
+[Check the tests for more examples of usage here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit)
