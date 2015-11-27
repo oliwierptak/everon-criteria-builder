@@ -182,13 +182,13 @@ In general using Sub Queries with ```where``` methods is easier, but manual Sub 
 
 ```php
 $CriteriaBuilder
-    ->where('id', 'IN', [1,2,3])
+        ->where('id', 'IN', [1,2,3])
         ->orWhere('id', 'NOT IN', [4,5,6])
     ->glueByOr()
-    ->where('name', '!=', 'foo')
+        ->where('name', '!=', 'foo')
         ->andWhere('email', '!=', 'foo@bar')
     ->glueByAnd()
-    ->where('bar', '=', 'bar')
+        ->where('bar', '=', 'bar')
         ->andWhere('name', '=', 'Doe');
 
 $CriteriaBuilder->setLimit(10);
