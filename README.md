@@ -102,6 +102,21 @@ OR (
 ```
 
 
+### RAW SQL
+RAW SQL is easy to implement.
+```php
+$CriteriaBuilder
+    ->whereRaw('foo + bar')
+    ->andWhereRaw('1=1')
+    ->orWhereRaw('foo::bar()');
+```
+
+Will be converted into:
+```sql
+WHERE (foo + bar AND 1=1 OR foo::bar())
+```
+
+
 ### Group By
 Group By has simple usage.
 ```php
@@ -159,21 +174,6 @@ Will be converted into:
 ```sql
 WHERE (foo + bar AND 1=1 OR foo::bar())
 ORDER BY name DESC,id ASC
-```
-
-
-### RAW SQL
-RAW SQL is easy to implement.
-```php
-$CriteriaBuilder
-    ->whereRaw('foo + bar')
-    ->andWhereRaw('1=1')
-    ->orWhereRaw('foo::bar()');
-```
-
-Will be converted into:
-```sql
-WHERE (foo + bar AND 1=1 OR foo::bar())
 ```
 
 
