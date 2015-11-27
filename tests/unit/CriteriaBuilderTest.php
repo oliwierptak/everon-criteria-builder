@@ -222,7 +222,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         /** @var OperatorInterface $CustomOperator */
-        $CriteriaBuilder->registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+        Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
 
         $CriteriaBuilder->whereRaw('bar', null, 'CustomType');
         $CriteriaBuilder->andWhereRaw('foo', null, 'CustomType');

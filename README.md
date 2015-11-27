@@ -217,7 +217,7 @@ class OperatorCustomTypeStub extends AbstractOperator
     const TYPE_AS_SQL = '<sql for custom operator>';
 }
 
-Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+Builder::registerOperator('CustomType', 'Some\Namespace\OperatorCustomTypeStub');
 ```
 
 
