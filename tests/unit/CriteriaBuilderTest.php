@@ -59,7 +59,10 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $CriteriaBuilder->getCurrentContainer()->getCriteria());
         $this->assertCount(2, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
 
-        $CriteriaBuilder->where('name', '!=', 'foo')->andWhere('name', '!=', 'bar');
+        $CriteriaBuilder
+            ->where('name', '!=', 'foo')
+            ->andWhere('name', '!=', 'bar');
+
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaBuilder->getCurrentContainer());
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $CriteriaBuilder->getCurrentContainer()->getCriteria());
         $this->assertCount(2, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
