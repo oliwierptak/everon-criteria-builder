@@ -79,7 +79,7 @@ array(8) [
   'id_895877163' => integer 55
 ```
 
-To connect Sub Quries with ```OR``` operator use Gluing methods.
+To connect Criteria with ```OR``` operator use Gluing methods.
 ```php
 $CriteriaBuilder
     ->where('id', 'IN', [1,2,3])
@@ -182,7 +182,7 @@ ORDER BY name DESC,id ASC
 
 
 ### Custom Gluing
-In general using ```Sub Where Statements``` with ```where``` methods is easier, but manual Sub Query handling is also possible by using the ```glue``` methods.
+Manual Criteria handling is also possible by using the ```glue``` methods.
 
 ```php
 $CriteriaBuilder
