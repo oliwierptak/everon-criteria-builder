@@ -50,14 +50,14 @@ class CriteriaTest extends MockeryTest
 
     }
 
-    public function test_Criteria()
+    public function test_Constructor()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $Criteria);
     }
 
-    public function test_Criteria_to_where()
+    public function test_where()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -75,7 +75,7 @@ class CriteriaTest extends MockeryTest
         $this->assertInternalType('array', $Criteria->toArray());
     }
 
-    public function test_Criteria_to_where_and_where()
+    public function test_where_and_where()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -109,7 +109,7 @@ class CriteriaTest extends MockeryTest
         $this->assertEquals(Builder::GLUE_AND, $AndCriteriumSecond->getGlue());
     }
 
-    public function test_Criteria_to_where_or_where()
+    public function test_where_or_where()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -143,7 +143,7 @@ class CriteriaTest extends MockeryTest
         $this->assertEquals(Builder::GLUE_OR, $OrCriterium->getGlue());
     }
 
-    public function test_Criteria_to_array()
+    public function test_to_array()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 

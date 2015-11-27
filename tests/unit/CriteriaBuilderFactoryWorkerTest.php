@@ -49,7 +49,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
 
     }
 
-    public function test_CriteriaBuilderFactoryWorker_is_a_worker()
+    public function test_is_a_worker()
     {
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface', $this->CriteriaBuilderFactoryWorker);
     }

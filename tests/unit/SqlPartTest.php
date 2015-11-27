@@ -46,7 +46,7 @@ class SqlPartTest extends MockeryTest
 
     }
 
-    public function test_SqlPart()
+    public function test_Constructor()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
             'foo_value' => 'bar'
@@ -55,7 +55,7 @@ class SqlPartTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\SqlPartInterface', $SqlPart);
     }
 
-    public function test_SqlPart_GetSql_should_return_sql_query_string()
+    public function test_GetSql_should_return_sql_query_string()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
             'foo_value' => 'bar'
@@ -64,7 +64,7 @@ class SqlPartTest extends MockeryTest
         $this->assertEquals('foo = :foo_value', $SqlPart->getSql());
     }
 
-    public function test_SqlPart_GetParameters_should_return_associative_array_with_parameters()
+    public function test_GetParameters_should_return_associative_array_with_parameters()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
             'foo_value' => 'bar'
@@ -73,7 +73,7 @@ class SqlPartTest extends MockeryTest
         $this->assertEquals(['foo_value' => 'bar'], $SqlPart->getParameters());
     }
 
-    public function test_SqlPart_GetParameterByValue_should_return_parameter_value()
+    public function test_GetParameterByValue_should_return_parameter_value()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
             'foo_value' => 'bar'
@@ -82,7 +82,7 @@ class SqlPartTest extends MockeryTest
         $this->assertEquals('bar', $SqlPart->getParameterValue('foo_value'));
     }
 
-    public function test_SqlPart_toArray()
+    public function test_toArray()
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
             'foo_value' => 'bar'

@@ -50,7 +50,7 @@ class ContainerTest extends MockeryTest
 
     }
 
-    public function test_CriteriaContainer()
+    public function test_Constructor()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
         $Container = $this->CriteriaBuilderFactoryWorker->buildCriteriaContainer($Criteria, Builder::GLUE_AND);
@@ -58,7 +58,7 @@ class ContainerTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $Container);
     }
 
-    public function test_CriteriaContainer_reset_glue()
+    public function test_reset_glue()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
         $Container = $this->CriteriaBuilderFactoryWorker->buildCriteriaContainer($Criteria, Builder::GLUE_AND);

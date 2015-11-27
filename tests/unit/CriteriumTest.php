@@ -49,28 +49,28 @@ class CriteriumTest extends MockeryTest
 
     }
 
-    public function test_CriteriaCriterium()
+    public function test_Constructor()
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $Criterium);
     }
 
-    public function test_CriteriaCriterium_is_factory_worker()
+    public function test_is_factory_worker()
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface', $Criterium->getCriteriaBuilderFactoryWorker());
     }
 
-    public function test_CriteriaCriterium_get_sql_part()
+    public function test_get_sql_part()
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\SqlPartInterface', $Criterium->getSqlPart());
     }
 
-    public function test_CriteriaCriterium_get_sql_part_sql()
+    public function test_get_sql_part_sql()
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
@@ -79,7 +79,7 @@ class CriteriumTest extends MockeryTest
         $this->assertTrue($this->textStartsWith($SqlPart->getSql(), 'foo = :foo_'));
     }
 
-    public function test_CriteriaCriterium_get_sql_part_parameters()
+    public function test_get_sql_part_parameters()
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
