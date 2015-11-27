@@ -234,3 +234,7 @@ WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo
 ```
 
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
+
+
+### More examples
+Check the tests for more examples: https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit
