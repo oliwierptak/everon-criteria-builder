@@ -2,7 +2,7 @@
 Beta version
 
 # Everon Criteria Builder v0.5
-Library to generate complete SQL WHERE clauses.
+Library to generate complete ```SQL WHERE``` statements, with simple and intuitive interface.
 
 ## Requirements
 * Php 5.5+
