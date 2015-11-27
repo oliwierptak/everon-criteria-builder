@@ -103,13 +103,13 @@ class CriteriaBuilderTest extends MockeryTest
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         $CriteriaBuilder
-            ->where('id', 'IN', [1,2,3])
-            ->orWhere('id', 'NOT IN', [4,5,6])
-        ->glueByOr()
-            ->where('name', '!=', 'foo')
-            ->andWhere('name', '!=', 'bar')
-        ->glueByAnd()
-            ->where('bar', '=', 'foo')->andWhere('name', '=', 'Doe');
+                ->where('id', 'IN', [1,2,3])
+                ->orWhere('id', 'NOT IN', [4,5,6])
+            ->glueByOr()
+                ->where('name', '!=', 'foo')
+                ->andWhere('name', '!=', 'bar')
+            ->glueByAnd()
+                ->where('bar', '=', 'foo')->andWhere('name', '=', 'Doe');
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
         
@@ -226,15 +226,15 @@ class CriteriaBuilderTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
         $CriteriaBuilder
-        ->whereRaw('foo + bar')
-            ->andWhereRaw('1=1')
-            ->orWhereRaw('foo::bar()')
-        ->glueByAnd()
-            ->whereRaw('1=1')
-        ->setLimit(10)
-        ->setOffset(5)
-        ->setGroupBy('name,id')
-        ->setOrderBy(['name' => 'DESC', 'id' => 'ASC']);
+            ->whereRaw('foo + bar')
+                ->andWhereRaw('1=1')
+                ->orWhereRaw('foo::bar()')
+            ->glueByAnd()
+                ->whereRaw('1=1')
+            ->setLimit(10)
+            ->setOffset(5)
+            ->setGroupBy('name,id')
+            ->setOrderBy(['name' => 'DESC', 'id' => 'ASC']);
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
         
