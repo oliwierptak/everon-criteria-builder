@@ -218,8 +218,11 @@ class OperatorCustomTypeStub extends AbstractOperator
 }
 
 Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+```
 
 
+You can use your own operator with ```raw``` methods.
+```php
 $CriteriaBuilder->whereRaw('bar', null, 'CustomType');
 $CriteriaBuilder->andWhereRaw('foo', null, 'CustomType');
 ```
