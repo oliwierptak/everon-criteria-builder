@@ -40,7 +40,7 @@ A Criterium is a condition.
 
 You can append Criterium by using ```andWhere``` and ```orWhere``` methods.
 
-Every time you use ```where``` statement a new Criteria will be created.
+Every time you use ```where``` statement a new Criteria will be created, ready for new set of conditions.
 
 ```php
 $CriteriaBuilder
