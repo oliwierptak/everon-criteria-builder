@@ -9,7 +9,6 @@ Beta version
 ## Features
 * Fluid interface
 * Minimized file/memory access/usage due to callbacks and lazy load
-* Factory gives full control on how each and every object is created and what dependencies it needs
 * Intuitive Interface: clear, small and simple API
 * Convention over configuration
 * Clean code
@@ -195,4 +194,35 @@ array(10) [
     'name_391340793' => string (3) "Doe"
     'bar_1337676982' => string (3) "bar"
 ]
+```
+
+### Operators
+Check https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator
+
+You can register your own Operators with:
+```php
+/**
+ * @param $type
+ * @param $operatorClassName
+ *
+ * @throws OperatorTypeAlreadyRegisteredException
+ * @return void
+ */
+public static function registerOperator($type, $operatorClassName);
+```
+
+For example:
+```php
+class OperatorCustomTypeStub extends AbstractOperator
+{
+    const TYPE_NAME = 'CustomType';
+    const TYPE_AS_SQL = '<sql for custom operator>';
+}
+
+$CriteriaBuilder->registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+```
+
+Will output:
+```sql
+WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> NULL)
 ```
