@@ -160,7 +160,8 @@ class CriteriaBuilderTest extends MockeryTest
 
         $this->assertEquals(count($SqlPart->getParameters()), count($sql_parameters));
         /*
-            sql: WHERE (id IN (:id_843451778,:id_897328169,:id_1377365551) OR id NOT IN (:id_1260952006,:id_519145813,:id_1367241593) AND name = :name_1178871152) OR (modified IS NULL AND name IS NOT NULL OR id = :id_895877163)
+            sql: WHERE (id IN (:id_843451778,:id_897328169,:id_1377365551) OR id NOT IN (:id_1260952006,:id_519145813,:id_1367241593) AND name = :name_1178871152)
+            OR (modified IS NULL AND name IS NOT NULL OR id = :id_895877163)
             parameters -> array(8) [
                 'name_1178871152' => string (3) "foo"
                 'id_1260952006' => integer 4
