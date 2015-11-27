@@ -33,16 +33,14 @@ array(8) [
 ]
 ```
 
-### Sub Where Statements
-Each ```where``` statement creates new Sub Where Clause.
-A Sub Where Clause is a set of Criteria Objects.
+### Criteria, Criterium aka conditions
+Each ```where``` statement creates new Criteria object.
 A Criteria object contains set of Criterium objects.
 A Criterium is a condition.
 
 You can append Criterium by using ```andWhere``` and ```orWhere``` methods.
 
-Every time you use ```where``` statement a new Sub Where Clause will be created,
-which Criteria will be connected with ```AND``` operator.
+Every time you use ```where``` statement a new Criteria will be created.
 
 ```php
 $CriteriaBuilder
