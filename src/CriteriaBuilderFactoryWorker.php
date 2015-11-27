@@ -20,8 +20,8 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     protected function registerBeforeWork()
     {
         $Factory = $this->getFactory();
-        $this->getFactory()->getDependencyContainer()->register('CriteriaBuilderFactoryWorker', function() use ($Factory) {
-            return $Factory->getWorkerByName('CriteriaBuilderFactoryWorker', 'Everon\Component\CriteriaBuilder');
+        $this->getFactory()->getDependencyContainer()->propose('CriteriaBuilderFactoryWorker', function() use ($Factory) {
+            return $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
         });
     }
 
@@ -33,9 +33,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
         try {
             $class_name = $this->getFactory()->getFullClassName($namespace, 'Criteria');
             $this->getFactory()->classExists($class_name);
-            $Builder = new $class_name();
-            $this->getFactory()->injectDependencies($class_name, $Builder);
-            return $Builder;
+            $Criteria = new $class_name();
+            $this->getFactory()->injectDependencies($class_name, $Criteria);
+            return $Criteria;
         }
         catch (\Exception $e) {
             throw new UnableToInstantiateException($e);

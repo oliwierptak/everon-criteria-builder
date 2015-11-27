@@ -37,13 +37,6 @@ class SqlPartTest extends MockeryTest
         /** @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
-
-        $FactoryWorker = $this->CriteriaBuilderFactoryWorker;
-
-        $Container->register('CriteriaBuilderFactoryWorker', function() use ($FactoryWorker) {
-            return $FactoryWorker;
-        });
-
     }
 
     public function test_Constructor()
