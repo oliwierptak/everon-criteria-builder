@@ -101,17 +101,17 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public function getGlue();
 
     /**
-     * @return void
+     * @return self
      */
     public function resetGlue();
 
     /**
-     * @return void
+     * @return self
      */
     public function glueByAnd();
 
     /**
-     * @return void
+     * @return self
      */
     public function glueByOr();
 

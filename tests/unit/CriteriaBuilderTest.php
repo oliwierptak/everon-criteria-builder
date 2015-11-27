@@ -51,7 +51,10 @@ class CriteriaBuilderTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
-        $CriteriaBuilder->where('id', 'IN', [1,2,3])->orWhere('id', 'NOT IN', [4,5,6]);
+        $CriteriaBuilder
+            ->where('id', 'IN', [1,2,3])
+            ->orWhere('id', 'NOT IN', [4,5,6]);
+
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaBuilder->getCurrentContainer());
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $CriteriaBuilder->getCurrentContainer()->getCriteria());
         $this->assertCount(2, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
@@ -66,7 +69,11 @@ class CriteriaBuilderTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
-        $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()');
+        $CriteriaBuilder
+            ->whereRaw('foo + bar')
+            ->andWhereRaw('1=1')
+            ->orWhereRaw('foo::bar()');
+
         $SqlPart = $CriteriaBuilder->toSqlPart();
         
         $this->assertEquals('WHERE (foo + bar AND 1=1 OR foo::bar())', $SqlPart->getSql());
@@ -77,7 +84,11 @@ class CriteriaBuilderTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
-        $CriteriaBuilder->whereRaw(':foo + bar', ['foo' => 'foo_value'])->andWhereRaw('bar = :bar', ['bar' => 'bar_value'])->orWhereRaw('foo::bar()');
+        $CriteriaBuilder
+            ->whereRaw(':foo + bar', ['foo' => 'foo_value'])
+            ->andWhereRaw('bar = :bar', ['bar' => 'bar_value'])
+            ->orWhereRaw('foo::bar()');
+
         $SqlPart = $CriteriaBuilder->toSqlPart();
         $parameters = $SqlPart->getParameters();
         
@@ -91,11 +102,14 @@ class CriteriaBuilderTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
-        $CriteriaBuilder->where('id', 'IN', [1,2,3])->orWhere('id', 'NOT IN', [4,5,6]);
-        $CriteriaBuilder->glueByOr();
-        $CriteriaBuilder->where('name', '!=', 'foo')->andWhere('name', '!=', 'bar');
-        $CriteriaBuilder->glueByAnd();
-        $CriteriaBuilder->where('bar', '=', 'foo')->andWhere('name', '=', 'Doe');
+        $CriteriaBuilder
+            ->where('id', 'IN', [1,2,3])
+            ->orWhere('id', 'NOT IN', [4,5,6])
+        ->glueByOr()
+            ->where('name', '!=', 'foo')
+            ->andWhere('name', '!=', 'bar')
+        ->glueByAnd()
+            ->where('bar', '=', 'foo')->andWhere('name', '=', 'Doe');
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
         
@@ -135,12 +149,20 @@ class CriteriaBuilderTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
-        $CriteriaBuilder->where('id', 'IN', [1,2,3])->orWhere('id', 'NOT IN', [4,5,6])->andWhere('name', '=', 'foo');
+        $CriteriaBuilder
+            ->where('id', 'IN', [1,2,3])
+            ->orWhere('id', 'NOT IN', [4,5,6])
+            ->andWhere('name', '=', 'foo');
+
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaBuilder->getCurrentContainer());
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $CriteriaBuilder->getCurrentContainer()->getCriteria());
         $this->assertCount(3, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
 
-        $CriteriaBuilder->where('modified', 'IS', null)->andWhere('name', '!=', null)->orWhere('id', '=', 55);
+        $CriteriaBuilder
+            ->where('modified', 'IS', null)
+            ->andWhere('name', '!=', null)
+            ->orWhere('id', '=', 55);
+
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaBuilder->getCurrentContainer());
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $CriteriaBuilder->getCurrentContainer()->getCriteria());
         $this->assertCount(3, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
@@ -178,27 +200,42 @@ class CriteriaBuilderTest extends MockeryTest
     public function test_to_string()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
-        $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()');
+
+        $CriteriaBuilder
+            ->whereRaw('foo + bar')
+            ->andWhereRaw('1=1')
+            ->orWhereRaw('foo::bar()');
+
         $this->assertEquals('WHERE (foo + bar AND 1=1 OR foo::bar())', (string) $CriteriaBuilder);
     }
 
     public function test_to_array()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
-        $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()')->orWhere('id', '=', 55);
+
+        $CriteriaBuilder
+            ->whereRaw('foo + bar')
+            ->andWhereRaw('1=1')
+            ->orWhereRaw('foo::bar()')
+            ->orWhere('id', '=', 55);
+
         $this->assertCount(1, $CriteriaBuilder->toArray());
     }
 
     public function test_limit_offset_group_by()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
-        $CriteriaBuilder->whereRaw('foo + bar')->andWhereRaw('1=1')->orWhereRaw('foo::bar()');
-        $CriteriaBuilder->glueByAnd();
-        $CriteriaBuilder->whereRaw('1=1');
-        $CriteriaBuilder->setLimit(10);
-        $CriteriaBuilder->setOffset(5);
-        $CriteriaBuilder->setGroupBy('name,id');
-        $CriteriaBuilder->setOrderBy(['name' => 'DESC', 'id' => 'ASC']);
+        $CriteriaBuilder
+        ->whereRaw('foo + bar')
+            ->andWhereRaw('1=1')
+            ->orWhereRaw('foo::bar()')
+        ->glueByAnd()
+            ->whereRaw('1=1')
+        ->setLimit(10)
+        ->setOffset(5)
+        ->setGroupBy('name,id')
+        ->setOrderBy(['name' => 'DESC', 'id' => 'ASC']);
+
         $SqlPart = $CriteriaBuilder->toSqlPart();
         
         $this->assertEquals('WHERE (foo + bar AND 1=1 OR foo::bar())
@@ -224,8 +261,9 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         /** @var OperatorInterface $CustomOperator */
         Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
 
-        $CriteriaBuilder->whereRaw('bar', null, 'CustomType');
-        $CriteriaBuilder->andWhereRaw('foo', null, 'CustomType');
+        $CriteriaBuilder
+            ->whereRaw('bar', null, 'CustomType')
+            ->andWhereRaw('foo', null, 'CustomType');
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
 

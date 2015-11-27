@@ -301,6 +301,7 @@ class Builder implements BuilderInterface
     public function resetGlue()
     {
         $this->getCurrentContainer()->resetGlue();
+        return $this;
     }
 
     /**
@@ -309,6 +310,7 @@ class Builder implements BuilderInterface
     public function glueByAnd()
     {
         $this->getCurrentContainer()->glueByAnd();
+        return $this;
     }
 
     /**
@@ -317,6 +319,7 @@ class Builder implements BuilderInterface
     public function glueByOr()
     {
         $this->getCurrentContainer()->glueByOr();
+        return $this;
     }
 
     /**
