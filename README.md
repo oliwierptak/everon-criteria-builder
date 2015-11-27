@@ -224,12 +224,12 @@ Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\
 You can use your own operator with ```raw``` methods.
 ```php
 $CriteriaBuilder->whereRaw('bar', null, 'CustomType');
-$CriteriaBuilder->andWhereRaw('foo', null, 'CustomType');
+$CriteriaBuilder->andWhereRaw('foo', ['foo' => 'bar'], 'CustomType');
 ```
 
 Will output:
 ```sql
-WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> NULL)
+WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo_1337676981)
 ```
 
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
