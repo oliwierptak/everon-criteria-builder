@@ -38,8 +38,8 @@ RAW SQL is easy to implement.
 ```php
 $CriteriaBuilder
     ->whereRaw('foo + bar')
-        ->andWhereRaw('1=1')
-        ->orWhereRaw('foo::bar()');
+    ->andWhereRaw('1=1')
+    ->orWhereRaw('foo::bar()');
 ```
 
 Will be converted into:
@@ -55,12 +55,12 @@ Every time you use ```where``` statement a new Sub Query will be created. By def
 
 ```php
 $CriteriaBuilder
-->where('id', 'IN', [1,2,3])
-    ->orWhere('id', 'NOT IN', [4,5,6])
-    ->andWhere('name', '=', 'foo');
-->where('modified', 'IS', null)
-    ->andWhere('name', '!=', null)
-    ->orWhere('id', '=', 55);
+    ->where('id', 'IN', [1,2,3])
+        ->orWhere('id', 'NOT IN', [4,5,6])
+        ->andWhere('name', '=', 'foo');
+    ->where('modified', 'IS', null)
+        ->andWhere('name', '!=', null)
+        ->orWhere('id', '=', 55);
 ```
 
 Will be converted into:
@@ -93,14 +93,13 @@ array(8) [
 To connect Sub Quries with ```OR``` operator use Gluing methods.
 ```php
 $CriteriaBuilder
-->where('id', 'IN', [1,2,3])
-    ->orWhere('id', 'NOT IN', [4,5,6])
-    ->andWhere('name', '=', 'foo');
-->glueByOr()
-->where('modified', 'IS', null)
-    ->andWhere('name', '!=', null)
-    ->orWhere('id', '=', 55);
-
+    ->where('id', 'IN', [1,2,3])
+        ->orWhere('id', 'NOT IN', [4,5,6])
+        ->andWhere('name', '=', 'foo');
+    ->glueByOr()
+    ->where('modified', 'IS', null)
+        ->andWhere('name', '!=', null)
+        ->orWhere('id', '=', 55);
 ```
 
 Will be converted into:
@@ -122,8 +121,8 @@ AND (
 Group By has simple usage.
 ```php
 $CriteriaBuilder
-->where('name', '!=', 'foo')
-    ->andWhere('id', '=', 123)
+    ->where('name', '!=', 'foo')
+        ->andWhere('id', '=', 123)
     ->setGroupBy('name,id');
 ```
 
@@ -145,11 +144,9 @@ array(8) [
 Pretty straightforward.
 ```php
 $CriteriaBuilder
-->whereRaw('foo + bar')
-    ->andWhereRaw('1=1')
-    ->orWhereRaw('foo::bar()');
-
-$CriteriaBuilder
+    ->whereRaw('foo + bar')
+        ->andWhereRaw('1=1')
+        ->orWhereRaw('foo::bar()');
     ->setLimit(10)
     ->setOffset(5);
 ```
@@ -164,14 +161,13 @@ LIMIT 10 OFFSET 5
 Order By is implemented using ```ASC``` and ```DESC``` keywords, in an associative array.
 ```php
 $CriteriaBuilder
-->whereRaw('foo + bar')
-    ->andWhereRaw('1=1')
-    ->orWhereRaw('foo::bar()');
-
-$CriteriaBuilder->setOrderBy([
-    'name' => 'DESC',
-    'id' => 'ASC'
-]);
+    ->whereRaw('foo + bar')
+        ->andWhereRaw('1=1')
+        ->orWhereRaw('foo::bar()')
+    ->setOrderBy([
+        'name' => 'DESC',
+        'id' => 'ASC'
+    ]);
 ```
 
 Will be converted into:
@@ -186,12 +182,12 @@ In general using Sub Queries with ```where``` methods is easier, but manual Sub 
 
 ```php
 $CriteriaBuilder
-->where('id', 'IN', [1,2,3])
-    ->orWhere('id', 'NOT IN', [4,5,6])
-->glueByOr()
+    ->where('id', 'IN', [1,2,3])
+        ->orWhere('id', 'NOT IN', [4,5,6])
+    ->glueByOr()
     ->where('name', '!=', 'foo')
         ->andWhere('email', '!=', 'foo@bar')
-->glueByAnd()
+    ->glueByAnd()
     ->where('bar', '=', 'bar')
         ->andWhere('name', '=', 'Doe');
 
