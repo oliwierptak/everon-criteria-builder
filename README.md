@@ -217,7 +217,11 @@ class OperatorCustomTypeStub extends AbstractOperator
     const TYPE_AS_SQL = '<sql for custom operator>';
 }
 
-$CriteriaBuilder->registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+
+
+$CriteriaBuilder->whereRaw('bar', null, 'CustomType');
+$CriteriaBuilder->andWhereRaw('foo', null, 'CustomType');
 ```
 
 Will output:
