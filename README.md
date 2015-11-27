@@ -151,8 +151,8 @@ ORDER BY name DESC,id ASC
 
 
 
-### Gluing
-Manual Sub Query processing is possible by using the ```glue``` methods.
+### Custom Gluing
+In general using Sub Queries is easier, but manual Sub Query processing is also possible by using the ```glue``` methods.
 
 ```php
 $CriteriaBuilder
