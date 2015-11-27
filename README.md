@@ -33,10 +33,16 @@ array(8) [
 ]
 ```
 
-### Sub Queries
-Each ```where``` statement creates new Sub Query. You can append conditions by using ```andWhere``` and ```orWhere``` methods.
-Every time you use ```where``` statement a new Sub Query will be created. By default they will be connected with ```AND``` operator.
+### Sub Where Statements
+Each ```where``` statement creates new Sub Where Clause.
+A Sub Where Clause is a set of Criteria Objects.
+A Criteria object contains set of Criterium objects.
+A Criterium is a condition.
 
+You can append Criterium by using ```andWhere``` and ```orWhere``` methods.
+
+Every time you use ```where``` statement a new Sub Where Clause will be created,
+which Criteria will be connected with ```AND``` operator.
 
 ```php
 $CriteriaBuilder
@@ -178,7 +184,7 @@ ORDER BY name DESC,id ASC
 
 
 ### Custom Gluing
-In general using Sub Queries with ```where``` methods is easier, but manual Sub Query handling is also possible by using the ```glue``` methods.
+In general using ```Sub Where Statements``` with ```where``` methods is easier, but manual Sub Query handling is also possible by using the ```glue``` methods.
 
 ```php
 $CriteriaBuilder
