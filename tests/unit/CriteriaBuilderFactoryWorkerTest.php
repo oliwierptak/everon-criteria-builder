@@ -35,8 +35,6 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
     protected function setUp()
     {
         $Container = new Container();
-
-        /** @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
     }
