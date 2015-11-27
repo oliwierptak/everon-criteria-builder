@@ -55,13 +55,12 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
     public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria');
 
     /**
-     * @param $type
-     * @param string $namespace
+     * @param $class_name
      *
      * @throws UnableToInstantiateException
      * @return OperatorInterface
      */
-    public function buildCriteriaOperator($type, $namespace='Everon\Component\CriteriaBuilder\Operator');
+    public function buildCriteriaOperator($class_name);
 
     /**
      * @param $sql

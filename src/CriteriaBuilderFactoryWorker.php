@@ -96,10 +96,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaOperator($type, $namespace='Everon\Component\CriteriaBuilder\Operator')
+    public function buildCriteriaOperator($class_name)
     {
         try {
-            $class_name = $this->getFactory()->getFullClassName($namespace, $type);
             $this->getFactory()->classExists($class_name);
             $CriteriaOperator = new $class_name();
             $this->getFactory()->injectDependencies($class_name, $CriteriaOperator);

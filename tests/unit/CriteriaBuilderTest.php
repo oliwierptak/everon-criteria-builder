@@ -11,6 +11,7 @@ namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
 use Everon\Component\CriteriaBuilder\Builder;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
+use Everon\Component\CriteriaBuilder\OperatorInterface;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\Factory\Dependency\ContainerInterface;
@@ -214,6 +215,22 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $CriteriaBuilder->appendContainerCollection($ContainerCollection);
         
         $this->assertCount(2, $CriteriaBuilder->getContainerCollection());
+    }
+
+    public function test_merge_register_operator()
+    {
+        $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
+
+        /** @var OperatorInterface $CustomOperator */
+        $CriteriaBuilder->registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+
+        $CriteriaBuilder->whereRaw('bar', null, 'CustomType');
+        $CriteriaBuilder->andWhereRaw('foo', null, 'CustomType');
+
+        $SqlPart = $CriteriaBuilder->toSqlPart();
+
+        $this->assertEquals('WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> NULL)', $SqlPart->getSql());
+        $this->assertEquals([], $SqlPart->getParameters());
     }
 
 }

@@ -13,11 +13,13 @@ use Everon\Component\Collection\Collection;
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
+use Everon\Component\CriteriaBuilder\Exception\OperatorTypeAlreadyRegisteredException;
 use Everon\Component\CriteriaBuilder\Operator;
 use Everon\Component\CriteriaBuilder\Dependency;
 use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\MergeDefault;
 use Everon\Component\Utils\Collection\ToArray;
+use Everon\Component\Utils\Popo\Popo;
 use Everon\Component\Utils\Text\ToString;
 
 
@@ -35,7 +37,7 @@ class Builder implements BuilderInterface
     /**
      * @var CollectionInterface
      */
-    protected static $operatorCollection = null;
+    protected static $OperatorCollection;
     
     /**
      * @var string
@@ -72,7 +74,23 @@ class Builder implements BuilderInterface
      */
     protected $group_by = null;
 
-    
+
+    /**
+     * @param $type 'SmallerOrEqual'
+     * @param $definition ['class' => 'full class name', 'sql' => 'IN']
+     *
+     * @return Popo
+     */
+    protected function createOperatorConfig($type, $definition)
+    {
+        return new Popo([
+            'type' => $type,
+            'class' => $definition['class'],
+            'sql' => $definition['sql'],
+        ]);
+    }
+
+
     /**
      * @return array
      */
@@ -181,10 +199,10 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function whereRaw($sql, array $value = null, $glue = self::GLUE_AND)
+    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = Builder::GLUE_AND)
     {
         $this->current++;
-        $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, 'raw', $value);
+        $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         $this->getCurrentContainer()->getCriteria()->where($Criterium);
 
         if ($this->current > 0) {
@@ -200,11 +218,11 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function andWhereRaw($sql, array $value = null)
+    public function andWhereRaw($sql, array $value = null, $customType = 'raw')
     {
-        $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, 'raw', $value);
+        $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->current < 0) {
-            $this->where($sql, 'raw', $value);
+            $this->where($sql, $customType, $value);
         }
         else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
@@ -215,7 +233,7 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function orWhereRaw($sql, array $value = null)
+    public function orWhereRaw($sql, array $value = null, $customType = 'raw')
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, 'raw', $value);
         if ($this->current < 0) {
@@ -483,8 +501,21 @@ class Builder implements BuilderInterface
         if (static::getOperatorCollection()->has($operator) === false) {
             throw new UnknownOperatorTypeException($operator);
         }
-        
+
         return static::getOperatorCollection()->get($operator);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function registerOperator($type, $operatorClassName)
+    {
+        $operator = strtoupper(trim($type));
+        if (static::getOperatorCollection()->has($operator)) {
+            throw new OperatorTypeAlreadyRegisteredException($operator);
+        }
+
+        static::getOperatorCollection()->set($operator, $operatorClassName);
     }
 
     /**
@@ -500,30 +531,29 @@ class Builder implements BuilderInterface
      */
     public static function getOperatorCollection()
     {
-        if (static::$operatorCollection === null) {
-            static::$operatorCollection = new Collection([
-                Operator\Between::TYPE_AS_SQL => 'Between',
-                Operator\Equal::TYPE_AS_SQL => 'Equal',
-                Operator\GreaterOrEqual::TYPE_AS_SQL => 'GreaterOrEqual',
-                Operator\GreaterThen::TYPE_AS_SQL => 'GreaterThen',
-                Operator\Ilike::TYPE_AS_SQL => 'Ilike',
-                Operator\In::TYPE_AS_SQL => 'In',
-                Operator\Is::TYPE_AS_SQL => 'Is',
-                Operator\Like::TYPE_AS_SQL => 'Like',
-                Operator\NotBetween::TYPE_AS_SQL => 'NotBetween',
-                Operator\NotEqual::TYPE_AS_SQL => 'NotEqual',
-                Operator\NotIlike::TYPE_AS_SQL => 'NotIlike',
-                Operator\NotIn::TYPE_AS_SQL => 'NotIn',
-                Operator\NotIn::TYPE_AS_SQL => 'NotIn',
-                Operator\NotIs::TYPE_AS_SQL => 'NotIs',
-                Operator\NotLike::TYPE_AS_SQL => 'NotLike',
-                Operator\Raw::TYPE_AS_SQL => 'Raw',
-                Operator\SmallerOrEqual::TYPE_AS_SQL => 'SmallerOrEqual',
-                Operator\SmallerThen::TYPE_AS_SQL => 'SmallerThen',
+        if (static::$OperatorCollection === null) {
+            static::$OperatorCollection = new Collection([
+                Operator\Between::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Between',
+                Operator\Equal::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Equal',
+                Operator\GreaterOrEqual::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\GreaterOrEqual',
+                Operator\GreaterThen::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\GreaterThen',
+                Operator\Ilike::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Ilike',
+                Operator\In::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\In',
+                Operator\Is::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Is',
+                Operator\Like::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Like',
+                Operator\NotBetween::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotBetween',
+                Operator\NotEqual::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotEqual',
+                Operator\NotIlike::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotIlike',
+                Operator\NotIn::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotIn',
+                Operator\NotIs::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotIs',
+                Operator\NotLike::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotLike',
+                Operator\Raw::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Raw',
+                Operator\SmallerOrEqual::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\SmallerOrEqual',
+                Operator\SmallerThen::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\SmallerThen',
             ]);
         }
 
-        return static::$operatorCollection;
+        return static::$OperatorCollection;
     }
 
     /**

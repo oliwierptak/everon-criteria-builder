@@ -95,10 +95,10 @@ class Criterium implements CriteriumInterface
      * @throws UnknownOperatorTypeException
      * @return OperatorInterface
      */
-    protected function buildOperator($operator, $value)
+    protected function buildOperatorWithValue($operator, $value)
     {
-        $class = Builder::getOperatorClassNameBySqlOperator($operator);
-        $Operator = $this->getFactoryWorker()->buildCriteriaOperator($class);
+        $className = Builder::getOperatorClassNameBySqlOperator($operator);
+        $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
         return $this->replaceOperatorForNulLValue($Operator, $value);
     }
 
@@ -114,10 +114,12 @@ class Criterium implements CriteriumInterface
     {
         if ($value === null) {
             if ($Operator->getType() === Equal::TYPE_NAME) {
-                $Operator = $this->getFactoryWorker()->buildCriteriaOperator(Is::TYPE_NAME);
+                $className = Builder::getOperatorClassNameBySqlOperator(Is::TYPE_AS_SQL);
+                $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
             }
             else if ($Operator->getType() === NotEqual::TYPE_NAME) {
-                $Operator = $this->getFactoryWorker()->buildCriteriaOperator(NotIs::TYPE_NAME);
+                $className = Builder::getOperatorClassNameBySqlOperator(NotIs::TYPE_AS_SQL);
+                $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
             }
         }
 
@@ -251,7 +253,7 @@ class Criterium implements CriteriumInterface
     public function getSqlPart()
     {
         if ($this->SqlPart === null) {
-            $Operator = $this->buildOperator($this->getOperatorType(), $this->getValue());
+            $Operator = $this->buildOperatorWithValue($this->getOperatorType(), $this->getValue());
             list($sql, $parameters) = $Operator->toSqlPartData($this);
             $this->SqlPart = $this->getFactoryWorker()->buildSqlPart($sql, $parameters);
         }

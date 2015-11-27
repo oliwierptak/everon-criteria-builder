@@ -89,7 +89,8 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
 
     public function test_buildCriteriaOperator()
     {
-        $OperatorEqual = $this->CriteriaBuilderFactoryWorker->buildCriteriaOperator(Equal::TYPE_NAME);
+        $className = Builder::getOperatorClassNameBySqlOperator(Equal::TYPE_AS_SQL);
+        $OperatorEqual = $this->CriteriaBuilderFactoryWorker->buildCriteriaOperator($className);
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\OperatorInterface', $OperatorEqual);
     }

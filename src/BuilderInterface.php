@@ -12,6 +12,7 @@ namespace Everon\Component\CriteriaBuilder;
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Dependency\CriteriaBuilderFactoryWorkerDependencyInterface;
+use Everon\Component\CriteriaBuilder\Exception\OperatorTypeAlreadyRegisteredException;
 use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\ArrayableInterface;
 use Everon\Component\Utils\Text\StringableInterface;
@@ -52,24 +53,27 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     /**
      * @param $sql
      * @param array|null $value
+     * @param string $customType
      * @param string $glue
      * @return $this
      */
-    public function whereRaw($sql, array $value = null, $glue = Builder::GLUE_AND);
+    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = Builder::GLUE_AND);
 
     /**
      * @param $sql
      * @param array|null $value
+     * @param string $customType
      * @return $this
      */
-    public function andWhereRaw($sql, array $value = null);
+    public function andWhereRaw($sql, array $value = null, $customType = 'raw');
 
     /**
      * @param $sql
      * @param array $value
+     * @param string $customType
      * @return $this
      */
-    public function orWhereRaw($sql, array $value = null);
+    public function orWhereRaw($sql, array $value = null, $customType = 'raw');
 
     /**
      * @return ContainerInterface
@@ -172,6 +176,15 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @throws UnknownOperatorTypeException
      */
     public static function getOperatorClassNameBySqlOperator($operator);
+
+    /**
+     * @param $type
+     * @param $operatorClassName
+     *
+     * @throws OperatorTypeAlreadyRegisteredException
+     * @return void
+     */
+    public static function registerOperator($type, $operatorClassName);
 
     /**
      * @param $name
