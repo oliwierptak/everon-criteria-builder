@@ -94,7 +94,7 @@ WHERE (
     OR id NOT IN (:id_1260952006,:id_519145813,:id_1367241593)
     AND name = :name_1178871152
 )
-AND (
+OR (
     modified IS NULL
     AND name IS NOT NULL
     OR id = :id_895877163
