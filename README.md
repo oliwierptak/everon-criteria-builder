@@ -33,7 +33,7 @@ array(8) [
 ]
 ```
 
-### Conditions, Criteria and Criterium
+### Where, orWhere, andWhere
 Each ```where``` statement creates new Container with Criteria object.
 A Criteria object contains set of Criterium objects.
 A Criterium is a condition.
