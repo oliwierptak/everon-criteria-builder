@@ -27,7 +27,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $glue
      * @return $this
      */
-    function where($column, $operator, $value, $glue = Builder::GLUE_AND);
+    public function where($column, $operator, $value, $glue = Builder::GLUE_AND);
         
     /**
      * Appends to current subquery
@@ -37,7 +37,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $value
      * @return Builder
      */
-    function andWhere($column, $operator, $value);
+    public function andWhere($column, $operator, $value);
 
     /**
      * Appends to current subquery
@@ -47,7 +47,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param $value
      * @return Builder
      */
-    function orWhere($column, $operator, $value);
+    public function orWhere($column, $operator, $value);
 
     /**
      * @param $sql
@@ -55,133 +55,147 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param string $glue
      * @return $this
      */
-    function whereRaw($sql, array $value = null, $glue = Builder::GLUE_AND);
+    public function whereRaw($sql, array $value = null, $glue = Builder::GLUE_AND);
 
     /**
      * @param $sql
      * @param array|null $value
      * @return $this
      */
-    function andWhereRaw($sql, array $value = null);
+    public function andWhereRaw($sql, array $value = null);
 
     /**
      * @param $sql
      * @param array $value
      * @return $this
      */
-    function orWhereRaw($sql, array $value = null);
+    public function orWhereRaw($sql, array $value = null);
 
     /**
      * @return ContainerInterface
      */
-    function getCurrentContainer();
+    public function getCurrentContainer();
 
     /**
      * @param ContainerInterface $Container
      */
-    function setCurrentContainer(ContainerInterface $Container);
+    public function setCurrentContainer(ContainerInterface $Container);
 
     /**
      * @return CollectionInterface
      */
-    function getContainerCollection();
+    public function getContainerCollection();
 
     /**
      * @param CollectionInterface $ContainerCollection
      */
-    function setContainerCollection(CollectionInterface $ContainerCollection);
+    public function setContainerCollection(CollectionInterface $ContainerCollection);
 
     /**
      * @return string
      */
-    function getGlue();
+    public function getGlue();
 
-    function resetGlue();
+    /**
+     * @return void
+     */
+    public function resetGlue();
 
-    function glueByAnd();
+    /**
+     * @return void
+     */
+    public function glueByAnd();
 
-    function glueByOr();
+    /**
+     * @return void
+     */
+    public function glueByOr();
 
     /**
      * @return string
      */
-    function getGroupBy();
+    public function getGroupBy();
 
     /**
      * @param string $group_by
      * @return BuilderInterface
      */
-    function setGroupBy($group_by);
+    public function setGroupBy($group_by);
 
     /**
      * @return int
      */
-    function getLimit();
+    public function getLimit();
 
     /**
      * @param int $limit
      * @return BuilderInterface
      */
-    function setLimit($limit);
+    public function setLimit($limit);
 
     /**
      * @return int
      */
-    function getOffset();
+    public function getOffset();
 
     /**
      * @param int $offset
      * @return BuilderInterface
      */
-    function setOffset($offset);
+    public function setOffset($offset);
     
     /**
      * @return array
      */
-    function getOrderBy();
+    public function getOrderBy();
 
     /**
      * @param array $order_by
      * @return BuilderInterface
      */
-    function setOrderBy(array $order_by);
+    public function setOrderBy(array $order_by);
     
     /**
      * @return SqlPartInterface
      */
-    function toSqlPart();
+    public function toSqlPart();
 
     /**
      * @param CollectionInterface $ContainerCollectionToMerge
      * @param string $glue
      */
-    function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=Builder::GLUE_AND);
+    public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=Builder::GLUE_AND);
 
     /**
      * @param $operator
      * @return string
      * @throws UnknownOperatorTypeException
      */
-    static function getOperatorClassNameBySqlOperator($operator);
+    public static function getOperatorClassNameBySqlOperator($operator);
 
     /**
      * @param $name
      * @return string
      */
-    static function randomizeParameterName($name);
+    public static function randomizeParameterName($name);
 
     /**
      * @return string
      */
-    function getOffsetLimitSql();
+    public function getOffsetLimitSql();
 
     /**
      * @return string
      */
-    function getOrderByAndSortSql();
+    public function getOrderByAndSortSql();
 
     /**
      * @return string
      */
-    function getGroupBySql();
+    public function getGroupBySql();
+
+    /**
+     * @return CollectionInterface
+     */
+    public static function getOperatorCollection();
 }
