@@ -486,7 +486,7 @@ class Builder implements BuilderInterface
      */
     public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=self::GLUE_AND)
     {
-        /** @var ContainerInterface */
+        /* @var ContainerInterface */
         foreach ($ContainerCollectionToMerge as $ContainerToMerge) {
             if ($ContainerToMerge->getGlue() === null) {
                 $ContainerToMerge->setGlue($glue);
