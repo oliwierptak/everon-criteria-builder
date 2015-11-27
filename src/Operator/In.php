@@ -33,9 +33,7 @@ class In extends AbstractOperator implements OperatorInterface
             throw new ValueMustBeAnArrayException('Value must be an array');
         }
 
-        /**
-         * @var array
-         */
+        /** @var array $data */
         foreach ($data as $value) {
             $rand = Builder::randomizeParameterName($Criterium->getPlaceholderAsParameter());
             $params[$rand] = $value;
