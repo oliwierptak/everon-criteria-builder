@@ -271,9 +271,8 @@ You can register your own Operators with:
 /**
  * @param $type
  * @param $operator_class_name
- * @return
- * @internal param $operatorClassName
- *
+
+ * @return void
  */
 public static function registerOperator($type, $operator_class_name);
 ```
