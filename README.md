@@ -33,21 +33,6 @@ array(8) [
 ]
 ```
 
-### RAW SQL
-RAW SQL is easy to implement.
-```php
-$CriteriaBuilder
-    ->whereRaw('foo + bar')
-    ->andWhereRaw('1=1')
-    ->orWhereRaw('foo::bar()');
-```
-
-Will be converted into:
-```sql
-WHERE (foo + bar AND 1=1 OR foo::bar())
-```
-
-
 ### Sub Queries
 Each ```where``` statement creates new Sub Query. You can append conditions by using ```andWhere``` and ```orWhere``` methods.
 Every time you use ```where``` statement a new Sub Query will be created. By default they will be connected with ```AND``` operator.
@@ -174,6 +159,21 @@ Will be converted into:
 ```sql
 WHERE (foo + bar AND 1=1 OR foo::bar())
 ORDER BY name DESC,id ASC
+```
+
+
+### RAW SQL
+RAW SQL is easy to implement.
+```php
+$CriteriaBuilder
+    ->whereRaw('foo + bar')
+    ->andWhereRaw('1=1')
+    ->orWhereRaw('foo::bar()');
+```
+
+Will be converted into:
+```sql
+WHERE (foo + bar AND 1=1 OR foo::bar())
 ```
 
 
