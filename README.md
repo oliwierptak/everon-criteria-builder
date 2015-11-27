@@ -152,7 +152,7 @@ ORDER BY name DESC,id ASC
 
 
 ### Custom Gluing
-In general using Sub Queries is easier, but manual Sub Query processing is also possible by using the ```glue``` methods.
+In general using Sub Queries is easier, but manual Sub Query handling is also possible by using the ```glue``` methods.
 
 ```php
 $CriteriaBuilder
