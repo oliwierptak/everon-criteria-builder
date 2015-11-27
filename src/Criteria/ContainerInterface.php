@@ -16,26 +16,35 @@ interface ContainerInterface
     /**
      * @return CriteriaInterface
      */
-    function getCriteria();
+    public function getCriteria();
 
     /**
      * @param CriteriaInterface $Criteria
      */
-    function setCriteria(CriteriaInterface $Criteria);
+    public function setCriteria(CriteriaInterface $Criteria);
 
     /**
      * @return string
      */
-    function getGlue();
+    public function getGlue();
 
     /**
      * @param string $glue
      */
-    function setGlue($glue);
+    public function setGlue($glue);
 
-    function resetGlue();
+    /**
+     * @return void
+     */
+    public function resetGlue();
 
-    function glueByAnd();
+    /**
+     * @return void
+     */
+    public function glueByAnd();
 
-    function glueByOr();
+    /**
+     * @return void
+     */
+    public function glueByOr();
 }

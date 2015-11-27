@@ -18,66 +18,75 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
     /**
      * @return string
      */
-    function getColumn();
+    public function getColumn();
 
     /**
      * @param string $column
      */
-    function setColumn($column);
+    public function setColumn($column);
 
     /**
      * @return string
      */
-    function getOperatorType();
+    public function getOperatorType();
 
     /**
      * @param string
      */
-    function setOperatorType($operator);
+    public function setOperatorType($operator);
 
     /**
      * @return string
      */
-    function getValue();
+    public function getValue();
 
     /**
      * @param string $value
      */
-    function setValue($value);
+    public function setValue($value);
 
     /**
      * @return string
      */
-    function getGlue();
+    public function getGlue();
 
-    function glueByAnd();
+    /**
+     * @return void
+     */
+    public function glueByAnd();
 
-    function glueByOr();
+    /**
+     * @return void
+     */
+    public function glueByOr();
 
-    function resetGlue();
+    /**
+     * @return void
+     */
+    public function resetGlue();
 
     /**
      * @return mixed
      */
-    function getPlaceholder();
+    public function getPlaceholder();
 
     /**
      * @param mixed $placeholder
      */
-    function setPlaceholder($placeholder);
+    public function setPlaceholder($placeholder);
 
     /**
      * @return string
      */
-    function getPlaceholderAsParameter();
+    public function getPlaceholderAsParameter();
 
     /**
      * @return SqlPartInterface
      */
-    function getSqlPart();
+    public function getSqlPart();
 
     /**
      * @param SqlPartInterface $SqlPart
      */
-    function setSqlPart(SqlPartInterface $SqlPart);
+    public function setSqlPart(SqlPartInterface $SqlPart);
 }
