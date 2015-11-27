@@ -197,8 +197,6 @@ array(10) [
 ```
 
 ### Operators
-Check https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator
-
 You can register your own Operators with:
 ```php
 /**
@@ -226,3 +224,5 @@ Will output:
 ```sql
 WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> NULL)
 ```
+
+See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
