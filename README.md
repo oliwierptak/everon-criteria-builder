@@ -33,8 +33,8 @@ array(8) [
 ]
 ```
 
-### Criteria, Criterium aka conditions
-Each ```where``` statement creates new Criteria object.
+### Conditions, Criteria and Criterium
+Each ```where``` statement creates new Container with Criteria object.
 A Criteria object contains set of Criterium objects.
 A Criterium is a condition.
 
