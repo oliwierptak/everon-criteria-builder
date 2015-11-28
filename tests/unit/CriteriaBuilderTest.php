@@ -60,12 +60,11 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertCount(2, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
 
         $CriteriaBuilder
-            ->where('name', '!=', 'foo')
-            ->andWhere('name', '!=', 'bar');
+            ->where('name', '!=', 'foo');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaBuilder->getCurrentContainer());
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $CriteriaBuilder->getCurrentContainer()->getCriteria());
-        $this->assertCount(2, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
+        $this->assertCount(1, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
     }
 
     public function test_where_raw_should_use_raw_sql()
