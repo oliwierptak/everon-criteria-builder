@@ -511,14 +511,14 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public static function registerOperator($sql_operator, $operator_class_name)
+    public static function registerOperator($sql_type, $operator_class_name)
     {
-        $sql = strtoupper(trim($sql_operator));
-        if (static::getOperatorCollection()->has($sql)) {
-            throw new OperatorTypeAlreadyRegisteredException($sql);
+        $sql_type = strtoupper(trim($sql_type));
+        if (static::getOperatorCollection()->has($sql_type)) {
+            throw new OperatorTypeAlreadyRegisteredException($sql_type);
         }
 
-        static::getOperatorCollection()->set($sql, $operator_class_name);
+        static::getOperatorCollection()->set($sql_type, $operator_class_name);
     }
 
     /**

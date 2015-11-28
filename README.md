@@ -269,14 +269,12 @@ There are many more. [See here for more examples](https://github.com/oliwierptak
 You can register your own Operators with:
 ```php
 /**
- * @param $sql_expression
+ * @param $sql_type
  * @param $operator_class_name
  *
  * @return void
- *
- * @internal param $type
  */
-public static function registerOperator($sql_expression, $operator_class_name);
+public static function registerOperator($sql_type, $operator_class_name);
 ```
 
 For example:
@@ -287,14 +285,14 @@ class OperatorCustomTypeStub extends AbstractOperator
     const TYPE_AS_SQL = '<sql for custom operator>';
 }
 
-Builder::registerOperator('CustomType', 'Some\Namespace\OperatorCustomTypeStub');
+Builder::registerOperator(OperatorCustomTypeStub::TYPE_AS_SQL, 'Some\Namespace\OperatorCustomTypeStub');
 ```
 
 
 You can use your own operator with ```raw``` methods.
 ```php
-$CriteriaBuilder->whereRaw('bar', null, 'CustomType');
-$CriteriaBuilder->andWhereRaw('foo', ['foo' => 'bar'], 'CustomType');
+$CriteriaBuilder->whereRaw('bar', null, OperatorCustomTypeStub::TYPE_AS_SQL);
+$CriteriaBuilder->andWhereRaw('foo', ['foo' => 'bar'], OperatorCustomTypeStub::TYPE_AS_SQL);
 ```
 
 Will output:

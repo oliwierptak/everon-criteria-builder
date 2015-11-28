@@ -13,6 +13,7 @@ use Everon\Component\CriteriaBuilder\Builder;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\OperatorInterface;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
+use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub;
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\Factory\FactoryInterface;
@@ -261,11 +262,11 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         /* @var OperatorInterface $CustomOperator */
-        Builder::registerOperator('CustomType', 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+        Builder::registerOperator(OperatorCustomTypeStub::TYPE_AS_SQL, 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
 
         $CriteriaBuilder
-            ->whereRaw('bar', null, 'CustomType')
-            ->andWhereRaw('foo', null, 'CustomType');
+            ->whereRaw('bar', null, OperatorCustomTypeStub::TYPE_AS_SQL)
+            ->andWhereRaw('foo', null, OperatorCustomTypeStub::TYPE_AS_SQL);
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
 

@@ -190,14 +190,12 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public static function getOperatorClassNameBySqlOperator($sql_operator);
 
     /**
-     * @param $sql_operator
+     * @param $sql_type
      * @param $operator_class_name
      *
      * @return void
-     *
-     * @internal param $type
      */
-    public static function registerOperator($sql_operator, $operator_class_name);
+    public static function registerOperator($sql_type, $operator_class_name);
 
     /**
      * @param $name
