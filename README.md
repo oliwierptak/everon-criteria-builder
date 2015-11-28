@@ -303,5 +303,5 @@ WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
 
 
-### Tests Driven
+### Test Driven
 [Check the tests for more examples of usage here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit)
