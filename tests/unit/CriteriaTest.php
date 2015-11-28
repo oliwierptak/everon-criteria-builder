@@ -53,18 +53,21 @@ class CriteriaTest extends MockeryTest
     public function test_where()
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
-
-        $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium(
-            'foo',
-            '=',
-            'bar'
-        );
+        $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
         $Criteria->where($Criterium);
 
         $this->assertInstanceOf('Everon\Component\Collection\CollectionInterface', $Criteria->getCriteriumCollection());
         $this->assertEquals(1, $Criteria->getCriteriumCollection()->count());
-        $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', current($Criteria->getCriteriumCollection()->toArray()));
+
+        $CriteriumCollection = $Criteria->getCriteriumCollection()->toArray();
+        array_walk($CriteriumCollection, function ($Criterium) {
+            $this->assertInstanceOf(
+                'Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface',
+                $Criterium
+            );
+        });
+
         $this->assertInternalType('array', $Criteria->toArray());
     }
 
@@ -96,8 +99,10 @@ class CriteriaTest extends MockeryTest
         /** @var CriteriumInterface $AndCriterium */
         /** @var CriteriumInterface $AndCriteriumSecond */
         list($AndCriterium, $AndCriteriumSecond) = $array;
+
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $AndCriterium);
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $AndCriteriumSecond);
+
         $this->assertNull($AndCriterium->getGlue());
         $this->assertEquals(Builder::GLUE_AND, $AndCriteriumSecond->getGlue());
     }
@@ -130,8 +135,10 @@ class CriteriaTest extends MockeryTest
         /** @var CriteriumInterface $AndCriterium */
         /** @var CriteriumInterface $OrCriterium */
         list($AndCriterium, $OrCriterium) = $array;
+
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $AndCriterium);
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $OrCriterium);
+
         $this->assertNull($AndCriterium->getGlue());
         $this->assertEquals(Builder::GLUE_OR, $OrCriterium->getGlue());
     }
