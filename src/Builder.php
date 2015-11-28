@@ -72,21 +72,6 @@ class Builder implements BuilderInterface
     protected $group_by = null;
 
     /**
-     * @param $type 'SmallerOrEqual'
-     * @param $definition ['class' => 'full class name', 'sql' => 'IN']
-     *
-     * @return Popo
-     */
-    protected function createOperatorConfig($type, $definition)
-    {
-        return new Popo([
-            'type' => $type,
-            'class' => $definition['class'],
-            'sql' => $definition['sql'],
-        ]);
-    }
-
-    /**
      * @return array
      */
     protected function getArrayableData()
