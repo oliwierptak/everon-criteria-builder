@@ -32,12 +32,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteria($namespace='Everon\Component\CriteriaBuilder')
     {
         try {
-            $class_name = $this->getFactory()->getFullClassName($namespace, 'Criteria');
-            $this->getFactory()->classExists($class_name);
-            $Criteria = new $class_name();
-            $this->getFactory()->injectDependencies($class_name, $Criteria);
-
-            return $Criteria;
+            return $this->getFactory()->buildWithEmptyConstructor('Criteria', $namespace);
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -49,12 +44,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
     {
         try {
-            $class_name = $this->getFactory()->getFullClassName($namespace, 'Builder');
-            $this->getFactory()->classExists($class_name);
-            $Builder = new $class_name();
-            $this->getFactory()->injectDependencies($class_name, $Builder);
-
-            return $Builder;
+            return $this->getFactory()->buildWithEmptyConstructor('Builder', $namespace);
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -66,12 +56,11 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria')
     {
         try {
-            $class_name = $this->getFactory()->getFullClassName($namespace, 'Criterium');
-            $this->getFactory()->classExists($class_name);
-            $Criterium = new $class_name($column, $operator, $value);
-            $this->getFactory()->injectDependencies($class_name, $Criterium);
-
-            return $Criterium;
+            return $this->getFactory()->buildWithConstructorParameters('Criterium', $namespace,
+                $this->getFactory()->buildParameterCollection([
+                    $column, $operator, $value,
+                ])
+            );
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -83,12 +72,11 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria')
     {
         try {
-            $class_name = $this->getFactory()->getFullClassName($namespace, 'Container');
-            $this->getFactory()->classExists($class_name);
-            $Container = new $class_name($Criteria, $glue);
-            $this->getFactory()->injectDependencies($class_name, $Container);
-
-            return $Container;
+            return $this->getFactory()->buildWithConstructorParameters('Container', $namespace,
+                $this->getFactory()->buildParameterCollection([
+                    $Criteria, $glue,
+                ])
+            );
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -100,11 +88,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaOperator($class_name)
     {
         try {
-            $this->getFactory()->classExists($class_name);
-            $CriteriaOperator = new $class_name();
-            $this->getFactory()->injectDependencies($class_name, $CriteriaOperator);
-
-            return $CriteriaOperator;
+            return $this->getFactory()->buildWithEmptyConstructor($class_name, '');
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -116,12 +100,11 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder')
     {
         try {
-            $class_name = $this->getFactory()->getFullClassName($namespace, 'SqlPart');
-            $this->getFactory()->classExists($class_name);
-            $SqlPart = new $class_name($sql, $parameters);
-            $this->getFactory()->injectDependencies($class_name, $SqlPart);
-
-            return $SqlPart;
+            return $this->getFactory()->buildWithConstructorParameters('SqlPart', $namespace,
+                $this->getFactory()->buildParameterCollection([
+                    $sql, $parameters,
+                ])
+            );
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
