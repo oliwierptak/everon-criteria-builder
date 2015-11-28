@@ -32,7 +32,6 @@ class SqlPartTest extends MockeryTest
 
     protected function setUp()
     {
-        $Container = Mockery::mock('Everon\Component\Factory\Dependency\ContainerInterface');
         $Container = new Container();
 
         /* @var ContainerInterface $Container */
