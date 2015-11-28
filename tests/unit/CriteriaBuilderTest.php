@@ -47,7 +47,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\BuilderInterface', $Builder);
     }
 
-    public function test_where_or_and_should_build_criteria()
+    public function test_where_or_and_should_build_criteria_and_advance_currentContainerIndex()
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 

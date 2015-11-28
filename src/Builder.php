@@ -39,7 +39,7 @@ class Builder implements BuilderInterface
     /**
      * @var string
      */
-    protected $current = -1;
+    protected $currentContainerIndex = -1;
 
     /**
      * @var CollectionInterface
@@ -149,11 +149,11 @@ class Builder implements BuilderInterface
      */
     public function where($column, $operator, $value, $glue = self::GLUE_AND)
     {
-        $this->current++;
+        $this->currentContainerIndex++;
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         $this->getCurrentContainer()->getCriteria()->where($Criterium);
 
-        if ($this->current > 0) {
+        if ($this->currentContainerIndex > 0) {
             $this->getCurrentContainer()->setGlue($glue);
         } else {
             $this->getCurrentContainer()->resetGlue(); //reset glue for first item
@@ -168,7 +168,7 @@ class Builder implements BuilderInterface
     public function andWhere($column, $operator, $value)
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
-        if ($this->current < 0) {
+        if ($this->currentContainerIndex < 0) {
             $this->where($column, $operator, $value);
         } else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
@@ -183,7 +183,7 @@ class Builder implements BuilderInterface
     public function orWhere($column, $operator, $value)
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
-        if ($this->current < 0) {
+        if ($this->currentContainerIndex < 0) {
             $this->where($column, $operator, $value);
         } else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
@@ -197,11 +197,11 @@ class Builder implements BuilderInterface
      */
     public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = self::GLUE_AND)
     {
-        $this->current++;
+        $this->currentContainerIndex++;
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         $this->getCurrentContainer()->getCriteria()->where($Criterium);
 
-        if ($this->current > 0) {
+        if ($this->currentContainerIndex > 0) {
             $this->getCurrentContainer()->setGlue($glue);
         } else {
             $this->getCurrentContainer()->resetGlue(); //reset glue for first item
@@ -216,7 +216,7 @@ class Builder implements BuilderInterface
     public function andWhereRaw($sql, array $value = null, $customType = 'raw')
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
-        if ($this->current < 0) {
+        if ($this->currentContainerIndex < 0) {
             $this->where($sql, $customType, $value);
         } else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
@@ -231,7 +231,7 @@ class Builder implements BuilderInterface
     public function orWhereRaw($sql, array $value = null, $customType = 'raw')
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, 'raw', $value);
-        if ($this->current < 0) {
+        if ($this->currentContainerIndex < 0) {
             $this->where($sql, 'raw', $value);
         } else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
@@ -245,13 +245,13 @@ class Builder implements BuilderInterface
      */
     public function getCurrentContainer()
     {
-        if ($this->getContainerCollection()->has($this->current) === false) {
+        if ($this->getContainerCollection()->has($this->currentContainerIndex) === false) {
             $Criteria = $this->getFactoryWorker()->buildCriteria();
             $Container = $this->getFactoryWorker()->buildCriteriaContainer($Criteria, null);
-            $this->getContainerCollection()->set($this->current, $Container);
+            $this->getContainerCollection()->set($this->currentContainerIndex, $Container);
         }
 
-        return $this->getContainerCollection()->get($this->current);
+        return $this->getContainerCollection()->get($this->currentContainerIndex);
     }
 
     /**
@@ -259,7 +259,7 @@ class Builder implements BuilderInterface
      */
     public function setCurrentContainer(ContainerInterface $Container)
     {
-        $this->ContainerCollection[$this->current] = $Container;
+        $this->ContainerCollection[$this->currentContainerIndex] = $Container;
     }
 
     /**
