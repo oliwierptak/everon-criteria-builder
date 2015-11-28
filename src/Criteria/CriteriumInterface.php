@@ -9,11 +9,11 @@
  */
 namespace Everon\Component\CriteriaBuilder\Criteria;
 
-use Everon\Component\CriteriaBuilder\Dependency\CriteriaBuilderFactoryWorkerDependencyInterface;
+use Everon\Component\CriteriaBuilder\Dependency\CriteriaBuilderFactoryWorkerAwareInterface;
 use Everon\Component\CriteriaBuilder\SqlPartInterface;
 use Everon\Component\Utils\Collection\ArrayableInterface;
 
-interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryWorkerDependencyInterface
+interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryWorkerAwareInterface
 {
 
     /**

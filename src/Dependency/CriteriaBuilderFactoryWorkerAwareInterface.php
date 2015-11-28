@@ -11,7 +11,7 @@ namespace Everon\Component\CriteriaBuilder\Dependency;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 
-interface CriteriaBuilderFactoryWorkerDependencyInterface
+interface CriteriaBuilderFactoryWorkerAwareInterface
 {
 
     /**
