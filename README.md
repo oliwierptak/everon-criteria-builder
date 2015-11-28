@@ -269,12 +269,14 @@ There are many more. [See here for more examples](https://github.com/oliwierptak
 You can register your own Operators with:
 ```php
 /**
- * @param $type
+ * @param $sql_expression
  * @param $operator_class_name
-
+ *
  * @return void
+ *
+ * @internal param $type
  */
-public static function registerOperator($type, $operator_class_name);
+public static function registerOperator($sql_expression, $operator_class_name);
 ```
 
 For example:

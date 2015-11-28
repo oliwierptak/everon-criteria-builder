@@ -498,27 +498,27 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public static function getOperatorClassNameBySqlOperator($operator)
+    public static function getOperatorClassNameBySqlOperator($sql_operator)
     {
-        $operator = strtoupper(trim($operator));
-        if (static::getOperatorCollection()->has($operator) === false) {
-            throw new UnknownOperatorTypeException($operator);
+        $sql_operator = strtoupper(trim($sql_operator));
+        if (static::getOperatorCollection()->has($sql_operator) === false) {
+            throw new UnknownOperatorTypeException($sql_operator);
         }
 
-        return static::getOperatorCollection()->get($operator);
+        return static::getOperatorCollection()->get($sql_operator);
     }
 
     /**
      * @inheritdoc
      */
-    public static function registerOperator($type, $operator_class_name)
+    public static function registerOperator($sql_operator, $operator_class_name)
     {
-        $operator = strtoupper(trim($type));
-        if (static::getOperatorCollection()->has($operator)) {
-            throw new OperatorTypeAlreadyRegisteredException($operator);
+        $sql = strtoupper(trim($sql_operator));
+        if (static::getOperatorCollection()->has($sql)) {
+            throw new OperatorTypeAlreadyRegisteredException($sql);
         }
 
-        static::getOperatorCollection()->set($operator, $operator_class_name);
+        static::getOperatorCollection()->set($sql, $operator_class_name);
     }
 
     /**

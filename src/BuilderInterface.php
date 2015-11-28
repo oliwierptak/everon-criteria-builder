@@ -181,21 +181,23 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=Builder::GLUE_AND);
 
     /**
-     * @param $operator
+     * @param $sql_operator
      *
      * @throws UnknownOperatorTypeException
      *
      * @return string
      */
-    public static function getOperatorClassNameBySqlOperator($operator);
+    public static function getOperatorClassNameBySqlOperator($sql_operator);
 
     /**
-     * @param $type
+     * @param $sql_operator
      * @param $operator_class_name
      *
      * @return void
+     *
+     * @internal param $type
      */
-    public static function registerOperator($type, $operator_class_name);
+    public static function registerOperator($sql_operator, $operator_class_name);
 
     /**
      * @param $name
