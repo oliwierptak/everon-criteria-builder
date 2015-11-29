@@ -313,7 +313,9 @@ use Everon\Component\Factory\Factory;
 
 $Container = new Container();
 $Factory = new Factory($Container);
-$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName(
+    'CriteriaBuilder', 'Everon\Component\CriteriaBuilder'
+);
 
 $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
