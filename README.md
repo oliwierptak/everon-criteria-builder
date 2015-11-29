@@ -303,6 +303,21 @@ WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo
 
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
 
+### How to use
+Initialize with ```CriteriaBuilderFactoryWorker->buildCriteriaBuilder()```.
+
+```php
+use Everon\Component\Factory\Dependency\Container;
+use Everon\Component\Factory\Factory;
+
+$Container = new Container();
+$Factory = new Factory($Container);
+$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+
+$CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
+
+```
+
 
 ### Test Driven
 [Check the tests for more examples of usage here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit)
