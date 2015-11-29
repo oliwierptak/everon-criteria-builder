@@ -20,9 +20,9 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
      */
     protected function registerBeforeWork()
     {
-        $Factory = $this->getFactory();
-        $this->getFactory()->getDependencyContainer()->propose('CriteriaBuilderFactoryWorker', function () use ($Factory) {
-            return $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+        //$Factory = $this->getFactory();
+        $this->getFactory()->getDependencyContainer()->propose('CriteriaBuilderFactoryWorker', function () {
+            return $this->getFactory()->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
         });
     }
 
