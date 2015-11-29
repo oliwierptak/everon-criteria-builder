@@ -304,6 +304,7 @@ WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
 
 ### How to use
+Dependency Injection is done with [Everon Factory](https://github.com/oliwierptak/everon-factory).
 Initialize with ```CriteriaBuilderFactoryWorker->buildCriteriaBuilder()```.
 
 ```php
