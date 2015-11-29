@@ -9,7 +9,7 @@ Library to generate complete ```SQL WHERE``` statements, with simple, fluid and 
 
 ## Features
 * Fluid interface
-* Easily to create multiple or nested conditions
+* Easily to create multiple conditions
 * Almost 20 ready to use Operators
 * Easy to extend with Custom Operators
 * Intuitive Interface: clear, small and simple API
