@@ -9,9 +9,10 @@ Library to generate complete ```SQL WHERE``` statements, with simple, fluid and 
 
 ## Features
 * Fluid interface
-* Minimized file/memory access/usage due to callbacks and lazy load
+* Easily to create multiple or nested conditions
+* Almost 20 ready to use Operators
+* Easy to extend with Custom Operators
 * Intuitive Interface: clear, small and simple API
-* Convention over configuration
 * Clean code
 
 ## Examples
