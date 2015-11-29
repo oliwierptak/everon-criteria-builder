@@ -16,7 +16,6 @@ use Everon\Component\CriteriaBuilder\Exception\OperatorTypeAlreadyRegisteredExce
 use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\MergeDefault;
 use Everon\Component\Utils\Collection\ToArray;
-use Everon\Component\Utils\Popo\Popo;
 use Everon\Component\Utils\Text\ToString;
 
 class Builder implements BuilderInterface
@@ -471,7 +470,6 @@ class Builder implements BuilderInterface
      */
     public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=self::GLUE_AND)
     {
-        /* @var ContainerInterface */
         foreach ($ContainerCollectionToMerge as $ContainerToMerge) {
             if ($ContainerToMerge->getGlue() === null) {
                 $ContainerToMerge->setGlue($glue);
