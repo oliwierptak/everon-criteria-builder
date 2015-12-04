@@ -316,8 +316,6 @@ use Everon\Component\Factory\Factory;
 
 include('vendor/autoload.php');
 
-$DATABASE = 'YOUR DATABASE';
-
 $Container = new Container();
 $Factory = new Factory($Container);
 /* @var CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker */
@@ -331,7 +329,7 @@ $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 Setup your conditions and optionally the sql query.
 ```php
 $CriteriaBuilder
-    ->sql('SELECT * FROM '.$DATABASE.' WHERE %s')
+    ->sql('SELECT * FROM some_table WHERE %s')
         ->where('sku', 'LIKE', '13%')
         ->orWhere('id', 'IN', [1, 2, 3])
     ->glueByOr()
@@ -342,7 +340,7 @@ Fetch sample data.
 Use ```SqlPart``` and methods like ```getSql``` and ```getParameters``` to retrieve needed resources.
 
 ```php
-$dbh = new \PDO('mysql:host=127.0.0.1;dbname='.$DATABASE, 'root', '');
+$dbh = new \PDO('mysql:host=127.0.0.1;dbname=DATABASE', 'root', '');
 
 $SqlPart = $CriteriaBuilder->toSqlPart();
 
@@ -355,7 +353,7 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
 Or you could just append criteria string to already existing sql.
 
 ```php
-$sql = 'SELECT * FROM '.$DATABASE;
+$sql = 'SELECT * FROM <TABLE>';
 
 $CriteriaBuilder
         ->where('sku', 'LIKE', '13%')
