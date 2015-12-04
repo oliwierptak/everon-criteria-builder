@@ -308,6 +308,7 @@ Dependency Injection is done with [Everon Factory](https://github.com/oliwierpta
 
 Initialize with ```CriteriaBuilderFactoryWorker->buildCriteriaBuilder()```.
 ```php
+use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\Factory\Factory;
 
@@ -317,7 +318,7 @@ $DATABASE = 'YOUR DATABASE';
 
 $Container = new Container();
 $Factory = new Factory($Container);
-/* @var \Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker */
+/* @var CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker */
 $CriteriaBuilderFactoryWorker = $Factory->getWorkerByName(
     'CriteriaBuilder', 'Everon\Component\CriteriaBuilder'
 );
