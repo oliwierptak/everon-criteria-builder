@@ -477,6 +477,10 @@ class Builder implements BuilderInterface
         $glue = null;
 
         foreach ($this->getContainerCollection() as $Container) {
+            if ($Container->getCriteria()->getCriteriumCollection()->isEmpty()) {
+                continue;
+            }
+
             $glue = (count($sql) === 0) ? '' : $Container->getGlue() . ' '; //reset glue if that's the first iteration
 
             $sql[] = $glue . $this->criteriaToSql($Container);

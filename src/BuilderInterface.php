@@ -92,7 +92,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public function setCurrentContainer(ContainerInterface $Container);
 
     /**
-     * @return CollectionInterface
+     * @return CollectionInterface|CriteriaInterface[]
      */
     public function getContainerCollection();
 
