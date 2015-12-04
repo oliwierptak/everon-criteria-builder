@@ -338,19 +338,6 @@ $CriteriaBuilder
         ->where('created_at', '>', '2015-12-03 12:27:22');
 ```
 
-Fetch sample data.
-Use ```SqlPart``` and methods like ```getSql``` and ```getParameters``` to retrieve needed resources.
-
-```php
-$dbh = new \PDO('mysql:host=127.0.0.1;dbname='.$DATABASE, 'root', '');
-
-$SqlPart = $CriteriaBuilder->toSqlPart();
-
-$sth = $dbh->prepare($SqlPart->getSql());
-$sth->execute($SqlPart->getParameters());
-
-$data = $sth->fetchAll(PDO::FETCH_ASSOC);
-```
 
 Or you could just append criteria string to already existing sql.
 
@@ -364,6 +351,20 @@ $CriteriaBuilder
         ->where('created_at', '>', '2015-12-03 12:27:22')
 
 $sql = $sql . (string) $CriteriaBuilder;
+```
+
+Fetch sample data.
+Use ```SqlPart``` and methods like ```getSql``` and ```getParameters``` to retrieve needed resources.
+
+```php
+$dbh = new \PDO('mysql:host=127.0.0.1;dbname='.$DATABASE, 'root', '');
+
+$SqlPart = $CriteriaBuilder->toSqlPart();
+
+$sth = $dbh->prepare($SqlPart->getSql());
+$sth->execute($SqlPart->getParameters());
+
+$data = $sth->fetchAll(PDO::FETCH_ASSOC);
 ```
 
 ### Test Driven
