@@ -76,9 +76,15 @@ class Builder implements BuilderInterface
     protected $sqlTemplate = 'WHERE %s';
 
     /**
+     * @var string
+     */
+    protected $defaultSqlTemplate = 'WHERE %s';
+
+    /**
      * @var bool
      */
     protected $isSequenceOpened = false;
+
 
     /**
      * @return array
@@ -472,7 +478,7 @@ class Builder implements BuilderInterface
      */
     public function toSqlPart()
     {
-        $sql = [];
+        $sqlTokens = [];
         $parameters = [];
         $glue = null;
 
@@ -481,28 +487,43 @@ class Builder implements BuilderInterface
                 continue;
             }
 
-            $glue = (count($sql) === 0) ? '' : $Container->getGlue() . ' '; //reset glue if that's the first iteration
+            $glue = $this->resetGlueOnFirstIteration($sqlTokens, $Container);
+            $sqlTokens[] = $glue . $this->criteriaToSql($Container);
 
-            $sql[] = $glue . $this->criteriaToSql($Container);
-            $criteria_parameters = $this->criteriaToParameters($Container);
-            $tmp = [];
-
-            foreach ($criteria_parameters as $cp_value) {
-                $tmp = $this->collectionMergeDefault($tmp, $cp_value);
-            }
-
-            $parameters = $this->collectionMergeDefault($tmp, $parameters);
+            $criteriaParameters = $this->criteriaToParameters($Container);
+            $parameters = $this->mergeParametersDefaults($criteriaParameters, $parameters);
         }
 
-        $sql_query = implode("\n", $sql);
+        $sqlQuery = $this->formatSqlQuery($sqlTokens, $glue);
+
+        return $this->getFactoryWorker()->buildSqlPart($sqlQuery, $parameters);
+    }
+
+    /**
+     * @param array $sqlTokens
+     * @param $glue
+     *
+     * @return string
+     */
+    protected function formatSqlQuery(array $sqlTokens, $glue)
+    {
+        $sql_query = implode("\n", $sqlTokens);
         $sql_query = rtrim($sql_query, $glue . ' ');
 
         $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' . $this->getOrderByAndSortSql() . ' ' . $this->getOffsetLimitSql());
 
-        $sql_query = empty($sql) === false || $this->getSqlTemplate() !== 'WHERE %s'
+        $sql_query = empty($sqlTokens) === false || $this->hasCustomSqlTemplate()
             ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
 
-        return $this->getFactoryWorker()->buildSqlPart(trim($sql_query), $parameters);
+        return trim($sql_query);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasCustomSqlTemplate()
+    {
+        return $this->getSqlTemplate() !== $this->defaultSqlTemplate;
     }
 
     /**
@@ -603,6 +624,35 @@ class Builder implements BuilderInterface
     protected function closeSequence()
     {
         $this->isSequenceOpened = false;
+    }
+
+    /**
+     * @param array $criteriaParameters
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function mergeParametersDefaults(array $criteriaParameters, array $parameters)
+    {
+        $tmp = [];
+        foreach ($criteriaParameters as $cpValues) {
+            $tmp = $this->collectionMergeDefault($tmp, $cpValues);
+        }
+
+        $parameters = $this->collectionMergeDefault($tmp, $parameters);
+        return $parameters;
+    }
+
+    /**
+     * @param array $sqlTokens
+     * @param ContainerInterface $Container
+     *
+     * @return string
+     */
+    protected function resetGlueOnFirstIteration(array $sqlTokens, ContainerInterface $Container)
+    {
+        $glue = (count($sqlTokens) === 0) ? '' : $Container->getGlue() . ' ';
+        return $glue;
     }
 
 }
