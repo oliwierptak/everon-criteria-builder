@@ -663,6 +663,14 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
+    public function resetExtraParameterCollection()
+    {
+        $this->ExtraParameterCollection = null;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getExtraParameterCollection()
     {
         if ($this->ExtraParameterCollection === null) {
@@ -677,7 +685,9 @@ class Builder implements BuilderInterface
      */
     public function setExtraParameterCollection(array $ExtraParameterCollection)
     {
-        $this->ExtraParameterCollection = new Collection($ExtraParameterCollection);
+        foreach ($ExtraParameterCollection as $key => $value) {
+            $this->setExtraParameter($key, $value);
+        }
 
         return $this;
     }
@@ -687,6 +697,7 @@ class Builder implements BuilderInterface
      */
     public function setExtraParameter($name, $value)
     {
+        $name = str_replace('.', '_', $name);
         $this->getExtraParameterCollection()->set($name, $value);
 
         return $this;

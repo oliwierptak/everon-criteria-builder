@@ -327,4 +327,23 @@ OR (session_id IS NULL) )", $SqlPart->getSql());
             'user_id' => 123
         ], $SqlPart->getParameters());
     }
+
+    public function test_extraParameterCollection_ensures_names_do_not_contain_dots()
+    {
+        $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
+
+        $CriteriaBuilder
+            ->setExtraParameterCollection([
+                'some.name' => 'foo.bar',
+                'user.id' => 123
+            ]);
+
+        $SqlPart = $CriteriaBuilder
+            ->toSqlPart();
+
+        $this->assertEquals([
+            'some_name' => 'foo.bar',
+            'user_id' => 123
+        ], $SqlPart->getParameters());
+    }
 }
