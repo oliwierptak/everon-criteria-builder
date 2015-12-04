@@ -299,7 +299,8 @@ $CriteriaBuilder->orWhereRaw('foo', 'bar', OperatorCustomTypeStub::TYPE_AS_SQL);
 
 Will output:
 ```sql
-WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo_1337676981 OR foo <sql for custom operator> :foo_2137676760 )
+WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo_1337676981
+    OR foo <sql for custom operator> :foo_2137676760 )
 ```
 
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
