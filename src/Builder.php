@@ -406,7 +406,7 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function setSqlTemplate($sql_template)
+    public function sql($sql_template)
     {
         $this->sqlTemplate = $sql_template;
 

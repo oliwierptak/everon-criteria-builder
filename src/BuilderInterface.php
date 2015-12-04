@@ -178,7 +178,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param string $sql_template
      * @return self
      */
-    public function setSqlTemplate($sql_template);
+    public function sql($sql_template);
 
     /**
      * @return SqlPartInterface
