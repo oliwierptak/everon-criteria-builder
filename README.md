@@ -333,10 +333,7 @@ $CriteriaBuilder
         ->where('sku', 'LIKE', '13%')
         ->orWhere('id', 'IN', [1, 2, 3])
     ->glueByOr()
-        ->where('created_at', '>', '2015-12-03 12:27:22')
-;
-
-$SqlPart = $CriteriaBuilder->toSqlPart();
+        ->where('created_at', '>', '2015-12-03 12:27:22');
 ```
 
 Fetch sample data.
@@ -345,6 +342,7 @@ Use ```SqlPart``` and methods like ```getSql``` and ```getParameters``` to retri
 ```php
 $dbh = new \PDO('mysql:host=127.0.0.1;dbname='.$DATABASE, 'root', '');
 
+$SqlPart = $CriteriaBuilder->toSqlPart();
 $sth = $dbh->prepare($SqlPart->getSql());
 $sth->execute($SqlPart->getParameters());
 
