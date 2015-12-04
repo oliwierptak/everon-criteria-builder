@@ -294,12 +294,12 @@ You can use your own operator with ```raw``` methods.
 ```php
 $CriteriaBuilder->whereRaw('bar', null, OperatorCustomTypeStub::TYPE_AS_SQL);
 $CriteriaBuilder->andWhereRaw('foo', ['foo' => 'bar'], OperatorCustomTypeStub::TYPE_AS_SQL);
-$CriteriaBuilder->orWhereRaw('foo', ['foo' => 'bar'], OperatorCustomTypeStub::TYPE_AS_SQL);
+$CriteriaBuilder->orWhereRaw('foo', 'bar', OperatorCustomTypeStub::TYPE_AS_SQL);
 ```
 
 Will output:
 ```sql
-WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo_1337676981)
+WHERE (bar <sql for custom operator> NULL AND foo <sql for custom operator> :foo_1337676981 OR foo <sql for custom operator> :foo_2137676760 )
 ```
 
 See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/Operator for more examples
