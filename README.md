@@ -294,6 +294,7 @@ You can use your own operator with ```raw``` methods.
 ```php
 $CriteriaBuilder->whereRaw('bar', null, OperatorCustomTypeStub::TYPE_AS_SQL);
 $CriteriaBuilder->andWhereRaw('foo', ['foo' => 'bar'], OperatorCustomTypeStub::TYPE_AS_SQL);
+$CriteriaBuilder->orWhereRaw('foo', ['foo' => 'bar'], OperatorCustomTypeStub::TYPE_AS_SQL);
 ```
 
 Will output:
