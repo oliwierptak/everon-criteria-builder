@@ -349,7 +349,6 @@ $sth = $dbh->prepare($SqlPart->getSql());
 $sth->execute($SqlPart->getParameters());
 
 $data = $sth->fetchAll(PDO::FETCH_ASSOC);
-dump($data, $SqlPart);
 ```
 
 Or you could just append criteria string to already existing sql.
