@@ -235,4 +235,32 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      */
     public static function getOperatorCollection();
 
+    /**
+     * @return CollectionInterface
+     */
+    public function getExtraParameterCollection();
+
+    /**
+     * @param array $ExtraParameterCollection
+     *
+     * @return self
+     */
+    public function setExtraParameterCollection(array $ExtraParameterCollection);
+
+    /**
+     * @param $name
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setExtraParameter($name, $value);
+
+    /**
+     * @param $name
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getExtraParameter($name);
+
 }

@@ -85,6 +85,11 @@ class Builder implements BuilderInterface
      */
     protected $isSequenceOpened = false;
 
+    /**
+     * @var CollectionInterface
+     */
+    protected $ExtraParameterCollection;
+
 
     /**
      * @return array
@@ -494,6 +499,7 @@ class Builder implements BuilderInterface
             $parameters = $this->mergeParametersDefaults($criteriaParameters, $parameters);
         }
 
+        $parameters = $this->collectionMergeDefault($parameters, $this->getExtraParameterCollection()->toArray());
         $sqlQuery = $this->formatSqlQuery($sqlTokens, $glue);
 
         return $this->getFactoryWorker()->buildSqlPart($sqlQuery, $parameters);
@@ -512,8 +518,7 @@ class Builder implements BuilderInterface
 
         $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' . $this->getOrderByAndSortSql() . ' ' . $this->getOffsetLimitSql());
 
-        $sql_query = empty($sqlTokens) === false || $this->hasCustomSqlTemplate()
-            ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
+        $sql_query = empty($sqlTokens) === false || $this->hasCustomSqlTemplate() ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
 
         return trim($sql_query);
     }
@@ -574,7 +579,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return CollectionInterface
+     * @inheritdoc
      */
     public static function getOperatorCollection()
     {
@@ -655,4 +660,43 @@ class Builder implements BuilderInterface
         return $glue;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getExtraParameterCollection()
+    {
+        if ($this->ExtraParameterCollection === null) {
+            $this->ExtraParameterCollection = new Collection([]);
+        }
+
+        return $this->ExtraParameterCollection;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setExtraParameterCollection(array $ExtraParameterCollection)
+    {
+        $this->ExtraParameterCollection = new Collection($ExtraParameterCollection);
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setExtraParameter($name, $value)
+    {
+        $this->getExtraParameterCollection()->set($name, $value);
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getExtraParameter($name)
+    {
+        return $this->getExtraParameterCollection()->get($name);
+    }
 }

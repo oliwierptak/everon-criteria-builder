@@ -308,4 +308,23 @@ OR (session_id IS NULL) )", $SqlPart->getSql());
 
         $this->assertEquals('WHERE %s', $CriteriaBuilder->getSqlTemplate());
     }
+
+    public function test_extraParameters_with_custom_sql()
+    {
+        $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
+
+        $CriteriaBuilder
+            ->sql('SELECT * FROM user u LEFT JOIN user_session us ON u.id = :user_id AND %s ')
+            ->whereRaw('1=1')
+            ->setExtraParameter('user_id', 123);
+
+        $SqlPart = $CriteriaBuilder
+            ->toSqlPart();
+
+        $this->assertEquals('SELECT * FROM user u LEFT JOIN user_session us ON u.id = :user_id AND (1=1)', $SqlPart->getSql());
+
+        $this->assertEquals([
+            'user_id' => 123
+        ], $SqlPart->getParameters());
+    }
 }
