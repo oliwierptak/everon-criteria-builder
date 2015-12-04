@@ -363,8 +363,7 @@ $CriteriaBuilder
     ->glueByOr()
         ->where('created_at', '>', '2015-12-03 12:27:22')
 
-$SqlPart = $CriteriaBuilder->toSqlPart();
-$sql = $sql . $SqlPart->getSql();
+$sql = $sql . (string) $CriteriaBuilder;
 ```
 
 ### Test Driven
