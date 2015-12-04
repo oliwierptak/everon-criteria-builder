@@ -111,7 +111,10 @@ class CriteriaBuilderTest extends MockeryTest
                 ->where('name', '!=', 'foo')
                 ->andWhere('name', '!=', 'bar')
             ->glueByAnd()
-                ->where('bar', '=', 'foo')->andWhere('name', '=', 'Doe');
+                ->where('bar', '=', 'foo')
+                ->andWhere('name', '=', 'Doe')
+            ->glueByOr()
+                ->where('score', 'BETWEEN', [6,12]);
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
 
@@ -129,20 +132,24 @@ class CriteriaBuilderTest extends MockeryTest
 
         $this->assertEquals(count($SqlPart->getParameters()), count($sql_parameters));
         /*
-         (id IN (:id_1263450107,:id_1088910886,:id_404821955) OR id NOT IN (:id_470739703,:id_562547487,:id_230395754)) OR
-        (name != :name_1409254675 AND name != :name_190021050) AND
-        (bar = :bar_1337676982 AND name = :name_391340793)"
-            protected parameters -> array(10) [
-                'id_470739703' => integer 4
-                'id_562547487' => integer 5
-                'id_230395754' => integer 6
-                'id_1263450107' => integer 1
-                'id_1088910886' => integer 2
-                'id_404821955' => integer 3
-                'name_190021050' => string (3) "bar"
-                'name_1409254675' => string (3) "foo"
-                'name_391340793' => string (3) "Doe"
-                'bar_1337676982' => string (3) "foo"
+        WHERE (id IN (:id_1160359716_621731305,:id_1160359716_1337919923,:id_1160359716_1442916869) OR id NOT IN (:id_1079369094_998600711,:id_1079369094_523094061,:id_1079369094_856216937))
+        OR (name != :name_454657188 AND name != :name_195323804)
+        AND (bar = :bar_65757800 AND name = :name_1296684151)
+        OR (score BETWEEN :score_341517479_392318756 AND :score_341517479_1370669169)
+        "
+            parameters -> array(12) [
+              "id_773052891_1328551757" => 4
+              "id_773052891_453206087" => 5
+              "id_773052891_761603928" => 6
+              "id_448219632_551348544" => 1
+              "id_448219632_193500176" => 2
+              "id_448219632_89837912" => 3
+              "name_941076102" => "bar"
+              "name_810836106" => "foo"
+              "name_484902645" => "Doe"
+              "bar_68579147" => "foo"
+              "score_251787527_1361091899" => 6
+              "score_251787527_80095256" => 12
             ]
          */
     }
@@ -186,7 +193,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertEquals(count($SqlPart->getParameters()), count($sql_parameters));
         /*
             sql: WHERE (id IN (:id_843451778,:id_897328169,:id_1377365551) OR id NOT IN (:id_1260952006,:id_519145813,:id_1367241593) AND name = :name_1178871152)
-            OR (modified IS NULL AND name IS NOT NULL OR id = :id_895877163)
+            AND (modified IS NULL AND name IS NOT NULL OR id = :id_895877163)
             parameters -> array(8) [
                 'name_1178871152' => string (3) "foo"
                 'id_1260952006' => integer 4
@@ -261,7 +268,10 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         /* @var OperatorInterface $CustomOperator */
-        Builder::registerOperator(OperatorCustomTypeStub::TYPE_AS_SQL, 'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub');
+        Builder::registerOperator(
+            OperatorCustomTypeStub::TYPE_AS_SQL,
+            'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub'
+        );
 
         $CriteriaBuilder
             ->whereRaw('bar', null, OperatorCustomTypeStub::TYPE_AS_SQL)
@@ -273,4 +283,29 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $this->assertEquals([], $SqlPart->getParameters());
     }
 
+    public function test_sql_should_be_formatted_according_to_sqlTemplate()
+    {
+        $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
+
+        $CriteriaBuilder
+                ->whereRaw("created_at >= NOW() - '24 hours'")
+                ->andWhereRaw('session_id IS NOT NULL')
+            ->glueByOr()
+                ->whereRaw('session_id IS NULL');
+
+        $SqlPart = $CriteriaBuilder
+            ->setSqlTemplate('SELECT * FROM user u LEFT JOIN user_session us ON u.id = us.user_id AND (%s)')
+            ->toSqlPart();
+
+        $this->assertEquals("SELECT * FROM user u LEFT JOIN user_session us ON u.id = us.user_id AND ((created_at >= NOW() - '24 hours' AND session_id IS NOT NULL)
+OR (session_id IS NULL) )", $SqlPart->getSql());
+        $this->assertEquals([], $SqlPart->getParameters());
+    }
+
+    public function test_sqlTemplate_default()
+    {
+        $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
+
+        $this->assertEquals('WHERE %s', $CriteriaBuilder->getSqlTemplate());
+    }
 }

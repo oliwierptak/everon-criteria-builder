@@ -63,12 +63,22 @@ class Builder implements BuilderInterface
     /**
      * @var array
      */
-    protected $order_by = [];
+    protected $orderBy = [];
 
     /**
      * @var string
      */
-    protected $group_by = null;
+    protected $groupBy = null;
+
+    /**
+     * @var string
+     */
+    protected $sqlTemplate = 'WHERE %s';
+
+    /**
+     * @var bool
+     */
+    protected $isSequenceOpened = false;
 
     /**
      * @return array
@@ -133,15 +143,16 @@ class Builder implements BuilderInterface
      */
     public function where($column, $operator, $value, $glue = self::GLUE_AND)
     {
-        $this->currentContainerIndex++;
+        $this->openSequence();
+
+        if ($this->currentContainerIndex === 0) {
+            $this->getCurrentContainer()->resetGlue(); //reset glue for first item
+        }
+
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         $this->getCurrentContainer()->getCriteria()->where($Criterium);
 
-        if ($this->currentContainerIndex > 0) {
-            $this->getCurrentContainer()->setGlue($glue);
-        } else {
-            $this->getCurrentContainer()->resetGlue(); //reset glue for first item
-        }
+        $this->closeSequence();
 
         return $this;
     }
@@ -154,7 +165,8 @@ class Builder implements BuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->currentContainerIndex < 0) {
             $this->where($column, $operator, $value);
-        } else {
+        }
+        else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
         }
 
@@ -169,7 +181,8 @@ class Builder implements BuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->currentContainerIndex < 0) {
             $this->where($column, $operator, $value);
-        } else {
+        }
+        else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
         }
 
@@ -181,15 +194,16 @@ class Builder implements BuilderInterface
      */
     public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = self::GLUE_AND)
     {
-        $this->currentContainerIndex++;
+        $this->openSequence();
+
+        if ($this->currentContainerIndex === 0) {
+            $this->getCurrentContainer()->resetGlue(); //reset glue for first item
+        }
+
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         $this->getCurrentContainer()->getCriteria()->where($Criterium);
 
-        if ($this->currentContainerIndex > 0) {
-            $this->getCurrentContainer()->setGlue($glue);
-        } else {
-            $this->getCurrentContainer()->resetGlue(); //reset glue for first item
-        }
+        $this->closeSequence();
 
         return $this;
     }
@@ -201,8 +215,9 @@ class Builder implements BuilderInterface
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->currentContainerIndex < 0) {
-            $this->where($sql, $customType, $value);
-        } else {
+            $this->whereRaw($sql, $customType, $value);
+        }
+        else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
         }
 
@@ -214,10 +229,11 @@ class Builder implements BuilderInterface
      */
     public function orWhereRaw($sql, array $value = null, $customType = 'raw')
     {
-        $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, 'raw', $value);
+        $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->currentContainerIndex < 0) {
-            $this->where($sql, 'raw', $value);
-        } else {
+            $this->whereRaw($sql, $customType, $value);
+        }
+        else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
         }
 
@@ -279,6 +295,7 @@ class Builder implements BuilderInterface
      */
     public function resetGlue()
     {
+        $this->openSequence();
         $this->getCurrentContainer()->resetGlue();
 
         return $this;
@@ -289,6 +306,7 @@ class Builder implements BuilderInterface
      */
     public function glueByAnd()
     {
+        $this->openSequence();
         $this->getCurrentContainer()->glueByAnd();
 
         return $this;
@@ -299,6 +317,7 @@ class Builder implements BuilderInterface
      */
     public function glueByOr()
     {
+        $this->openSequence();
         $this->getCurrentContainer()->glueByOr();
 
         return $this;
@@ -309,7 +328,7 @@ class Builder implements BuilderInterface
      */
     public function getGroupBy()
     {
-        return $this->group_by;
+        return $this->groupBy;
     }
 
     /**
@@ -317,7 +336,7 @@ class Builder implements BuilderInterface
      */
     public function setGroupBy($group_by)
     {
-        $this->group_by = $group_by;
+        $this->groupBy = $group_by;
 
         return $this;
     }
@@ -363,7 +382,7 @@ class Builder implements BuilderInterface
      */
     public function getOrderBy()
     {
-        return $this->order_by;
+        return $this->orderBy;
     }
 
     /**
@@ -371,7 +390,25 @@ class Builder implements BuilderInterface
      */
     public function setOrderBy(array $order_by)
     {
-        $this->order_by = $order_by;
+        $this->orderBy = $order_by;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSqlTemplate()
+    {
+        return $this->sqlTemplate;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSqlTemplate($sql_template)
+    {
+        $this->sqlTemplate = $sql_template;
 
         return $this;
     }
@@ -385,11 +422,11 @@ class Builder implements BuilderInterface
             return '';
         }
 
-        if ($this->getLimit() === null && ($this->getOffset() !== null && (int) $this->getOffset() !== 0)) {
+        if ($this->getLimit() === null && ($this->getOffset() !== null && (int)$this->getOffset() !== 0)) {
             return 'OFFSET ' . $this->offset;
         }
 
-        if ((int) $this->getLimit() !== 0 && $this->getOffset() === null) {
+        if ((int)$this->getLimit() !== 0 && $this->getOffset() === null) {
             return 'LIMIT ' . $this->getLimit();
         }
 
@@ -456,11 +493,9 @@ class Builder implements BuilderInterface
         $sql_query = implode("\n", $sql);
         $sql_query = rtrim($sql_query, $glue . ' ');
 
-        $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' .
-                $this->getOrderByAndSortSql() . ' ' .
-                $this->getOffsetLimitSql());
+        $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' . $this->getOrderByAndSortSql() . ' ' . $this->getOffsetLimitSql());
 
-        $sql_query = empty($sql) === false ? 'WHERE ' . $sql_query : $sql_query;
+        $sql_query = empty($sql) === false ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
 
         return $this->getFactoryWorker()->buildSqlPart(trim($sql_query), $parameters);
     }
@@ -468,7 +503,7 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=self::GLUE_AND)
+    public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue = self::GLUE_AND)
     {
         foreach ($ContainerCollectionToMerge as $ContainerToMerge) {
             if ($ContainerToMerge->getGlue() === null) {
@@ -548,6 +583,21 @@ class Builder implements BuilderInterface
     protected function getFactoryWorker()
     {
         return $this->getCriteriaBuilderFactoryWorker();
+    }
+
+    protected function openSequence()
+    {
+        if ($this->isSequenceOpened) {
+            return;
+        }
+
+        $this->currentContainerIndex++;
+        $this->isSequenceOpened = true;
+    }
+
+    protected function closeSequence()
+    {
+        $this->isSequenceOpened = false;
     }
 
 }

@@ -170,6 +170,17 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public function setOrderBy(array $order_by);
 
     /**
+     * @return string
+     */
+    public function getSqlTemplate();
+
+    /**
+     * @param string $sql_template
+     * @return self
+     */
+    public function setSqlTemplate($sql_template);
+
+    /**
      * @return SqlPartInterface
      */
     public function toSqlPart();
