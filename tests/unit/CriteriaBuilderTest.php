@@ -288,13 +288,13 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         $CriteriaBuilder
+            ->sql('SELECT * FROM user u LEFT JOIN user_session us ON u.id = us.user_id AND (%s)')
                 ->whereRaw("created_at >= NOW() - '24 hours'")
                 ->andWhereRaw('session_id IS NOT NULL')
             ->glueByOr()
                 ->whereRaw('session_id IS NULL');
 
         $SqlPart = $CriteriaBuilder
-            ->sql('SELECT * FROM user u LEFT JOIN user_session us ON u.id = us.user_id AND (%s)')
             ->toSqlPart();
 
         $this->assertEquals("SELECT * FROM user u LEFT JOIN user_session us ON u.id = us.user_id AND ((created_at >= NOW() - '24 hours' AND session_id IS NOT NULL)

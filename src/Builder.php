@@ -495,7 +495,8 @@ class Builder implements BuilderInterface
 
         $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' . $this->getOrderByAndSortSql() . ' ' . $this->getOffsetLimitSql());
 
-        $sql_query = empty($sql) === false ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
+        $sql_query = empty($sql) === false || $this->getSqlTemplate() !== 'WHERE %s'
+            ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
 
         return $this->getFactoryWorker()->buildSqlPart(trim($sql_query), $parameters);
     }

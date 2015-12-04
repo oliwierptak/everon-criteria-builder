@@ -305,22 +305,66 @@ See https://github.com/oliwierptak/everon-criteria-builder/tree/development/src/
 
 ### How to use
 Dependency Injection is done with [Everon Factory](https://github.com/oliwierptak/everon-factory).
-Initialize with ```CriteriaBuilderFactoryWorker->buildCriteriaBuilder()```.
 
+Initialize with ```CriteriaBuilderFactoryWorker->buildCriteriaBuilder()```.
 ```php
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\Factory\Factory;
 
+include('vendor/autoload.php');
+
+$DATABASE = 'YOUR DATABASE';
+
 $Container = new Container();
 $Factory = new Factory($Container);
+/* @var \Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker */
 $CriteriaBuilderFactoryWorker = $Factory->getWorkerByName(
     'CriteriaBuilder', 'Everon\Component\CriteriaBuilder'
 );
 
 $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
-
 ```
 
+Setup your conditions and optionally the sql query.
+```php
+$CriteriaBuilder
+    ->sql('SELECT * FROM '.$DATABASE.' WHERE %s')
+        ->where('sku', 'LIKE', '13%')
+        ->orWhere('id', 'IN', [1, 2, 3])
+    ->glueByOr()
+        ->where('created_at', '>', '2015-12-03 12:27:22')
+;
+
+$SqlPart = $CriteriaBuilder->toSqlPart();
+```
+
+Fetch sample data.
+Use ```SqlPart``` and methods like ```getSql``` and ```getParameters``` to retrieve needed resources.
+
+```php
+$dbh = new \PDO('mysql:host=127.0.0.1;dbname='.$DATABASE, 'root', '');
+
+$sth = $dbh->prepare($SqlPart->getSql());
+$sth->execute($SqlPart->getParameters());
+
+$data = $sth->fetchAll(PDO::FETCH_ASSOC);
+dump($data, $SqlPart);
+```
+
+Or you could just append criteria string to already existing sql.
+
+```php
+$sql = 'SELECT * FROM '.$DATABASE;
+
+$CriteriaBuilder
+        ->where('sku', 'LIKE', '13%')
+        ->orWhere('id', 'IN', [1, 2, 3])
+    ->glueByOr()
+        ->where('created_at', '>', '2015-12-03 12:27:22')
+
+$SqlPart = $CriteriaBuilder->toSqlPart();
+$sql = $sql . $SqlPart->getSql();
+```
 
 ### Test Driven
 [Check the tests for more examples of usage here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit)
