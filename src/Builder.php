@@ -516,9 +516,8 @@ class Builder implements BuilderInterface
         $sql_query = implode("\n", $sqlTokens);
         $sql_query = rtrim($sql_query, $glue . ' ');
 
-        $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' . $this->getOrderByAndSortSql() . ' ' . $this->getOffsetLimitSql());
-
         $sql_query = empty($sqlTokens) === false || $this->hasCustomSqlTemplate() ? sprintf($this->getSqlTemplate(), $sql_query) : $sql_query;
+        $sql_query .= ' ' . trim($this->getGroupBySql() . ' ' . $this->getOrderByAndSortSql() . ' ' . $this->getOffsetLimitSql());
 
         return trim($sql_query);
     }
