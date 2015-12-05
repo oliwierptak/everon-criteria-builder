@@ -9,6 +9,7 @@ Library to generate complete ```SQL WHERE``` statements, with simple, fluid and 
 
 ## Features
 * It's not a DQL
+* SQL for what's important, fluid interface for boring stuff
 * Fluid interface
 * Easily to create multiple conditions
 * Almost 20 ready to use Operators
@@ -18,18 +19,24 @@ Library to generate complete ```SQL WHERE``` statements, with simple, fluid and 
 
 ## No boring Sql
 ### Focus on what's important
-You can attach your own *sql query* via ```CriteriaBuilder->sql($sql)``` and have easy and flexible way of generating fast *sql
-queries* without dealing with boring string concatenations, code duplication and vast amount of if/else, switch statements or constants,
+You can attach your own ```SQL``` via ```CriteriaBuilder->sql($sql)``` and have easy and flexible way of generating fast *sql
+queries* without dealing with boring string concatenations, code duplication and vast amount of if/else, switch statements or constants
 required to handle logic related to *LIMIT*, *OFFSET* or *SORT* statements.
 All those boring parts were eliminated with ```CriteriaBuilderInterface```.
+
+### Hammer won't do when you need a screwdriver
+Putting boring stuff aside you have full control on how the ```SQL``` is constructed, which is helpful for highly complex,
+complicated or very specific queries where using *DQL* makes things actually harder then easier.
+*DQL* is great for everyday use, however sometimes you need to express yourself in very specific way,
+and *raw* ```SQL``` is the best way to get you there.
 
 ### Translate request into something database can understand
 Easy to translate request parameters into something database can understand with
 ```Operators```, ```where``` statements and methods like ```setLimit```, ```setOffset```, or ```setOrderBy```.
 Useful for pagination or filtering, for example.
 
-Clear separation between *sql query*, *sql query parameters*, and applying concepts like *aggregation*, *sort*, or *limit*.
-Now you can focus only on what's important, the *sql query* part.
+Clear separation between ```SQL```, ```SQL PARAMETERS```, and applying concepts like *aggregation*, *sort*, or *limit*.
+Now you can focus only on what's important, the ```SQL``` part.
 
 Very easy to use with ```PDO``` thanks to ```SqlPartInterface```
 ```php
