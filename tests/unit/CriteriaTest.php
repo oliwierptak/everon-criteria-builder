@@ -9,7 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\Factory\Dependency\Container;
@@ -104,7 +104,7 @@ class CriteriaTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $AndCriteriumSecond);
 
         $this->assertNull($AndCriterium->getGlue());
-        $this->assertEquals(Builder::GLUE_AND, $AndCriteriumSecond->getGlue());
+        $this->assertEquals(CriteriaBuilder::GLUE_AND, $AndCriteriumSecond->getGlue());
     }
 
     public function test_where_or_where()
@@ -140,7 +140,7 @@ class CriteriaTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $OrCriterium);
 
         $this->assertNull($AndCriterium->getGlue());
-        $this->assertEquals(Builder::GLUE_OR, $OrCriterium->getGlue());
+        $this->assertEquals(CriteriaBuilder::GLUE_OR, $OrCriterium->getGlue());
     }
 
     public function test_to_array()

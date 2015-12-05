@@ -9,7 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface as CriteriaContainerInterface;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 use Everon\Component\Factory\Dependency\Container;
@@ -37,7 +37,7 @@ class ContainerTest extends MockeryTest
 
         $Criteria = Mockery::mock('Everon\Component\CriteriaBuilder\CriteriaInterface');
         /* @var CriteriaInterface  $Criteria */
-        $this->CriteriaContainer = $CriteriaBuilderFactoryWorker->buildCriteriaContainer($Criteria, Builder::GLUE_AND);
+        $this->CriteriaContainer = $CriteriaBuilderFactoryWorker->buildCriteriaContainer($Criteria, CriteriaBuilder::GLUE_AND);
     }
 
     public function test_Constructor()
@@ -51,7 +51,7 @@ class ContainerTest extends MockeryTest
         $this->assertEquals(null, $this->CriteriaContainer->getGlue());
 
         $this->CriteriaContainer->glueByAnd();
-        $this->assertEquals(Builder::GLUE_AND, $this->CriteriaContainer->getGlue());
+        $this->assertEquals(CriteriaBuilder::GLUE_AND, $this->CriteriaContainer->getGlue());
     }
 
     public function test_glue_by_or()
@@ -60,7 +60,7 @@ class ContainerTest extends MockeryTest
         $this->assertEquals(null, $this->CriteriaContainer->getGlue());
 
         $this->CriteriaContainer->glueByOr();
-        $this->assertEquals(Builder::GLUE_OR, $this->CriteriaContainer->getGlue());
+        $this->assertEquals(CriteriaBuilder::GLUE_OR, $this->CriteriaContainer->getGlue());
     }
 
     public function test_reset_glue()

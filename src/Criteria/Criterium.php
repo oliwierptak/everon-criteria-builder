@@ -9,7 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Criteria;
 
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\CriteriaBuilder\Operator\Equal;
@@ -97,7 +97,7 @@ class Criterium implements CriteriumInterface
      */
     protected function buildOperatorWithValue($operator, $value)
     {
-        $className = Builder::getOperatorClassNameBySqlOperator($operator);
+        $className = CriteriaBuilder::getOperatorClassNameBySqlOperator($operator);
         $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
 
         return $this->replaceOperatorForNulLValue($Operator, $value);
@@ -115,10 +115,10 @@ class Criterium implements CriteriumInterface
     {
         if ($value === null) {
             if ($Operator->getType() === Equal::TYPE_NAME) {
-                $className = Builder::getOperatorClassNameBySqlOperator(Is::TYPE_AS_SQL);
+                $className = CriteriaBuilder::getOperatorClassNameBySqlOperator(Is::TYPE_AS_SQL);
                 $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
             } elseif ($Operator->getType() === NotEqual::TYPE_NAME) {
-                $className = Builder::getOperatorClassNameBySqlOperator(NotIs::TYPE_AS_SQL);
+                $className = CriteriaBuilder::getOperatorClassNameBySqlOperator(NotIs::TYPE_AS_SQL);
                 $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
             }
         }
@@ -171,7 +171,7 @@ class Criterium implements CriteriumInterface
      */
     public function glueByAnd()
     {
-        $this->glue = Builder::GLUE_AND;
+        $this->glue = CriteriaBuilder::GLUE_AND;
     }
 
     /**
@@ -179,7 +179,7 @@ class Criterium implements CriteriumInterface
      */
     public function glueByOr()
     {
-        $this->glue = Builder::GLUE_OR;
+        $this->glue = CriteriaBuilder::GLUE_OR;
     }
 
     /**
@@ -200,7 +200,7 @@ class Criterium implements CriteriumInterface
         }
 
         if ($this->placeholder === null) {
-            $column_name = str_replace('.', '_', Builder::randomizeParameterName($this->getColumn()));
+            $column_name = str_replace('.', '_', CriteriaBuilder::randomizeParameterName($this->getColumn()));
             $this->placeholder = ':' . $column_name;
         }
 

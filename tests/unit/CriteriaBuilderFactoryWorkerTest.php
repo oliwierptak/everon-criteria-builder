@@ -9,7 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 use Everon\Component\CriteriaBuilder\Operator\Equal;
@@ -55,7 +55,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
-        $this->assertInstanceOf('Everon\Component\CriteriaBuilder\BuilderInterface', $CriteriaBuilder);
+        $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderInterface', $CriteriaBuilder);
     }
 
     public function test_CriteriaBuilderHasWorker()
@@ -81,7 +81,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
         $Criteria = Mockery::mock('Everon\Component\CriteriaBuilder\CriteriaInterface');
         /* @var CriteriaInterface  $Criteria */
         $CriteriaContainer = $this->CriteriaBuilderFactoryWorker->buildCriteriaContainer(
-            $Criteria, Builder::GLUE_AND
+            $Criteria, CriteriaBuilder::GLUE_AND
         );
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaContainer);
@@ -89,7 +89,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
 
     public function test_buildCriteriaOperator()
     {
-        $className = Builder::getOperatorClassNameBySqlOperator(Equal::TYPE_AS_SQL);
+        $className = CriteriaBuilder::getOperatorClassNameBySqlOperator(Equal::TYPE_AS_SQL);
         $OperatorEqual = $this->CriteriaBuilderFactoryWorker->buildCriteriaOperator($className);
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\OperatorInterface', $OperatorEqual);

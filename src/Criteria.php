@@ -28,7 +28,7 @@ class Criteria implements CriteriaInterface
     /**
      * @var string
      */
-    protected $glue = Builder::GLUE_AND;
+    protected $glue = CriteriaBuilder::GLUE_AND;
 
     /**
      * @return array
@@ -120,7 +120,7 @@ class Criteria implements CriteriaInterface
      */
     public function glueByAnd()
     {
-        $this->glue = Builder::GLUE_AND;
+        $this->glue = CriteriaBuilder::GLUE_AND;
     }
 
     /**
@@ -128,7 +128,7 @@ class Criteria implements CriteriaInterface
      */
     public function glueByOr()
     {
-        $this->glue = Builder::GLUE_OR;
+        $this->glue = CriteriaBuilder::GLUE_OR;
     }
 
 }

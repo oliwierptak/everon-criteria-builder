@@ -10,7 +10,7 @@
 namespace Everon\Component\CriteriaBuilder\Operator;
 
 use Everon\Component\CriteriaBuilder\AbstractOperator;
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\Exception\ValueMustBeAnArrayException;
 use Everon\Component\CriteriaBuilder\OperatorInterface;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
@@ -39,7 +39,7 @@ class Between extends AbstractOperator implements OperatorInterface
 
         /** @var array $data */
         foreach ($data as $value) {
-            $rand = Builder::randomizeParameterName($Criterium->getPlaceholderAsParameter());
+            $rand = CriteriaBuilder::randomizeParameterName($Criterium->getPlaceholderAsParameter());
             $params[$rand] = $value;
         }
 

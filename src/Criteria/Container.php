@@ -9,7 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Criteria;
 
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 
 class Container implements ContainerInterface
@@ -80,7 +80,7 @@ class Container implements ContainerInterface
      */
     public function glueByAnd()
     {
-        $this->glue = Builder::GLUE_AND;
+        $this->glue = CriteriaBuilder::GLUE_AND;
     }
 
     /**
@@ -88,7 +88,7 @@ class Container implements ContainerInterface
      */
     public function glueByOr()
     {
-        $this->glue = Builder::GLUE_OR;
+        $this->glue = CriteriaBuilder::GLUE_OR;
     }
 
 }

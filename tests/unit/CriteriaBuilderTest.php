@@ -9,7 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
-use Everon\Component\CriteriaBuilder\Builder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\OperatorInterface;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
@@ -43,8 +43,8 @@ class CriteriaBuilderTest extends MockeryTest
 
     public function testConstructor()
     {
-        $Builder = new Builder();
-        $this->assertInstanceOf('Everon\Component\CriteriaBuilder\BuilderInterface', $Builder);
+        $Builder = new CriteriaBuilder();
+        $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderInterface', $Builder);
     }
 
     public function test_where_or_and_should_build_criteria_and_advance_currentContainerIndex()
@@ -268,7 +268,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         /* @var OperatorInterface $CustomOperator */
-        Builder::registerOperator(
+        CriteriaBuilder::registerOperator(
             OperatorCustomTypeStub::TYPE_AS_SQL,
             'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub'
         );
@@ -298,7 +298,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
             ->toSqlPart();
 
         $this->assertEquals("SELECT * FROM user u LEFT JOIN user_session us ON u.id = us.user_id AND ((created_at >= NOW() - '24 hours' AND session_id IS NOT NULL)
-OR (session_id IS NULL) )", $SqlPart->getSql());
+OR (session_id IS NULL))", $SqlPart->getSql());
         $this->assertEquals([], $SqlPart->getParameters());
     }
 

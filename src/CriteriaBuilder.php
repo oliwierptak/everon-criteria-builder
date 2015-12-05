@@ -18,7 +18,7 @@ use Everon\Component\Utils\Collection\MergeDefault;
 use Everon\Component\Utils\Collection\ToArray;
 use Everon\Component\Utils\Text\ToString;
 
-class Builder implements BuilderInterface
+class CriteriaBuilder implements CriteriaBuilderInterface
 {
 
     use Dependency\Setter\CriteriaBuilderFactoryWorker;
@@ -682,9 +682,9 @@ class Builder implements BuilderInterface
     /**
      * @inheritdoc
      */
-    public function setExtraParameterCollection(array $ExtraParameterCollection)
+    public function setExtraParameterCollection(array $extra_parameter_collection)
     {
-        foreach ($ExtraParameterCollection as $key => $value) {
+        foreach ($extra_parameter_collection as $key => $value) {
             $this->setExtraParameter($key, $value);
         }
 

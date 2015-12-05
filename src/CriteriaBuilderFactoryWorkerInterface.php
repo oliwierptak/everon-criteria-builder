@@ -31,7 +31,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @throws UnableToInstantiateException
      *
-     * @return BuilderInterface
+     * @return CriteriaBuilderInterface
      */
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder');
 

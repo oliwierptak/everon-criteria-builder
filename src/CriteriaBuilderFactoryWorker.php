@@ -43,7 +43,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
     {
         try {
-            return $this->getFactory()->buildWithEmptyConstructor('Builder', $namespace);
+            return $this->getFactory()->buildWithEmptyConstructor('CriteriaBuilder', $namespace);
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }

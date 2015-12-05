@@ -16,55 +16,57 @@ use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\ArrayableInterface;
 use Everon\Component\Utils\Text\StringableInterface;
 
-interface BuilderInterface extends ArrayableInterface, StringableInterface, CriteriaBuilderFactoryWorkerAwareInterface
+interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterface, CriteriaBuilderFactoryWorkerAwareInterface
 {
 
     /**
-     * Starts new Sub Query
+     * Starts new sub set of conditions
      * 
-     * @param $column
-     * @param $operator
+     * @param string $column
+     * @param string $operator
      * @param $value
-     * @param $glue
+     * @param string $glue
      *
      * @return self
      */
-    public function where($column, $operator, $value, $glue = Builder::GLUE_AND);
+    public function where($column, $operator, $value, $glue = CriteriaBuilder::GLUE_AND);
 
     /**
-     * Appends to current subquery
+     * Appends to current sub set
      * 
-     * @param $column
-     * @param $operator
+     * @param string $column
+     * @param string $operator
      * @param $value
      *
-     * @return Builder
+     * @return self
      */
     public function andWhere($column, $operator, $value);
 
     /**
-     * Appends to current subquery
+     * Appends to current sub set
      * 
-     * @param $column
-     * @param $operator
+     * @param string $column
+     * @param string $operator
      * @param $value
      *
-     * @return Builder
+     * @return self
      */
     public function orWhere($column, $operator, $value);
 
     /**
-     * @param $sql
+     * Starts new sub set of conditions
+     *
+     * @param string $sql
      * @param array|null $value
      * @param string $customType
      * @param string $glue
      *
      * @return self
      */
-    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = Builder::GLUE_AND);
+    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = CriteriaBuilder::GLUE_AND);
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array|null $value
      * @param string $customType
      *
@@ -73,7 +75,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public function andWhereRaw($sql, array $value = null, $customType = 'raw');
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $value
      * @param string $customType
      *
@@ -129,7 +131,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     /**
      * @param string $group_by
      *
-     * @return BuilderInterface
+     * @return CriteriaBuilderInterface
      */
     public function setGroupBy($group_by);
 
@@ -141,7 +143,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     /**
      * @param int $limit
      *
-     * @return BuilderInterface
+     * @return CriteriaBuilderInterface
      */
     public function setLimit($limit);
 
@@ -153,7 +155,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     /**
      * @param int $offset
      *
-     * @return BuilderInterface
+     * @return CriteriaBuilderInterface
      */
     public function setOffset($offset);
 
@@ -165,7 +167,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     /**
      * @param array $order_by
      *
-     * @return BuilderInterface
+     * @return CriteriaBuilderInterface
      */
     public function setOrderBy(array $order_by);
 
@@ -176,6 +178,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
 
     /**
      * @param string $sql_template
+     *
      * @return self
      */
     public function sql($sql_template);
@@ -189,10 +192,10 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
      * @param CollectionInterface $ContainerCollectionToMerge
      * @param string $glue
      */
-    public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=Builder::GLUE_AND);
+    public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=CriteriaBuilder::GLUE_AND);
 
     /**
-     * @param $sql_operator
+     * @param string $sql_operator
      *
      * @throws UnknownOperatorTypeException
      *
@@ -201,7 +204,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public static function getOperatorClassNameBySqlOperator($sql_operator);
 
     /**
-     * @param $sql_type
+     * @param string $sql_type
      * @param $operator_class_name
      *
      * @return void
@@ -209,7 +212,7 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public static function registerOperator($sql_type, $operator_class_name);
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return string
      */
@@ -246,27 +249,27 @@ interface BuilderInterface extends ArrayableInterface, StringableInterface, Crit
     public function getExtraParameterCollection();
 
     /**
-     * @param array $ExtraParameterCollection
+     * @param array $extra_parameter_collection
      *
      * @return self
      */
-    public function setExtraParameterCollection(array $ExtraParameterCollection);
+    public function setExtraParameterCollection(array $extra_parameter_collection);
 
     /**
      * Replaces . with _
      *
-     * @param $name
+     * @param string $name
      * @param $value
      *
-     * @return $this
+     * @return self
      */
     public function setExtraParameter($name, $value);
 
     /**
-     * @param $name
+     * @param string $name
      * @param $value
      *
-     * @return mixed
+     * @return
      */
     public function getExtraParameter($name);
 

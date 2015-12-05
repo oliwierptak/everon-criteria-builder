@@ -8,12 +8,35 @@ Library to generate complete ```SQL WHERE``` statements, with simple, fluid and 
 * Php 5.5+
 
 ## Features
+* It's not a DQL
 * Fluid interface
 * Easily to create multiple conditions
 * Almost 20 ready to use Operators
 * Easy to extend with Custom Operators
 * Intuitive Interface: clear, small and simple API
 * Clean code
+
+## No boring Sql
+### Focus on what's important
+You can attach your own *sql query* via ```CriteriaBuilder->sql($sql)``` and have easy and flexible way of generating fast *sql
+queries* without dealing with boring string concatenations, code duplication and vast amount of if/else, switch statements or constants,
+required to handle logic related to *LIMIT*, *OFFSET* or *SORT* statements.
+All those boring parts were eliminated with ```CriteriaBuilderInterface```.
+
+### Translate request into something database can understand
+Easy to translate request parameters into something database can understand with
+```Operators```, ```where``` statements and methods like ```setLimit```, ```setOffset```, or ```setOrderBy```.
+Useful for pagination or filtering, for example.
+
+Clear separation between *sql query*, *sql query parameters*, and applying concepts like *aggregation*, *sort*, or *limit*.
+Now you can focus only on what's important, the *sql query* part.
+
+Very easy to use with ```PDO``` thanks to ```SqlPartInterface```
+```php
+$sth = $dbh->prepare($SqlPart->getSql());
+$sth->execute($SqlPart->getParameters());
+```
+
 
 ## Examples
 ### Simple Query
@@ -326,14 +349,20 @@ $CriteriaBuilderFactoryWorker = $Factory->getWorkerByName(
 $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 ```
 
-Setup your conditions and optionally the sql query.
+Setup your conditions.
 ```php
 $CriteriaBuilder
-    ->sql('SELECT * FROM some_table WHERE %s')
         ->where('sku', 'LIKE', '13%')
         ->orWhere('id', 'IN', [1, 2, 3])
     ->glueByOr()
         ->where('created_at', '>', '2015-12-03 12:27:22');
+```
+
+Append criteria string to already existing sql.
+
+```php
+$sql = 'SELECT * FROM <TABLE>';
+$sql = $sql . (string) $CriteriaBuilder;
 ```
 
 Fetch sample data.
@@ -346,22 +375,25 @@ $SqlPart = $CriteriaBuilder->toSqlPart();
 
 $sth = $dbh->prepare($SqlPart->getSql());
 $sth->execute($SqlPart->getParameters());
-
-$data = $sth->fetchAll(PDO::FETCH_ASSOC);
 ```
 
-Or you could just append criteria string to already existing sql.
-
+### Putting it all together
 ```php
-$sql = 'SELECT * FROM <TABLE>';
+$dbh = new \PDO('mysql:host=127.0.0.1;dbname=DATABASE', 'root', '');
 
 $CriteriaBuilder
-        ->where('sku', 'LIKE', '13%')
-        ->orWhere('id', 'IN', [1, 2, 3])
-    ->glueByOr()
-        ->where('created_at', '>', '2015-12-03 12:27:22')
+    ->sql('SELECT * FROM fooTable f LEFT JOIN barTable b ON f.bar_id = b.id AND f.is_active = :is_active AND %s')
+    ->where('bar', '=', 1)
+        ->andWhere('foo', 'NOT IN', [1,2,3])
+        ->orWhereRaw('foo::bar() IS NULL')
+        ->setExtraParameter('is_active', false);
 
-$sql = $sql . (string) $CriteriaBuilder;
+$SqlPart = $CriteriaBuilder->toSqlPart();
+
+$sth = $dbh->prepare($SqlPart->getSql());
+$sth->execute($SqlPart->getParameters());
+
+$data = $sth->fetchAll(PDO::FETCH_ASSOC);
 ```
 
 ### Test Driven
