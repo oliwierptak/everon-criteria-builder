@@ -370,16 +370,16 @@ Append criteria string to already existing sql.
 ```php
 $sql = 'SELECT * FROM <TABLE>';
 $sql = $sql . (string) $CriteriaBuilder;
+$sth = $dbh->prepare($sql);
 ```
 
 Fetch sample data.
-Use ```SqlPart``` and methods like ```getSql``` and ```getParameters``` to retrieve needed resources.
+After you attached ```SQL``` to the ```CriteriaBuilder```, it's even easier to retrieve *sql query* and its *parameters*,
+with ```SqlPartInterface``` and methods like ```getSql``` and ```getParameters```.
 
 ```php
 $dbh = new \PDO('mysql:host=127.0.0.1;dbname=DATABASE', 'root', '');
-
 $SqlPart = $CriteriaBuilder->toSqlPart();
-
 $sth = $dbh->prepare($SqlPart->getSql());
 $sth->execute($SqlPart->getParameters());
 ```
@@ -387,7 +387,6 @@ $sth->execute($SqlPart->getParameters());
 ### Putting it all together
 ```php
 $dbh = new \PDO('mysql:host=127.0.0.1;dbname=DATABASE', 'root', '');
-
 $CriteriaBuilder
     ->sql('SELECT * FROM fooTable f LEFT JOIN barTable b ON f.bar_id = b.id AND f.is_active = :is_active AND %s')
     ->where('bar', '=', 1)
@@ -396,10 +395,8 @@ $CriteriaBuilder
         ->setExtraParameter('is_active', false);
 
 $SqlPart = $CriteriaBuilder->toSqlPart();
-
 $sth = $dbh->prepare($SqlPart->getSql());
 $sth->execute($SqlPart->getParameters());
-
 $data = $sth->fetchAll(PDO::FETCH_ASSOC);
 ```
 
