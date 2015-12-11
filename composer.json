@@ -6,7 +6,7 @@
   "version": "0.5",
   "authors": [{
     "name": "Oliwier Ptak",
-    "email": "EveronFramework@gmail.com"
+    "email": "everonphp@gmail.com"
   }],
   "minimum-stability": "dev",
   "autoload": {
