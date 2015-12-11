@@ -114,7 +114,7 @@ class CriteriaBuilderTest extends MockeryTest
                 ->where('bar', '=', 'foo')
                 ->andWhere('name', '=', 'Doe')
             ->glueByOr()
-                ->where('score', 'BETWEEN', [6,12]);
+                ->where('score', 'BETWEEN', [6, 12]);
 
         $SqlPart = $CriteriaBuilder->toSqlPart();
 
@@ -324,7 +324,7 @@ OR (session_id IS NULL))", $SqlPart->getSql());
         $this->assertEquals('SELECT * FROM user u LEFT JOIN user_session us ON u.id = :user_id AND (1=1)', $SqlPart->getSql());
 
         $this->assertEquals([
-            'user_id' => 123
+            'user_id' => 123,
         ], $SqlPart->getParameters());
     }
 
@@ -335,7 +335,7 @@ OR (session_id IS NULL))", $SqlPart->getSql());
         $CriteriaBuilder
             ->setExtraParameterCollection([
                 'some.name' => 'foo.bar',
-                'user.id' => 123
+                'user.id' => 123,
             ]);
 
         $SqlPart = $CriteriaBuilder
@@ -343,7 +343,8 @@ OR (session_id IS NULL))", $SqlPart->getSql());
 
         $this->assertEquals([
             'some_name' => 'foo.bar',
-            'user_id' => 123
+            'user_id' => 123,
         ], $SqlPart->getParameters());
     }
+
 }

@@ -90,7 +90,6 @@ class CriteriaBuilder implements CriteriaBuilderInterface
      */
     protected $ExtraParameterCollection;
 
-
     /**
      * @return array
      */
@@ -176,8 +175,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->currentContainerIndex < 0) {
             $this->where($column, $operator, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
         }
 
@@ -192,8 +190,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->currentContainerIndex < 0) {
             $this->where($column, $operator, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
         }
 
@@ -227,8 +224,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->currentContainerIndex < 0) {
             $this->whereRaw($sql, $customType, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->andWhere($Criterium);
         }
 
@@ -243,8 +239,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->currentContainerIndex < 0) {
             $this->whereRaw($sql, $customType, $value);
-        }
-        else {
+        } else {
             $this->getCurrentContainer()->getCriteria()->orWhere($Criterium);
         }
 
@@ -433,11 +428,11 @@ class CriteriaBuilder implements CriteriaBuilderInterface
             return '';
         }
 
-        if ($this->getLimit() === null && ($this->getOffset() !== null && (int)$this->getOffset() !== 0)) {
+        if ($this->getLimit() === null && ($this->getOffset() !== null && (int) $this->getOffset() !== 0)) {
             return 'OFFSET ' . $this->offset;
         }
 
-        if ((int)$this->getLimit() !== 0 && $this->getOffset() === null) {
+        if ((int) $this->getLimit() !== 0 && $this->getOffset() === null) {
             return 'LIMIT ' . $this->getLimit();
         }
 
@@ -644,6 +639,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         }
 
         $parameters = $this->collectionMergeDefault($tmp, $parameters);
+
         return $parameters;
     }
 
@@ -656,6 +652,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     protected function resetGlueOnFirstIteration(array $sqlTokens, ContainerInterface $Container)
     {
         $glue = (count($sqlTokens) === 0) ? '' : $Container->getGlue() . ' ';
+
         return $glue;
     }
 
@@ -709,4 +706,5 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     {
         return $this->getExtraParameterCollection()->get($name);
     }
+
 }

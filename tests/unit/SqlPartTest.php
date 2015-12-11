@@ -15,7 +15,6 @@ use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\Factory\FactoryInterface;
 use Everon\Component\Factory\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Utils\TestCase\MockeryTest;
-use Mockery;
 
 class SqlPartTest extends MockeryTest
 {

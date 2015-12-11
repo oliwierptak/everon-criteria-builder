@@ -28,7 +28,6 @@ class ContainerTest extends MockeryTest
      */
     protected $CriteriaContainer;
 
-
     protected function setUp()
     {
         $Container = new Container();
