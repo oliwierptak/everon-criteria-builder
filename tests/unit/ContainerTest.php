@@ -13,7 +13,7 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface as CriteriaContainerInterface;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 use Everon\Component\Factory\Dependency\Container;
-use Everon\Component\Factory\Tests\Unit\Doubles\FactoryStub;
+use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Utils\TestCase\MockeryTest;
 use Everon\Component\Utils\Text\StartsWith;
 use Mockery;

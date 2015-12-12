@@ -15,7 +15,7 @@ use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\Factory\FactoryInterface;
 use Everon\Component\Utils\TestCase\MockeryTest;
 use Everon\Component\Utils\Text\StartsWith;
-use Everon\Component\Factory\Tests\Unit\Doubles\FactoryStub;
+use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
 
 class CriteriumTest extends MockeryTest
 {

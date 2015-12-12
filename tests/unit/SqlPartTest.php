@@ -13,7 +13,7 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\Factory\FactoryInterface;
-use Everon\Component\Factory\Tests\Unit\Doubles\FactoryStub;
+use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Utils\TestCase\MockeryTest;
 
 class SqlPartTest extends MockeryTest
