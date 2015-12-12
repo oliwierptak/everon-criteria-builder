@@ -129,11 +129,11 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function getGroupBy();
 
     /**
-     * @param string $group_by
+     * @param string $groupBy
      *
      * @return CriteriaBuilderInterface
      */
-    public function setGroupBy($group_by);
+    public function setGroupBy($groupBy);
 
     /**
      * @return int
@@ -165,11 +165,11 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function getOrderBy();
 
     /**
-     * @param array $order_by
+     * @param array $orderBy
      *
      * @return CriteriaBuilderInterface
      */
-    public function setOrderBy(array $order_by);
+    public function setOrderBy(array $orderBy);
 
     /**
      * @return string
@@ -177,11 +177,11 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function getSqlTemplate();
 
     /**
-     * @param string $sql_template
+     * @param string $sqlTemplate
      *
      * @return self
      */
-    public function sql($sql_template);
+    public function sql($sqlTemplate);
 
     /**
      * @return SqlPartInterface
@@ -195,21 +195,21 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=CriteriaBuilder::GLUE_AND);
 
     /**
-     * @param string $sql_operator
+     * @param string $sqlOperator
      *
      * @throws UnknownOperatorTypeException
      *
      * @return string
      */
-    public static function getOperatorClassNameBySqlOperator($sql_operator);
+    public static function getOperatorClassNameBySqlOperator($sqlOperator);
 
     /**
-     * @param string $sql_type
-     * @param $operator_class_name
+     * @param string $sqlType
+     * @param $operatorClassName
      *
      * @return void
      */
-    public static function registerOperator($sql_type, $operator_class_name);
+    public static function registerOperator($sqlType, $operatorClassName);
 
     /**
      * @param string $name
@@ -241,19 +241,19 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     /**
      * @return void
      */
-    public function resetExtraParameterCollection();
+    public function resetParameterCollection();
 
     /**
      * @return CollectionInterface
      */
-    public function getExtraParameterCollection();
+    public function getParameterCollection();
 
     /**
-     * @param array $extra_parameter_collection
+     * @param array $parameterCollection
      *
      * @return self
      */
-    public function setExtraParameterCollection(array $extra_parameter_collection);
+    public function setParameterCollection(array $parameterCollection);
 
     /**
      * Replaces . with _
@@ -263,7 +263,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function setExtraParameter($name, $value);
+    public function setParameter($name, $value);
 
     /**
      * @param string $name
@@ -271,6 +271,6 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return
      */
-    public function getExtraParameter($name);
+    public function getParameter($name);
 
 }

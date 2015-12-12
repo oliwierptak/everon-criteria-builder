@@ -88,7 +88,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @var CollectionInterface
      */
-    protected $ExtraParameterCollection;
+    protected $ParameterCollection;
 
     /**
      * @return array
@@ -340,9 +340,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setGroupBy($group_by)
+    public function setGroupBy($groupBy)
     {
-        $this->groupBy = $group_by;
+        $this->groupBy = $groupBy;
 
         return $this;
     }
@@ -394,9 +394,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setOrderBy(array $order_by)
+    public function setOrderBy(array $orderBy)
     {
-        $this->orderBy = $order_by;
+        $this->orderBy = $orderBy;
 
         return $this;
     }
@@ -412,9 +412,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function sql($sql_template)
+    public function sql($sqlTemplate)
     {
-        $this->sqlTemplate = $sql_template;
+        $this->sqlTemplate = $sqlTemplate;
 
         return $this;
     }
@@ -494,7 +494,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
             $parameters = $this->mergeParametersDefaults($criteriaParameters, $parameters);
         }
 
-        $parameters = $this->collectionMergeDefault($parameters, $this->getExtraParameterCollection()->toArray());
+        $parameters = $this->collectionMergeDefault($parameters, $this->getParameterCollection()->toArray());
         $sqlQuery = $this->formatSqlQuery($sqlTokens, $glue);
 
         return $this->getFactoryWorker()->buildSqlPart($sqlQuery, $parameters);
@@ -541,27 +541,27 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public static function getOperatorClassNameBySqlOperator($sql_operator)
+    public static function getOperatorClassNameBySqlOperator($sqlOperator)
     {
-        $sql_operator = strtoupper(trim($sql_operator));
-        if (static::getOperatorCollection()->has($sql_operator) === false) {
-            throw new UnknownOperatorTypeException($sql_operator);
+        $sqlOperator = strtoupper(trim($sqlOperator));
+        if (static::getOperatorCollection()->has($sqlOperator) === false) {
+            throw new UnknownOperatorTypeException($sqlOperator);
         }
 
-        return static::getOperatorCollection()->get($sql_operator);
+        return static::getOperatorCollection()->get($sqlOperator);
     }
 
     /**
      * @inheritdoc
      */
-    public static function registerOperator($sql_type, $operator_class_name)
+    public static function registerOperator($sqlType, $operatorClassName)
     {
-        $sql_type = strtoupper(trim($sql_type));
-        if (static::getOperatorCollection()->has($sql_type)) {
-            throw new OperatorTypeAlreadyRegisteredException($sql_type);
+        $sqlType = strtoupper(trim($sqlType));
+        if (static::getOperatorCollection()->has($sqlType)) {
+            throw new OperatorTypeAlreadyRegisteredException($sqlType);
         }
 
-        static::getOperatorCollection()->set($sql_type, $operator_class_name);
+        static::getOperatorCollection()->set($sqlType, $operatorClassName);
     }
 
     /**
@@ -659,30 +659,30 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function resetExtraParameterCollection()
+    public function resetParameterCollection()
     {
-        $this->ExtraParameterCollection = null;
+        $this->ParameterCollection = null;
     }
 
     /**
      * @inheritdoc
      */
-    public function getExtraParameterCollection()
+    public function getParameterCollection()
     {
-        if ($this->ExtraParameterCollection === null) {
-            $this->ExtraParameterCollection = new Collection([]);
+        if ($this->ParameterCollection === null) {
+            $this->ParameterCollection = new Collection([]);
         }
 
-        return $this->ExtraParameterCollection;
+        return $this->ParameterCollection;
     }
 
     /**
      * @inheritdoc
      */
-    public function setExtraParameterCollection(array $extra_parameter_collection)
+    public function setParameterCollection(array $parameterCollection)
     {
-        foreach ($extra_parameter_collection as $key => $value) {
-            $this->setExtraParameter($key, $value);
+        foreach ($parameterCollection as $key => $value) {
+            $this->setParameter($key, $value);
         }
 
         return $this;
@@ -691,10 +691,10 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setExtraParameter($name, $value)
+    public function setParameter($name, $value)
     {
         $name = str_replace('.', '_', $name);
-        $this->getExtraParameterCollection()->set($name, $value);
+        $this->getParameterCollection()->set($name, $value);
 
         return $this;
     }
@@ -702,9 +702,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getExtraParameter($name)
+    public function getParameter($name)
     {
-        return $this->getExtraParameterCollection()->get($name);
+        return $this->getParameterCollection()->get($name);
     }
 
 }

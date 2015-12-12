@@ -316,7 +316,7 @@ OR (session_id IS NULL))", $SqlPart->getSql());
         $CriteriaBuilder
             ->sql('SELECT * FROM user u LEFT JOIN user_session us ON u.id = :user_id AND %s ')
             ->whereRaw('1=1')
-            ->setExtraParameter('user_id', 123);
+            ->setParameter('user_id', 123);
 
         $SqlPart = $CriteriaBuilder
             ->toSqlPart();
@@ -333,7 +333,7 @@ OR (session_id IS NULL))", $SqlPart->getSql());
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         $CriteriaBuilder
-            ->setExtraParameterCollection([
+            ->setParameterCollection([
                 'some.name' => 'foo.bar',
                 'user.id' => 123,
             ]);
