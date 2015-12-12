@@ -388,7 +388,7 @@ $sth->execute($SqlPart->getParameters());
 ```php
 $dbh = new \PDO('mysql:host=127.0.0.1;dbname=DATABASE', 'root', '');
 $CriteriaBuilder
-    ->sql('SELECT * FROM fooTable f LEFT JOIN barTable b ON f.bar_id = b.id AND f.is_active = :is_active AND %s')
+    ->sql('SELECT * FROM fooTable f LEFT JOIN barTable b ON f.bar_id = b.id AND f.is_active = :is_active')
     ->where('bar', '=', 1)
         ->andWhere('foo', 'NOT IN', [1,2,3])
         ->orWhereRaw('foo::bar() IS NULL')
