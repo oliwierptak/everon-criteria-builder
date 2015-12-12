@@ -392,7 +392,7 @@ $CriteriaBuilder
     ->where('bar', '=', 1)
         ->andWhere('foo', 'NOT IN', [1,2,3])
         ->orWhereRaw('foo::bar() IS NULL')
-    ->setExtraParameter('is_active', false)
+    ->setParameter('is_active', false)
     ->setLimit(10)
     ->setOffset(20)
     ->setOrderBy(['foo' => 'DESC']);
