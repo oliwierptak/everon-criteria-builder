@@ -1,6 +1,6 @@
 {
   "name": "everon/criteria-builder",
-  "description": "Everon Criteria Builder",
+  "description": "Everon Criteria Builder Component",
   "type": "library",
   "license": "MIT",
   "version": "0.5",
