@@ -10,7 +10,7 @@ Library to generate complete ```SQL WHERE``` statements, with simple, fluid and 
 ## Features
 * It's not a DQL
 * SQL for what's important, fluid interface for boring stuff
-* Automatic PDO parameter name escaping and uniqueness
+* Automatic PDO parameter name escaping and uniqueness, custom parameters
 * Fluid interface
 * Easily to create multiple conditions
 * Almost 20 ready to use Operators
