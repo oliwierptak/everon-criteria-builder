@@ -66,6 +66,24 @@ class CriteriumTest extends MockeryTest
         );
     }
 
+    public function test_is_null_when_equal_null()
+    {
+        $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', null);
+
+        $SqlPart = $Criterium->getSqlPart();
+
+        $this->assertEquals($SqlPart->getSql(), 'foo IS NULL');
+    }
+
+    public function test_is_not_null_when_not_equal_null()
+    {
+        $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '!=', null);
+
+        $SqlPart = $Criterium->getSqlPart();
+
+        $this->assertEquals($SqlPart->getSql(), 'foo IS NOT NULL');
+    }
+
     public function test_get_sql_part_with_parameters()
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
@@ -76,6 +94,24 @@ class CriteriumTest extends MockeryTest
             current(array_keys(array_flip(
                 $SqlPart->getParameters()
             )))
+        );
+    }
+
+    public function test_to_Array()
+    {
+        $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
+
+        $data = $Criterium->toArray();
+
+        $this->assertEquals([
+            'column',
+            'value',
+            'operator_type',
+            'placeholder',
+            'glue',
+            'SqlPart'
+        ],
+            array_keys($data)
         );
     }
 

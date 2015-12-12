@@ -158,4 +158,31 @@ class CriteriaTest extends MockeryTest
         $this->assertInternalType('array', $Criteria->toArray());
     }
 
+    public function test_glue_by_and()
+    {
+        $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
+
+        $Criteria->glueByAnd();
+
+        $this->assertEquals(CriteriaBuilder::GLUE_AND, $Criteria->getGlue());
+    }
+
+    public function test_glue_by_or()
+    {
+        $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
+
+        $Criteria->glueByOr();
+
+        $this->assertEquals(CriteriaBuilder::GLUE_OR, $Criteria->getGlue());
+    }
+
+    public function test_reset_glue()
+    {
+        $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
+
+        $Criteria->resetGlue();
+
+        $this->assertEquals(null, $Criteria->getGlue());
+    }
+
 }
