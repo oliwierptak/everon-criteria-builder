@@ -109,7 +109,7 @@ class CriteriumTest extends MockeryTest
             'operator_type',
             'placeholder',
             'glue',
-            'SqlPart'
+            'SqlPart',
         ],
             array_keys($data)
         );
