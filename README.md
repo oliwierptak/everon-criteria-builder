@@ -1,6 +1,3 @@
-# everon-criteria-builder
-Beta version
-
 # Everon Criteria Builder v1.0
 Library to generate complete ```SQL WHERE``` statements, with simple, fluid and intuitive interface.
 
