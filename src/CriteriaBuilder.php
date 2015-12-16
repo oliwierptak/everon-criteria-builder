@@ -93,7 +93,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @return array
      */
-    protected function getArrayableData()
+    protected function getArrayableData(): array
     {
         $SqlPart = $this->toSqlPart();
 
@@ -103,7 +103,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @return string
      */
-    protected function getToString()
+    protected function getToString(): string
     {
         $SqlPart = $this->toSqlPart();
 
@@ -115,7 +115,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
      *
      * @return string
      */
-    protected function criteriaToSql(ContainerInterface $Container)
+    protected function criteriaToSql(ContainerInterface $Container): string
     {
         /*
          * @var CriteriumInterface $Criterium
@@ -134,7 +134,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
      *
      * @return array
      */
-    protected function criteriaToParameters(ContainerInterface $Container)
+    protected function criteriaToParameters(ContainerInterface $Container): array
     {
         /*
          * @var CriteriumInterface $Criterium
@@ -151,7 +151,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function where($column, $operator, $value, $glue = self::GLUE_AND)
+    public function where(string $column, string $operator, $value, $glue = self::GLUE_AND): CriteriaBuilderInterface
     {
         $this->openSequence();
 
@@ -170,7 +170,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function andWhere($column, $operator, $value)
+    public function andWhere(string $column, string $operator, $value): CriteriaBuilderInterface
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->currentContainerIndex < 0) {
@@ -185,7 +185,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function orWhere($column, $operator, $value)
+    public function orWhere(string $column, string $operator, $value): CriteriaBuilderInterface
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($column, $operator, $value);
         if ($this->currentContainerIndex < 0) {
@@ -200,7 +200,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = self::GLUE_AND)
+    public function whereRaw(string $sql, array $value = null, string $customType = 'raw', $glue = self::GLUE_AND): CriteriaBuilderInterface
     {
         $this->openSequence();
 
@@ -219,7 +219,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function andWhereRaw($sql, array $value = null, $customType = 'raw')
+    public function andWhereRaw(string $sql, array $value = null, string $customType = 'raw'): CriteriaBuilderInterface
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->currentContainerIndex < 0) {
@@ -234,7 +234,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function orWhereRaw($sql, array $value = null, $customType = 'raw')
+    public function orWhereRaw(string $sql, array $value = null, string $customType = 'raw'): CriteriaBuilderInterface
     {
         $Criterium = $this->getFactoryWorker()->buildCriteriaCriterium($sql, $customType, $value);
         if ($this->currentContainerIndex < 0) {
@@ -249,7 +249,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getCurrentContainer()
+    public function getCurrentContainer(): ContainerInterface
     {
         if ($this->getContainerCollection()->has($this->currentContainerIndex) === false) {
             $Criteria = $this->getFactoryWorker()->buildCriteria();
@@ -271,7 +271,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getContainerCollection()
+    public function getContainerCollection(): CollectionInterface
     {
         if ($this->ContainerCollection === null) {
             $this->ContainerCollection = new Collection([]);
@@ -299,7 +299,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function resetGlue()
+    public function resetGlue(): CriteriaBuilderInterface
     {
         $this->openSequence();
         $this->getCurrentContainer()->resetGlue();
@@ -310,7 +310,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function glueByAnd()
+    public function glueByAnd(): CriteriaBuilderInterface
     {
         $this->openSequence();
         $this->getCurrentContainer()->glueByAnd();
@@ -321,7 +321,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function glueByOr()
+    public function glueByOr(): CriteriaBuilderInterface
     {
         $this->openSequence();
         $this->getCurrentContainer()->glueByOr();
@@ -340,7 +340,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setGroupBy($groupBy)
+    public function setGroupBy($groupBy): CriteriaBuilderInterface
     {
         $this->groupBy = $groupBy;
 
@@ -358,7 +358,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setLimit($limit)
+    public function setLimit($limit): CriteriaBuilderInterface
     {
         $this->limit = $limit;
 
@@ -376,7 +376,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setOffset($offset)
+    public function setOffset($offset): CriteriaBuilderInterface
     {
         $this->offset = $offset;
 
@@ -394,7 +394,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setOrderBy(array $orderBy)
+    public function setOrderBy(array $orderBy): CriteriaBuilderInterface
     {
         $this->orderBy = $orderBy;
 
@@ -404,7 +404,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getSqlTemplate()
+    public function getSqlTemplate(): string
     {
         return $this->sqlTemplate;
     }
@@ -412,7 +412,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function sql($sqlTemplate)
+    public function sql($sqlTemplate): CriteriaBuilderInterface
     {
         $this->sqlTemplate = $sqlTemplate;
 
@@ -422,7 +422,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getOffsetLimitSql()
+    public function getOffsetLimitSql(): string
     {
         if ($this->getLimit() === null && $this->getOffset() === null) {
             return '';
@@ -442,7 +442,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getOrderByAndSortSql()
+    public function getOrderByAndSortSql(): string
     {
         if (is_array($this->getOrderBy()) === false || empty($this->getOrderBy())) {
             return '';
@@ -464,7 +464,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getGroupBySql()
+    public function getGroupBySql(): string
     {
         if ($this->getGroupBy() === null) {
             return '';
@@ -476,7 +476,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function toSqlPart()
+    public function toSqlPart(): SqlPartInterface
     {
         $sqlTokens = [];
         $parameters = [];
@@ -502,11 +502,11 @@ class CriteriaBuilder implements CriteriaBuilderInterface
 
     /**
      * @param array $sqlTokens
-     * @param $glue
+     * @param string|null $glue
      *
      * @return string
      */
-    protected function formatSqlQuery(array $sqlTokens, $glue)
+    protected function formatSqlQuery(array $sqlTokens, $glue): string
     {
         $sql_query = implode("\n", $sqlTokens);
         $sql_query = rtrim($sql_query, $glue . ' ');
@@ -520,7 +520,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @return bool
      */
-    protected function hasCustomSqlTemplate()
+    protected function hasCustomSqlTemplate(): bool
     {
         return $this->getSqlTemplate() !== $this->defaultSqlTemplate;
     }
@@ -541,7 +541,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public static function getOperatorClassNameBySqlOperator($sqlOperator)
+    public static function getOperatorClassNameBySqlOperator($sqlOperator): string
     {
         $sqlOperator = strtoupper(trim($sqlOperator));
         if (static::getOperatorCollection()->has($sqlOperator) === false) {
@@ -567,7 +567,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public static function randomizeParameterName($name)
+    public static function randomizeParameterName($name): string
     {
         return $name . '_' . mt_rand(100, time());
     }
@@ -575,7 +575,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public static function getOperatorCollection()
+    public static function getOperatorCollection(): CollectionInterface
     {
         if (static::$OperatorCollection === null) {
             static::$OperatorCollection = new Collection([
@@ -605,11 +605,14 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @return CriteriaBuilderFactoryWorkerInterface
      */
-    protected function getFactoryWorker()
+    protected function getFactoryWorker(): CriteriaBuilderFactoryWorkerInterface
     {
         return $this->getCriteriaBuilderFactoryWorker();
     }
 
+    /**
+     * @return void
+     */
     protected function openSequence()
     {
         if ($this->isSequenceOpened) {
@@ -620,6 +623,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $this->isSequenceOpened = true;
     }
 
+    /**
+     * @return void
+     */
     protected function closeSequence()
     {
         $this->isSequenceOpened = false;
@@ -631,7 +637,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
      *
      * @return array
      */
-    protected function mergeParametersDefaults(array $criteriaParameters, array $parameters)
+    protected function mergeParametersDefaults(array $criteriaParameters, array $parameters): array
     {
         $tmp = [];
         foreach ($criteriaParameters as $cpValues) {
@@ -649,7 +655,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
      *
      * @return string
      */
-    protected function resetGlueOnFirstIteration(array $sqlTokens, ContainerInterface $Container)
+    protected function resetGlueOnFirstIteration(array $sqlTokens, ContainerInterface $Container): string
     {
         $glue = (count($sqlTokens) === 0) ? '' : $Container->getGlue() . ' ';
 
@@ -667,7 +673,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function getParameterCollection()
+    public function getParameterCollection(): CollectionInterface
     {
         if ($this->ParameterCollection === null) {
             $this->ParameterCollection = new Collection([]);
@@ -679,7 +685,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setParameterCollection(array $parameterCollection)
+    public function setParameterCollection(array $parameterCollection): CriteriaBuilderInterface
     {
         foreach ($parameterCollection as $key => $value) {
             $this->setParameter($key, $value);
@@ -691,7 +697,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setParameter($name, $value)
+    public function setParameter($name, $value): CriteriaBuilderInterface
     {
         $name = str_replace('.', '_', $name);
         $this->getParameterCollection()->set($name, $value);

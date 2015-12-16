@@ -17,18 +17,18 @@ interface OperatorInterface
     /**
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * @return string
      */
-    public function getTypeAsSql();
+    public function getTypeAsSql(): string;
 
     /**
      * @param CriteriumInterface $Criterium
      *
      * @return array
      */
-    public function toSqlPartData(CriteriumInterface $Criterium);
+    public function toSqlPartData(CriteriumInterface $Criterium): array;
 
 }

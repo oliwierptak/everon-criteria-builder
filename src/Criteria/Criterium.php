@@ -75,7 +75,7 @@ class Criterium implements CriteriumInterface
     /**
      * @return array
      */
-    protected function getArrayableData()
+    protected function getArrayableData(): array
     {
         return [
             'column' => $this->getColumn(),
@@ -95,7 +95,7 @@ class Criterium implements CriteriumInterface
      *
      * @return OperatorInterface
      */
-    protected function buildOperatorWithValue($operator, $value)
+    protected function buildOperatorWithValue($operator, $value): OperatorInterface
     {
         $className = CriteriaBuilder::getOperatorClassNameBySqlOperator($operator);
         $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
@@ -111,7 +111,7 @@ class Criterium implements CriteriumInterface
      *
      * @return OperatorInterface
      */
-    protected function replaceOperatorForNulLValue(OperatorInterface $Operator, $value)
+    protected function replaceOperatorForNulLValue(OperatorInterface $Operator, $value): OperatorInterface
     {
         if ($value === null) {
             if ($Operator->getType() === Equal::TYPE_NAME) {
@@ -129,7 +129,7 @@ class Criterium implements CriteriumInterface
     /**
      * @inheritdoc
      */
-    public function getColumn()
+    public function getColumn(): string
     {
         return $this->column;
     }
@@ -193,7 +193,7 @@ class Criterium implements CriteriumInterface
     /**
      * @inheritdoc
      */
-    public function getPlaceholder()
+    public function getPlaceholder(): string
     {
         if ($this->value === null) {
             return 'NULL';
@@ -218,7 +218,7 @@ class Criterium implements CriteriumInterface
     /**
      * @inheritdoc
      */
-    public function getPlaceholderAsParameter()
+    public function getPlaceholderAsParameter(): string
     {
         return ltrim($this->getPlaceholder(), ':');
     }
@@ -226,7 +226,7 @@ class Criterium implements CriteriumInterface
     /**
      * @inheritdoc
      */
-    public function getOperatorType()
+    public function getOperatorType(): string
     {
         return $this->operator_type;
     }
@@ -250,7 +250,7 @@ class Criterium implements CriteriumInterface
     /**
      * @inheritdoc
      */
-    public function getSqlPart()
+    public function getSqlPart(): SqlPartInterface
     {
         if ($this->SqlPart === null) {
             $Operator = $this->buildOperatorWithValue($this->getOperatorType(), $this->getValue());
@@ -264,7 +264,7 @@ class Criterium implements CriteriumInterface
     /**
      * @return CriteriaBuilderFactoryWorkerInterface
      */
-    protected function getFactoryWorker()
+    protected function getFactoryWorker(): CriteriaBuilderFactoryWorkerInterface
     {
         return $this->getCriteriaBuilderFactoryWorker();
     }

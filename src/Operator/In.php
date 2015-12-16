@@ -24,7 +24,7 @@ class In extends AbstractOperator implements OperatorInterface
     /**
      * @inheritdoc
      */
-    public function toSqlPartData(CriteriumInterface $Criterium)
+    public function toSqlPartData(CriteriumInterface $Criterium): array
     {
         $params = [];
         $data = $Criterium->getValue();

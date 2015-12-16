@@ -20,56 +20,58 @@ interface CriteriaInterface extends ArrayableInterface
     /**
      * @param CriteriumInterface $Criterium
      *
-     * @return self
+     * @return CriteriaInterface
      */
-    public function where(CriteriumInterface $Criterium);
+    public function where(CriteriumInterface $Criterium): CriteriaInterface;
 
     /**
      * @param CriteriumInterface $Criterium
      *
      * @throws NoSubQueryFoundException
      *
-     * @return self
+     * @return CriteriaInterface
      */
-    public function andWhere(CriteriumInterface $Criterium);
+    public function andWhere(CriteriumInterface $Criterium): CriteriaInterface;
 
     /**
      * @param CriteriumInterface $Criterium
      *
      * @throws NoSubQueryFoundException
      *
-     * @return self
+     * @return CriteriaInterface
      */
-    public function orWhere(CriteriumInterface $Criterium);
+    public function orWhere(CriteriumInterface $Criterium): CriteriaInterface;
 
     /**
      * @return CollectionInterface|CriteriumInterface[]
      */
-    public function getCriteriumCollection();
+    public function getCriteriumCollection(): CollectionInterface;
 
     /**
      * @param CollectionInterface $CriteriumCollection
+     *
+     * @return CriteriaInterface
      */
-    public function setCriteriumCollection(CollectionInterface $CriteriumCollection);
+    public function setCriteriumCollection(CollectionInterface $CriteriumCollection): CriteriaInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getGlue();
 
     /**
-     * @return void
+     * @return CriteriaInterface
      */
-    public function resetGlue();
+    public function resetGlue(): CriteriaInterface;
 
     /**
-     * @return void
+     * @return CriteriaInterface
      */
-    public function glueByAnd();
+    public function glueByAnd(): CriteriaInterface;
 
     /**
-     * @return void
+     * @return CriteriaInterface
      */
-    public function glueByOr();
+    public function glueByOr(): CriteriaInterface;
 
 }

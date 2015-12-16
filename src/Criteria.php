@@ -31,9 +31,11 @@ class Criteria implements CriteriaInterface
     protected $glue = CriteriaBuilder::GLUE_AND;
 
     /**
+     * @param bool $deep
+     *
      * @return array
      */
-    protected function getArrayableData($deep=false)
+    protected function getArrayableData(bool $deep = false): array
     {
         return $this->getCriteriumCollection()->toArray($deep);
     }
@@ -41,7 +43,7 @@ class Criteria implements CriteriaInterface
     /**
      * @inheritdoc
      */
-    public function where(CriteriumInterface $Criterium)
+    public function where(CriteriumInterface $Criterium): CriteriaInterface
     {
         $Criterium->resetGlue();
         $this->getCriteriumCollection()->append($Criterium);
@@ -52,7 +54,7 @@ class Criteria implements CriteriaInterface
     /**
      * @inheritdoc
      */
-    public function andWhere(CriteriumInterface $Criterium)
+    public function andWhere(CriteriumInterface $Criterium): CriteriaInterface
     {
         if ($this->getCriteriumCollection()->isEmpty()) {
             throw new NoSubQueryFoundException();
@@ -67,7 +69,7 @@ class Criteria implements CriteriaInterface
     /**
      * @inheritdoc
      */
-    public function orWhere(CriteriumInterface $Criterium)
+    public function orWhere(CriteriumInterface $Criterium): CriteriaInterface
     {
         if ($this->getCriteriumCollection()->isEmpty()) {
             throw new NoSubQueryFoundException();
@@ -82,7 +84,7 @@ class Criteria implements CriteriaInterface
     /**
      * @inheritdoc
      */
-    public function getCriteriumCollection()
+    public function getCriteriumCollection(): CollectionInterface
     {
         if ($this->CriteriumCollection === null) {
             $this->CriteriumCollection = new Collection([]);
@@ -94,9 +96,11 @@ class Criteria implements CriteriaInterface
     /**
      * @inheritdoc
      */
-    public function setCriteriumCollection(CollectionInterface $CriteriumCollection)
+    public function setCriteriumCollection(CollectionInterface $CriteriumCollection): CriteriaInterface
     {
         $this->CriteriumCollection = $CriteriumCollection;
+
+        return $this;
     }
 
     /**
@@ -110,25 +114,31 @@ class Criteria implements CriteriaInterface
     /**
      * @inheritdoc
      */
-    public function resetGlue()
+    public function resetGlue(): CriteriaInterface
     {
         $this->glue = null;
+
+        return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function glueByAnd()
+    public function glueByAnd(): CriteriaInterface
     {
         $this->glue = CriteriaBuilder::GLUE_AND;
+
+        return $this;
     }
 
     /**
      * @inheritdoc
      */
-    public function glueByOr()
+    public function glueByOr(): CriteriaInterface
     {
         $this->glue = CriteriaBuilder::GLUE_OR;
+
+        return $this;
     }
 
 }

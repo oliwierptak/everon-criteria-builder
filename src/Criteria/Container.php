@@ -38,7 +38,7 @@ class Container implements ContainerInterface
     /**
      * @return CriteriaInterface
      */
-    public function getCriteria()
+    public function getCriteria(): CriteriaInterface
     {
         return $this->Criteria;
     }
@@ -62,7 +62,7 @@ class Container implements ContainerInterface
     /**
      * @param string $glue
      */
-    public function setGlue($glue)
+    public function setGlue(string $glue)
     {
         $this->glue = $glue;
     }

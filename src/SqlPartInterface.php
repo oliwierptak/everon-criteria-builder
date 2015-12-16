@@ -17,7 +17,7 @@ interface SqlPartInterface extends ArrayableInterface
     /**
      * @return array
      */
-    public function getParameters();
+    public function getParameters(): array;
 
     /**
      * @param array $parameters
@@ -40,7 +40,7 @@ interface SqlPartInterface extends ArrayableInterface
     /**
      * @return string
      */
-    public function getSql();
+    public function getSql(): string;
 
     /**
      * @param string $sql

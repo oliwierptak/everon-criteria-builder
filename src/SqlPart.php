@@ -39,7 +39,7 @@ class SqlPart implements SqlPartInterface
     /**
      * @return array
      */
-    protected function getArrayableData()
+    protected function getArrayableData(): array
     {
         return [
             'sql' => $this->getSql(),
@@ -66,7 +66,7 @@ class SqlPart implements SqlPartInterface
     /**
      * @inheritdoc
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
@@ -82,7 +82,7 @@ class SqlPart implements SqlPartInterface
     /**
      * @inheritdoc
      */
-    public function getSql()
+    public function getSql(): string
     {
         return $this->sql;
     }

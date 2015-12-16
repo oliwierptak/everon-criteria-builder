@@ -19,7 +19,7 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
     /**
      * @return string
      */
-    public function getColumn();
+    public function getColumn(): string;
 
     /**
      * @param string $column
@@ -29,7 +29,7 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
     /**
      * @return string
      */
-    public function getOperatorType();
+    public function getOperatorType(): string;
 
     /**
      * @param string
@@ -47,7 +47,7 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
     public function setValue($value);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getGlue();
 
@@ -69,7 +69,7 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
     /**
      * @return mixed
      */
-    public function getPlaceholder();
+    public function getPlaceholder(): string;
 
     /**
      * @param mixed $placeholder
@@ -79,12 +79,12 @@ interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryW
     /**
      * @return string
      */
-    public function getPlaceholderAsParameter();
+    public function getPlaceholderAsParameter(): string;
 
     /**
      * @return SqlPartInterface
      */
-    public function getSqlPart();
+    public function getSqlPart(): SqlPartInterface;
 
     /**
      * @param SqlPartInterface $SqlPart

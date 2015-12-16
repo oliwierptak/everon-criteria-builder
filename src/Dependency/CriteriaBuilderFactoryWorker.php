@@ -22,7 +22,7 @@ trait CriteriaBuilderFactoryWorker
     /**
      * @return CriteriaBuilderFactoryWorkerInterface
      */
-    public function getCriteriaBuilderFactoryWorker()
+    public function getCriteriaBuilderFactoryWorker(): CriteriaBuilderFactoryWorkerInterface
     {
         return $this->CriteriaBuilderFactoryWorker;
     }

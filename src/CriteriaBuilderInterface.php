@@ -29,7 +29,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function where($column, $operator, $value, $glue = CriteriaBuilder::GLUE_AND);
+    public function where(string $column, string $operator, $value, $glue = CriteriaBuilder::GLUE_AND): CriteriaBuilderInterface;
 
     /**
      * Appends to current sub set
@@ -40,7 +40,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function andWhere($column, $operator, $value);
+    public function andWhere(string $column, string $operator, $value): CriteriaBuilderInterface;
 
     /**
      * Appends to current sub set
@@ -51,7 +51,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function orWhere($column, $operator, $value);
+    public function orWhere(string $column, string $operator, $value): CriteriaBuilderInterface;
 
     /**
      * Starts new sub set of conditions
@@ -63,7 +63,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = CriteriaBuilder::GLUE_AND);
+    public function whereRaw(string $sql, array $value = null, string $customType = 'raw', $glue = CriteriaBuilder::GLUE_AND): CriteriaBuilderInterface;
 
     /**
      * @param string $sql
@@ -72,7 +72,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function andWhereRaw($sql, array $value = null, $customType = 'raw');
+    public function andWhereRaw(string $sql, array $value = null, string $customType = 'raw'): CriteriaBuilderInterface;
 
     /**
      * @param string $sql
@@ -81,12 +81,12 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return self
      */
-    public function orWhereRaw($sql, array $value = null, $customType = 'raw');
+    public function orWhereRaw(string $sql, array $value = null, string $customType = 'raw'): CriteriaBuilderInterface;
 
     /**
      * @return ContainerInterface
      */
-    public function getCurrentContainer();
+    public function getCurrentContainer(): ContainerInterface;
 
     /**
      * @param ContainerInterface $Container
@@ -96,7 +96,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     /**
      * @return CollectionInterface|CriteriaInterface[]
      */
-    public function getContainerCollection();
+    public function getContainerCollection(): CollectionInterface;
 
     /**
      * @param CollectionInterface $ContainerCollection
@@ -104,60 +104,60 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function setContainerCollection(CollectionInterface $ContainerCollection);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getGlue();
 
     /**
-     * @return self
+     * @return CriteriaBuilderInterface
      */
-    public function resetGlue();
+    public function resetGlue(): CriteriaBuilderInterface;
 
     /**
-     * @return self
+     * @return CriteriaBuilderInterface
      */
-    public function glueByAnd();
+    public function glueByAnd(): CriteriaBuilderInterface;
 
     /**
-     * @return self
+     * @return CriteriaBuilderInterface
      */
-    public function glueByOr();
+    public function glueByOr(): CriteriaBuilderInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getGroupBy();
 
     /**
-     * @param string $groupBy
+     * @param string|null $groupBy
      *
      * @return CriteriaBuilderInterface
      */
-    public function setGroupBy($groupBy);
+    public function setGroupBy($groupBy): CriteriaBuilderInterface;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getLimit();
 
     /**
-     * @param int $limit
+     * @param int|null $limit
      *
      * @return CriteriaBuilderInterface
      */
-    public function setLimit($limit);
+    public function setLimit($limit): CriteriaBuilderInterface;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getOffset();
 
     /**
-     * @param int $offset
+     * @param int|null $offset
      *
      * @return CriteriaBuilderInterface
      */
-    public function setOffset($offset);
+    public function setOffset($offset): CriteriaBuilderInterface;
 
     /**
      * @return array
@@ -169,7 +169,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return CriteriaBuilderInterface
      */
-    public function setOrderBy(array $orderBy);
+    public function setOrderBy(array $orderBy): CriteriaBuilderInterface;
 
     /**
      * @return string
@@ -179,14 +179,14 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     /**
      * @param string $sqlTemplate
      *
-     * @return self
+     * @return CriteriaBuilderInterface
      */
-    public function sql($sqlTemplate);
+    public function sql($sqlTemplate): CriteriaBuilderInterface;
 
     /**
      * @return SqlPartInterface
      */
-    public function toSqlPart();
+    public function toSqlPart(): SqlPartInterface;
 
     /**
      * @param CollectionInterface $ContainerCollectionToMerge
@@ -201,7 +201,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return string
      */
-    public static function getOperatorClassNameBySqlOperator($sqlOperator);
+    public static function getOperatorClassNameBySqlOperator($sqlOperator): string;
 
     /**
      * @param string $sqlType
@@ -216,27 +216,27 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      *
      * @return string
      */
-    public static function randomizeParameterName($name);
+    public static function randomizeParameterName($name): string;
 
     /**
      * @return string
      */
-    public function getOffsetLimitSql();
+    public function getOffsetLimitSql(): string;
 
     /**
      * @return string
      */
-    public function getOrderByAndSortSql();
+    public function getOrderByAndSortSql(): string;
 
     /**
      * @return string
      */
-    public function getGroupBySql();
+    public function getGroupBySql(): string;
 
     /**
      * @return CollectionInterface
      */
-    public static function getOperatorCollection();
+    public static function getOperatorCollection(): CollectionInterface;
 
     /**
      * @return void
@@ -246,14 +246,14 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     /**
      * @return CollectionInterface
      */
-    public function getParameterCollection();
+    public function getParameterCollection(): CollectionInterface;
 
     /**
      * @param array $parameterCollection
      *
-     * @return self
+     * @return CriteriaBuilderInterface
      */
-    public function setParameterCollection(array $parameterCollection);
+    public function setParameterCollection(array $parameterCollection): CriteriaBuilderInterface;
 
     /**
      * Replaces . with _
@@ -261,12 +261,12 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      * @param string $name
      * @param $value
      *
-     * @return self
+     * @return CriteriaBuilderInterface
      */
-    public function setParameter($name, $value);
+    public function setParameter($name, $value): CriteriaBuilderInterface;
 
     /**
-     * @param string $name
+     * @param string|int $name
      * @param $value
      *
      * @return

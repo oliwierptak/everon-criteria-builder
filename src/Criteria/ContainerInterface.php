@@ -17,7 +17,7 @@ interface ContainerInterface
     /**
      * @return CriteriaInterface
      */
-    public function getCriteria();
+    public function getCriteria(): CriteriaInterface;
 
     /**
      * @param CriteriaInterface $Criteria
@@ -25,14 +25,14 @@ interface ContainerInterface
     public function setCriteria(CriteriaInterface $Criteria);
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getGlue();
 
     /**
      * @param string $glue
      */
-    public function setGlue($glue);
+    public function setGlue(string $glue);
 
     /**
      * @return void

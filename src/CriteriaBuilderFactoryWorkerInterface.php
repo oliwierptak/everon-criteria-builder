@@ -24,7 +24,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @return CriteriaInterface
      */
-    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder');
+    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder'): CriteriaInterface;
 
     /**
      * @param string $namespace
@@ -33,7 +33,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @return CriteriaBuilderInterface
      */
-    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder');
+    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder'): CriteriaBuilderInterface;
 
     /**
      * @param $column
@@ -45,7 +45,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @return CriteriumInterface
      */
-    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria');
+    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria'): CriteriumInterface;
 
     /**
      * @param CriteriaInterface $Criteria
@@ -56,7 +56,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @return ContainerInterface
      */
-    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria');
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria'): ContainerInterface;
 
     /**
      * @param $class_name
@@ -65,7 +65,7 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @return OperatorInterface
      */
-    public function buildCriteriaOperator($class_name);
+    public function buildCriteriaOperator($class_name): OperatorInterface;
 
     /**
      * @param $sql
@@ -76,6 +76,6 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      *
      * @return SqlPartInterface
      */
-    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder');
+    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder'): SqlPartInterface;
 
 }

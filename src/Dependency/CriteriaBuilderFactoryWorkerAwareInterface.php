@@ -17,7 +17,7 @@ interface CriteriaBuilderFactoryWorkerAwareInterface
     /**
      * @return CriteriaBuilderFactoryWorkerInterface
      */
-    public function getCriteriaBuilderFactoryWorker();
+    public function getCriteriaBuilderFactoryWorker(): CriteriaBuilderFactoryWorkerInterface;
 
     /**
      * @param CriteriaBuilderFactoryWorkerInterface $FactoryWorker

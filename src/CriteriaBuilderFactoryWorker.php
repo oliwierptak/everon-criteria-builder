@@ -9,6 +9,8 @@
  */
 namespace Everon\Component\CriteriaBuilder;
 
+use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
+use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\Factory\AbstractWorker;
 use Everon\Component\Factory\Exception\UnableToInstantiateException;
 
@@ -28,7 +30,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder')
+    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder'): CriteriaInterface
     {
         try {
             return $this->getFactory()->buildWithEmptyConstructor('Criteria', $namespace);
@@ -40,7 +42,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
+    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder'): CriteriaBuilderInterface
     {
         try {
             return $this->getFactory()->buildWithEmptyConstructor('CriteriaBuilder', $namespace);
@@ -52,7 +54,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria')
+    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria'): CriteriumInterface
     {
         try {
             return $this->getFactory()->buildWithConstructorParameters('Criterium', $namespace,
@@ -68,7 +70,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria')
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria'): ContainerInterface
     {
         try {
             return $this->getFactory()->buildWithConstructorParameters('Container', $namespace,
@@ -84,7 +86,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaOperator($class_name)
+    public function buildCriteriaOperator($class_name): OperatorInterface
     {
         try {
             return $this->getFactory()->buildWithEmptyConstructor($class_name, '');
@@ -96,7 +98,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder')
+    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder'): SqlPartInterface
     {
         try {
             return $this->getFactory()->buildWithConstructorParameters('SqlPart', $namespace,
