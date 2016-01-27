@@ -19,18 +19,18 @@ class SqlPart implements SqlPartInterface
     /**
      * @var string
      */
-    protected $sql = null;
+    protected $sql;
 
     /**
      * @var array
      */
-    protected $parameters = null;
+    protected $parameters = [];
 
     /**
-     * @param $sql
-     * @param $parameters
+     * @param string $sql
+     * @param array $parameters
      */
-    public function __construct($sql, $parameters)
+    public function __construct(string $sql, array $parameters)
     {
         $this->sql = $sql;
         $this->parameters = $parameters;
@@ -50,7 +50,7 @@ class SqlPart implements SqlPartInterface
     /**
      * @inheritdoc
      */
-    public function setParameterValue($name, $value)
+    public function setParameterValue(string $name, $value)
     {
         $this->parameters[$name] = $value;
     }
@@ -58,7 +58,7 @@ class SqlPart implements SqlPartInterface
     /**
      * @inheritdoc
      */
-    public function getParameterValue($name)
+    public function getParameterValue(string $name)
     {
         return $this->parameters[$name];
     }
@@ -74,7 +74,7 @@ class SqlPart implements SqlPartInterface
     /**
      * @inheritdoc
      */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
     }
@@ -84,13 +84,13 @@ class SqlPart implements SqlPartInterface
      */
     public function getSql(): string
     {
-        return $this->sql;
+        return (string) $this->sql;
     }
 
     /**
      * @inheritdoc
      */
-    public function setSql($sql)
+    public function setSql(string $sql)
     {
         $this->sql = $sql;
     }

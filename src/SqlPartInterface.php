@@ -22,20 +22,20 @@ interface SqlPartInterface extends ArrayableInterface
     /**
      * @param array $parameters
      */
-    public function setParameters($parameters);
+    public function setParameters(array $parameters);
 
     /**
-     * @param $name
+     * @param string $name
      * @param $value
      */
-    public function setParameterValue($name, $value);
+    public function setParameterValue(string $name, $value);
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return mixed
      */
-    public function getParameterValue($name);
+    public function getParameterValue(string $name);
 
     /**
      * @return string
@@ -45,6 +45,6 @@ interface SqlPartInterface extends ArrayableInterface
     /**
      * @param string $sql
      */
-    public function setSql($sql);
+    public function setSql(string $sql);
 
 }
