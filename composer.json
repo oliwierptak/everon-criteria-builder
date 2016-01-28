@@ -3,7 +3,6 @@
   "description": "Everon Criteria Builder Component",
   "type": "library",
   "license": "MIT",
-  "version": "1.0.1",
   "authors": [{
     "name": "Oliwier Ptak",
     "email": "everonphp@gmail.com"
