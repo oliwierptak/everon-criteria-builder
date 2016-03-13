@@ -14,7 +14,6 @@ use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\Factory\Dependency\Container;
-use Everon\Component\Factory\Dependency\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
 use Everon\Component\Factory\FactoryInterface;
 use Everon\Component\Utils\TestCase\MockeryTest;
@@ -38,10 +37,11 @@ class CriteriaTest extends MockeryTest
     protected function setUp()
     {
         $Container = new Container();
-
-        /* @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
-        $this->CriteriaBuilderFactoryWorker = $this->Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
+        $this->Factory->registerWorkerCallback('CriteriaBuilderFactoryWorker', function () {
+            return $this->Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
+        });
+        $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
     }
 
     public function test_Constructor()
