@@ -9,6 +9,8 @@
  */
 namespace Everon\Component\CriteriaBuilder;
 
+use Everon\Component\CriteriaBuilder\Criteria\Container;
+use Everon\Component\CriteriaBuilder\Criteria\Criterium;
 use Everon\Component\Factory\AbstractWorker;
 use Everon\Component\Factory\Exception\UnableToInstantiateException;
 
@@ -20,18 +22,21 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
      */
     protected function registerBeforeWork()
     {
-        $this->registerWorker('CriteriaBuilderFactoryWorker', function () {
-            return $this->getFactory()->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+        $this->getFactory()->registerWorkerCallback('CriteriaBuilderFactoryWorker', function () {
+            return $this->getFactory()->buildWorker(self::class);
         });
     }
 
     /**
      * @inheritdoc
      */
-    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder')
+    public function buildCriteria()
     {
         try {
-            return $this->getFactory()->buildWithEmptyConstructor('Criteria', $namespace);
+            $Criteria = new Criteria();
+            $this->getFactory()->injectDependencies(Criteria::class, $Criteria);
+
+            return $Criteria;
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -43,7 +48,10 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder')
     {
         try {
-            return $this->getFactory()->buildWithEmptyConstructor('CriteriaBuilder', $namespace);
+            $CriteriaBuilder = new CriteriaBuilder();
+            $this->getFactory()->injectDependencies(CriteriaBuilder::class, $CriteriaBuilder);
+
+            return $CriteriaBuilder;
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -52,14 +60,13 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria')
+    public function buildCriteriaCriterium($column, $operator, $value)
     {
         try {
-            return $this->getFactory()->buildWithConstructorParameters('Criterium', $namespace,
-                $this->getFactory()->buildParameterCollection([
-                    $column, $operator, $value,
-                ])
-            );
+            $Criterium = new Criterium($column, $operator, $value);
+            $this->getFactory()->injectDependencies(Criterium::class, $Criterium);
+
+            return $Criterium;
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -68,14 +75,13 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria')
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue)
     {
         try {
-            return $this->getFactory()->buildWithConstructorParameters('Container', $namespace,
-                $this->getFactory()->buildParameterCollection([
-                    $Criteria, $glue,
-                ])
-            );
+            $Container = new Container($Criteria, $glue);
+            $this->getFactory()->injectDependencies(Container::class, $Container);
+
+            return $Container;
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -87,7 +93,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     public function buildCriteriaOperator($class_name)
     {
         try {
-            return $this->getFactory()->buildWithEmptyConstructor($class_name, '');
+            return new $class_name();
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }
@@ -96,14 +102,13 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder')
+    public function buildSqlPart($sql, array $parameters)
     {
         try {
-            return $this->getFactory()->buildWithConstructorParameters('SqlPart', $namespace,
-                $this->getFactory()->buildParameterCollection([
-                    $sql, $parameters,
-                ])
-            );
+            $SqlPart = new SqlPart($sql, $parameters);
+            $this->getFactory()->injectDependencies(SqlPart::class, $SqlPart);
+
+            return $SqlPart;
         } catch (\Exception $e) {
             throw new UnableToInstantiateException($e);
         }

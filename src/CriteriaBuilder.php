@@ -579,23 +579,23 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     {
         if (static::$OperatorCollection === null) {
             static::$OperatorCollection = new Collection([
-                Operator\Between::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Between',
-                Operator\Equal::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Equal',
-                Operator\GreaterOrEqual::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\GreaterOrEqual',
-                Operator\GreaterThen::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\GreaterThen',
-                Operator\Ilike::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Ilike',
-                Operator\In::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\In',
-                Operator\Is::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Is',
-                Operator\Like::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Like',
-                Operator\NotBetween::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotBetween',
-                Operator\NotEqual::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotEqual',
-                Operator\NotIlike::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotIlike',
-                Operator\NotIn::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotIn',
-                Operator\NotIs::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotIs',
-                Operator\NotLike::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\NotLike',
-                Operator\Raw::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\Raw',
-                Operator\SmallerOrEqual::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\SmallerOrEqual',
-                Operator\SmallerThen::TYPE_AS_SQL => 'Everon\Component\CriteriaBuilder\Operator\SmallerThen',
+                Operator\Between::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\Between::class,
+                Operator\Equal::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\Equal::class,
+                Operator\GreaterOrEqual::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\GreaterOrEqual::class,
+                Operator\GreaterThen::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\GreaterThen::class,
+                Operator\Ilike::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\Ilike::class,
+                Operator\In::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\In::class,
+                Operator\Is::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\Is::class,
+                Operator\Like::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\Like::class,
+                Operator\NotBetween::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\NotBetween::class,
+                Operator\NotEqual::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\NotEqual::class,
+                Operator\NotIlike::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\NotIlike::class,
+                Operator\NotIn::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\NotIn::class,
+                Operator\NotIs::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\NotIs::class,
+                Operator\NotLike::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\NotLike::class,
+                Operator\Raw::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\Raw::class,
+                Operator\SmallerOrEqual::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\SmallerOrEqual::class,
+                Operator\SmallerThen::TYPE_AS_SQL => \Everon\Component\CriteriaBuilder\Operator\SmallerThen::class,
             ]);
         }
 
@@ -610,6 +610,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         return $this->getCriteriaBuilderFactoryWorker();
     }
 
+    /**
+     * @return void
+     */
     protected function openSequence()
     {
         if ($this->isSequenceOpened) {
@@ -620,6 +623,9 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $this->isSequenceOpened = true;
     }
 
+    /**
+     * @return void
+     */
     protected function closeSequence()
     {
         $this->isSequenceOpened = false;

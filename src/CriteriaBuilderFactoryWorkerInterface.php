@@ -18,13 +18,11 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
 {
 
     /**
-     * @param string $namespace
-     *
      * @throws UnableToInstantiateException
      *
      * @return CriteriaInterface
      */
-    public function buildCriteria($namespace='Everon\Component\CriteriaBuilder');
+    public function buildCriteria();
 
     /**
      * @param string $namespace
@@ -36,30 +34,28 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
     public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder');
 
     /**
-     * @param $column
-     * @param $operator
-     * @param $value
-     * @param string $namespace
+     * @param string $column
+     * @param string $operator
+     * @param string $value
      *
      * @throws UnableToInstantiateException
      *
      * @return CriteriumInterface
      */
-    public function buildCriteriaCriterium($column, $operator, $value, $namespace = 'Everon\Component\CriteriaBuilder\Criteria');
+    public function buildCriteriaCriterium($column, $operator, $value);
 
     /**
      * @param CriteriaInterface $Criteria
-     * @param $glue
-     * @param string $namespace
+     * @param string $glue
      *
      * @throws UnableToInstantiateException
      *
      * @return ContainerInterface
      */
-    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue, $namespace='Everon\Component\CriteriaBuilder\Criteria');
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue);
 
     /**
-     * @param $class_name
+     * @param string $class_name
      *
      * @throws UnableToInstantiateException
      *
@@ -68,14 +64,13 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
     public function buildCriteriaOperator($class_name);
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $parameters
-     * @param string $namespace
      *
      * @throws UnableToInstantiateException
      *
      * @return SqlPartInterface
      */
-    public function buildSqlPart($sql, array $parameters, $namespace = 'Everon\Component\CriteriaBuilder');
+    public function buildSqlPart($sql, array $parameters);
 
 }

@@ -11,6 +11,8 @@ namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface as CriteriaContainerInterface;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
@@ -32,7 +34,8 @@ class ContainerTest extends MockeryTest
     {
         $Container = new Container();
         $Factory = new FactoryStub($Container);
-        $CriteriaBuilderFactoryWorker = $Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+        /* @var CriteriaBuilderFactoryWorkerInterface  $CriteriaBuilderFactoryWorker */
+        $CriteriaBuilderFactoryWorker = $Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
 
         $Criteria = Mockery::mock('Everon\Component\CriteriaBuilder\CriteriaInterface');
         /* @var CriteriaInterface  $Criteria */
