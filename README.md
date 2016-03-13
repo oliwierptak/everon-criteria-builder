@@ -1,4 +1,4 @@
-# Everon Criteria Builder v1.0
+# Everon Criteria Builder
 Library to generate complete ```SQL WHERE``` statements, with simple, fluid and intuitive interface.
 
 ## Works with
@@ -348,11 +348,11 @@ include('vendor/autoload.php');
 
 $Container = new Container();
 $Factory = new Factory($Container);
-/* @var CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker */
-$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName(
-    'CriteriaBuilder', 'Everon\Component\CriteriaBuilder'
-);
+$Factory->registerWorkerCallback('CriteriaBuilderFactoryWorker', function() use ($Factory) {
+    return $Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
+});
 
+$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
 $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 ```
 
