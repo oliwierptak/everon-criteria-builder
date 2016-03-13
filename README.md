@@ -348,11 +348,11 @@ include('vendor/autoload.php');
 
 $Container = new Container();
 $Factory = new Factory($Container);
-/* @var CriteriaBuilderFactoryWorkerInterface $CriteriaBuilderFactoryWorker */
-$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName(
-    'CriteriaBuilder', 'Everon\Component\CriteriaBuilder'
-);
+$Factory->registerWorkerCallback('CriteriaBuilderFactoryWorker', function() use ($Factory) {
+    return $Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
+});
 
+$CriteriaBuilderFactoryWorker = $Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
 $CriteriaBuilder = $CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 ```
 
