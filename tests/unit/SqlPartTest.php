@@ -9,6 +9,7 @@
  */
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
+use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\Factory\Dependency\Container;
 use Everon\Component\Factory\Dependency\ContainerInterface;
@@ -35,7 +36,7 @@ class SqlPartTest extends MockeryTest
 
         /* @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
-        $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+        $this->CriteriaBuilderFactoryWorker = $this->Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
     }
 
     public function test_Constructor()

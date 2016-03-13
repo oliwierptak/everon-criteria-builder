@@ -32,7 +32,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function where($column, $operator, $value, $glue = CriteriaBuilder::GLUE_AND);
 
     /**
-     * Appends to current sub set
+     * Appends another condition to current set, using AND operator
      * 
      * @param string $column
      * @param string $operator
@@ -43,7 +43,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function andWhere($column, $operator, $value);
 
     /**
-     * Appends to current sub set
+     * Appends another condition to current set, using OR operator
      * 
      * @param string $column
      * @param string $operator
@@ -54,7 +54,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function orWhere($column, $operator, $value);
 
     /**
-     * Starts new sub set of conditions
+     * Starts new sub set of conditions using raw SQL string
      *
      * @param string $sql
      * @param array|null $value
@@ -66,6 +66,8 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = CriteriaBuilder::GLUE_AND);
 
     /**
+     * Appends another condition to current set, using AND operator with raw SQL string
+     *
      * @param string $sql
      * @param array|null $value
      * @param string $customType
@@ -75,6 +77,8 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function andWhereRaw($sql, array $value = null, $customType = 'raw');
 
     /**
+     * Appends another condition to current set, using OR operator with raw SQL string
+     *
      * @param string $sql
      * @param array $value
      * @param string $customType
@@ -104,21 +108,29 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function setContainerCollection(CollectionInterface $ContainerCollection);
 
     /**
+     * Get operator joining current condition set
+     *
      * @return string
      */
     public function getGlue();
 
     /**
+     * Reset operator joining current condition set
+     *
      * @return self
      */
     public function resetGlue();
 
     /**
+     * Join set of conditions with another set using AND operator
+     *
      * @return self
      */
     public function glueByAnd();
 
     /**
+     * Join set of conditions with another set using OR operator
+     *
      * @return self
      */
     public function glueByOr();
@@ -172,11 +184,15 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function setOrderBy(array $orderBy);
 
     /**
+     * Get raw SQL template used to generate output, default is 'WHERE %s'
+     *
      * @return string
      */
     public function getSqlTemplate();
 
     /**
+     * Set raw SQL template used to generate output, default is 'WHERE %s'
+     *
      * @param string $sqlTemplate
      *
      * @return self
@@ -205,7 +221,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
 
     /**
      * @param string $sqlType
-     * @param $operatorClassName
+     * @param string $operatorClassName
      *
      * @return void
      */
@@ -269,7 +285,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      * @param string $name
      * @param $value
      *
-     * @return
+     * @return mixed
      */
     public function getParameter($name);
 

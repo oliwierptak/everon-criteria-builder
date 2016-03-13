@@ -10,6 +10,7 @@
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\CriteriaInterface;
 use Everon\Component\CriteriaBuilder\Operator\Equal;
@@ -36,7 +37,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
     {
         $Container = new Container();
         $this->Factory = new FactoryStub($Container);
-        $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+        $this->CriteriaBuilderFactoryWorker = $this->Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
     }
 
     public function test_is_a_worker()

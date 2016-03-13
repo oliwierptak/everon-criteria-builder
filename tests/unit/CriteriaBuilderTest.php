@@ -10,6 +10,7 @@
 namespace Everon\Component\CriteriaBuilder\Tests\Unit;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilder;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
 use Everon\Component\CriteriaBuilder\OperatorInterface;
 use Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\FactoryStub;
@@ -38,10 +39,10 @@ class CriteriaBuilderTest extends MockeryTest
 
         /* @var ContainerInterface $Container */
         $this->Factory = new FactoryStub($Container);
-        $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilder', 'Everon\Component\CriteriaBuilder');
+        $this->CriteriaBuilderFactoryWorker = $this->Factory->buildWorker(CriteriaBuilderFactoryWorker::class);
     }
 
-    public function testConstructor()
+    public function test_constructor()
     {
         $Builder = new CriteriaBuilder();
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderInterface', $Builder);
@@ -270,7 +271,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         /* @var OperatorInterface $CustomOperator */
         CriteriaBuilder::registerOperator(
             OperatorCustomTypeStub::TYPE_AS_SQL,
-            'Everon\Component\CriteriaBuilder\Tests\Unit\Doubles\OperatorCustomTypeStub'
+            OperatorCustomTypeStub::class
         );
 
         $CriteriaBuilder
