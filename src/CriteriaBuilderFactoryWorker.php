@@ -20,16 +20,6 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     /**
      * @inheritdoc
      */
-    protected function registerBeforeWork()
-    {
-        $this->getFactory()->registerWorkerCallback('CriteriaBuilderFactoryWorker', function () {
-            return $this->getFactory()->buildWorker(self::class);
-        });
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function buildCriteria()
     {
         try {
@@ -38,7 +28,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
 
             return $Criteria;
         } catch (\Exception $e) {
-            throw new UnableToInstantiateException($e);
+            throw new UnableToInstantiateException(Criteria::class, null, $e);
         }
     }
 
@@ -53,7 +43,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
 
             return $CriteriaBuilder;
         } catch (\Exception $e) {
-            throw new UnableToInstantiateException($e);
+            throw new UnableToInstantiateException(CriteriaBuilder::class, null, $e);
         }
     }
 
@@ -68,7 +58,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
 
             return $Criterium;
         } catch (\Exception $e) {
-            throw new UnableToInstantiateException($e);
+            throw new UnableToInstantiateException(Criterium::class, null, $e);
         }
     }
 
@@ -83,7 +73,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
 
             return $Container;
         } catch (\Exception $e) {
-            throw new UnableToInstantiateException($e);
+            throw new UnableToInstantiateException(Container::class, null, $e);
         }
     }
 
@@ -95,7 +85,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
         try {
             return new $class_name();
         } catch (\Exception $e) {
-            throw new UnableToInstantiateException($e);
+            throw new UnableToInstantiateException($class_name, null, $e);
         }
     }
 
@@ -110,7 +100,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
 
             return $SqlPart;
         } catch (\Exception $e) {
-            throw new UnableToInstantiateException($e);
+            throw new UnableToInstantiateException(SqlPart::class, null, $e);
         }
     }
 
