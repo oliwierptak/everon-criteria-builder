@@ -33,7 +33,6 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
      */
     protected $Factory;
 
-
     protected function setUp()
     {
         $Container = new Container();
