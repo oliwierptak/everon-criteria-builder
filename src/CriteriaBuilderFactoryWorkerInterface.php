@@ -11,34 +11,25 @@ namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
-use Everon\Component\Factory\Exception\UnableToInstantiateException;
 use Everon\Component\Factory\FactoryWorkerInterface;
 
 interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
 {
 
     /**
-     * @throws UnableToInstantiateException
-     *
      * @return CriteriaInterface
      */
     public function buildCriteria();
 
     /**
-     * @param string $namespace
-     *
-     * @throws UnableToInstantiateException
-     *
      * @return CriteriaBuilderInterface
      */
-    public function buildCriteriaBuilder($namespace='Everon\Component\CriteriaBuilder');
+    public function buildCriteriaBuilder();
 
     /**
      * @param string $column
      * @param string $operator
      * @param string $value
-     *
-     * @throws UnableToInstantiateException
      *
      * @return CriteriumInterface
      */
@@ -48,16 +39,12 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
      * @param CriteriaInterface $Criteria
      * @param string $glue
      *
-     * @throws UnableToInstantiateException
-     *
      * @return ContainerInterface
      */
     public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue);
 
     /**
      * @param string $class_name
-     *
-     * @throws UnableToInstantiateException
      *
      * @return OperatorInterface
      */
@@ -66,8 +53,6 @@ interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
     /**
      * @param string $sql
      * @param array $parameters
-     *
-     * @throws UnableToInstantiateException
      *
      * @return SqlPartInterface
      */
