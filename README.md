@@ -365,7 +365,7 @@ $CriteriaBuilder
         ->where('created_at', '>', '2015-12-03 12:27:22');
 ```
 
-Append criteria string to already existing sql.
+Append criteria string to already existing ```SQL```.
 
 ```php
 $sql = 'SELECT * FROM <TABLE>';
@@ -388,7 +388,7 @@ $sth->execute($SqlPart->getParameters());
 ```php
 $dbh = new \PDO('mysql:host=127.0.0.1;dbname=DATABASE', 'root', '');
 $CriteriaBuilder
-    ->sql('SELECT * FROM fooTable f LEFT JOIN barTable b ON f.bar_id = b.id AND f.is_active = :is_active')
+    ->sql('SELECT * FROM fooTable f LEFT JOIN barTable b ON f.bar_id = b.id AND f.is_active = :is_active WHERE %s')
     ->where('bar', '=', 1)
         ->andWhere('foo', 'NOT IN', [1,2,3])
         ->orWhereRaw('foo::bar() IS NULL')
