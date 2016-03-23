@@ -1,4 +1,4 @@
-# Everon Criteria Builder
+# Everon Criteria Builder Library
 Library to generate complete ```SQL WHERE``` statements, with simple, fluid and intuitive interface.
 
 ## Works with
