@@ -31,17 +31,17 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     const GLUE_OR = 'OR';
 
     /**
-     * @var CollectionInterface
+     * @var CollectionInterface|null
      */
     protected static $OperatorCollection;
 
     /**
-     * @var string
+     * @var int
      */
     protected $currentContainerIndex = -1;
 
     /**
-     * @var CollectionInterface
+     * @var CollectionInterface|null
      */
     protected $ContainerCollection;
 
@@ -51,12 +51,12 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     protected $glue = self::GLUE_AND;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $offset = null;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $limit = null;
 
@@ -66,7 +66,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     protected $orderBy = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $groupBy = null;
 
@@ -86,7 +86,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
     protected $isSequenceOpened = false;
 
     /**
-     * @var CollectionInterface
+     * @var CollectionInterface|null
      */
     protected $ParameterCollection;
 
