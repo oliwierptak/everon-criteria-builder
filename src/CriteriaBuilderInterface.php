@@ -21,7 +21,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
 
     /**
      * Starts new sub set of conditions
-     * 
+     *
      * @param string $column
      * @param string $operator
      * @param $value
@@ -33,7 +33,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
 
     /**
      * Appends another condition to current set, using AND operator
-     * 
+     *
      * @param string $column
      * @param string $operator
      * @param $value
@@ -44,7 +44,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
 
     /**
      * Appends another condition to current set, using OR operator
-     * 
+     *
      * @param string $column
      * @param string $operator
      * @param $value
@@ -153,7 +153,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function getLimit();
 
     /**
-     * @param int $limit
+     * @param int|null $limit
      *
      * @return CriteriaBuilderInterface
      */
@@ -165,7 +165,7 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
     public function getOffset();
 
     /**
-     * @param int $offset
+     * @param int|null $offset
      *
      * @return CriteriaBuilderInterface
      */
