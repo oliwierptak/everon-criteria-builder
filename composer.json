@@ -7,7 +7,7 @@
     "name": "Oliwier Ptak",
     "email": "everonphp@gmail.com"
   }],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
       "Everon\\Component\\CriteriaBuilder\\": "src/",
@@ -15,14 +15,14 @@
     }
   },
   "require": {
-    "php": ">=5.6",
-    "everon/collection": "^1.0.0",
-    "everon/factory": "^1.1.0",
-    "everon/utils": "^1.0.0"
+    "php": "^7.2",
+    "everon/collection": "^2",
+    "everon/factory": "^2",
+    "everon/utils": "^2"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "mockery/mockery": "dev-master"
+    "phpunit/phpunit": "^8.5",
+    "mockery/mockery": "^1.3"
   }
 }
 

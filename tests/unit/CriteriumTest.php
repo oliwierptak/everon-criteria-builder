@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * This file is part of the Everon components.
  *
@@ -32,7 +32,7 @@ class CriteriumTest extends MockeryTest
      */
     protected $Factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $Container = new Container();
         $this->Factory = new FactoryStub($Container);
@@ -42,21 +42,21 @@ class CriteriumTest extends MockeryTest
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
     }
 
-    public function test_Constructor()
+    public function test_Constructor(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $Criterium);
     }
 
-    public function test_get_sql_part()
+    public function test_get_sql_part(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\SqlPartInterface', $Criterium->getSqlPart());
     }
 
-    public function test_get_sql_part_with_sql()
+    public function test_get_sql_part_with_sql(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
@@ -67,7 +67,7 @@ class CriteriumTest extends MockeryTest
         );
     }
 
-    public function test_is_null_when_equal_null()
+    public function test_is_null_when_equal_null(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', null);
 
@@ -76,7 +76,7 @@ class CriteriumTest extends MockeryTest
         $this->assertEquals($SqlPart->getSql(), 'foo IS NULL');
     }
 
-    public function test_is_not_null_when_not_equal_null()
+    public function test_is_not_null_when_not_equal_null(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '!=', null);
 
@@ -85,7 +85,7 @@ class CriteriumTest extends MockeryTest
         $this->assertEquals($SqlPart->getSql(), 'foo IS NOT NULL');
     }
 
-    public function test_get_sql_part_with_parameters()
+    public function test_get_sql_part_with_parameters(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 
@@ -98,7 +98,7 @@ class CriteriumTest extends MockeryTest
         );
     }
 
-    public function test_to_Array()
+    public function test_to_Array(): void
     {
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
 

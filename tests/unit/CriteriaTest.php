@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * This file is part of the Everon components.
  *
@@ -34,7 +34,7 @@ class CriteriaTest extends MockeryTest
      */
     protected $Factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $Container = new Container();
         $this->Factory = new FactoryStub($Container);
@@ -44,14 +44,14 @@ class CriteriaTest extends MockeryTest
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
     }
 
-    public function test_Constructor()
+    public function test_Constructor(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $Criteria);
     }
 
-    public function test_where()
+    public function test_where(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
         $Criterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('foo', '=', 'bar');
@@ -69,10 +69,10 @@ class CriteriaTest extends MockeryTest
             );
         });
 
-        $this->assertInternalType('array', $Criteria->toArray());
+        $this->assertIsArray($Criteria->toArray());
     }
 
-    public function test_where_and_where()
+    public function test_where_and_where(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -95,7 +95,7 @@ class CriteriaTest extends MockeryTest
 
         $this->assertInstanceOf('Everon\Component\Collection\CollectionInterface', $Criteria->getCriteriumCollection());
         $this->assertEquals(2, $Criteria->getCriteriumCollection()->count());
-        $this->assertInternalType('array', $array);
+        $this->assertIsArray($array);
 
         /** @var CriteriumInterface $AndCriterium */
         /** @var CriteriumInterface $AndCriteriumSecond */
@@ -108,7 +108,7 @@ class CriteriaTest extends MockeryTest
         $this->assertEquals(CriteriaBuilder::GLUE_AND, $AndCriteriumSecond->getGlue());
     }
 
-    public function test_where_or_where()
+    public function test_where_or_where(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -131,7 +131,7 @@ class CriteriaTest extends MockeryTest
 
         $this->assertInstanceOf('Everon\Component\Collection\CollectionInterface', $Criteria->getCriteriumCollection());
         $this->assertEquals(2, $Criteria->getCriteriumCollection()->count());
-        $this->assertInternalType('array', $array);
+        $this->assertIsArray($array);
 
         /** @var CriteriumInterface $AndCriterium */
         /** @var CriteriumInterface $OrCriterium */
@@ -144,7 +144,7 @@ class CriteriaTest extends MockeryTest
         $this->assertEquals(CriteriaBuilder::GLUE_OR, $OrCriterium->getGlue());
     }
 
-    public function test_to_array()
+    public function test_to_array(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -156,10 +156,10 @@ class CriteriaTest extends MockeryTest
 
         $Criteria->where($Criterium);
 
-        $this->assertInternalType('array', $Criteria->toArray());
+        $this->assertIsArray($Criteria->toArray());
     }
 
-    public function test_glue_by_and()
+    public function test_glue_by_and(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -168,7 +168,7 @@ class CriteriaTest extends MockeryTest
         $this->assertEquals(CriteriaBuilder::GLUE_AND, $Criteria->getGlue());
     }
 
-    public function test_glue_by_or()
+    public function test_glue_by_or(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
@@ -177,7 +177,7 @@ class CriteriaTest extends MockeryTest
         $this->assertEquals(CriteriaBuilder::GLUE_OR, $Criteria->getGlue());
     }
 
-    public function test_reset_glue()
+    public function test_reset_glue(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 

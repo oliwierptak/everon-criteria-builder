@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * This file is part of the Everon components.
  *
@@ -30,7 +30,7 @@ class ContainerTest extends MockeryTest
      */
     protected $CriteriaContainer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $Container = new Container();
         $Factory = new FactoryStub($Container);
@@ -42,12 +42,12 @@ class ContainerTest extends MockeryTest
         $this->CriteriaContainer = $CriteriaBuilderFactoryWorker->buildCriteriaContainer($Criteria, CriteriaBuilder::GLUE_AND);
     }
 
-    public function test_Constructor()
+    public function test_Constructor(): void
     {
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $this->CriteriaContainer);
     }
 
-    public function test_glue_by_and()
+    public function test_glue_by_and(): void
     {
         $this->CriteriaContainer->resetGlue();
         $this->assertEquals(null, $this->CriteriaContainer->getGlue());
@@ -56,7 +56,7 @@ class ContainerTest extends MockeryTest
         $this->assertEquals(CriteriaBuilder::GLUE_AND, $this->CriteriaContainer->getGlue());
     }
 
-    public function test_glue_by_or()
+    public function test_glue_by_or(): void
     {
         $this->CriteriaContainer->resetGlue();
         $this->assertEquals(null, $this->CriteriaContainer->getGlue());
@@ -65,7 +65,7 @@ class ContainerTest extends MockeryTest
         $this->assertEquals(CriteriaBuilder::GLUE_OR, $this->CriteriaContainer->getGlue());
     }
 
-    public function test_reset_glue()
+    public function test_reset_glue(): void
     {
         $this->CriteriaContainer->resetGlue();
 

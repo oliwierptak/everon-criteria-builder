@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * This file is part of the Everon components.
  *
@@ -33,7 +33,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
      */
     protected $Factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $Container = new Container();
         $this->Factory = new FactoryStub($Container);
@@ -43,10 +43,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
     }
 
-    /**
-     * @return void
-     */
-    protected function useFaultyFactory()
+    protected function useFaultyFactory(): void
     {
         $FactoryMock = Mockery::mock('Everon\Component\Factory\FactoryInterface');
         $FactoryMock->shouldReceive('injectDependencies')
@@ -56,35 +53,35 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
         $this->CriteriaBuilderFactoryWorker->setFactory($FactoryMock);
     }
 
-    public function test_buildCriteria()
+    public function test_buildCriteria(): void
     {
         $Criteria = $this->CriteriaBuilderFactoryWorker->buildCriteria();
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaInterface', $Criteria);
     }
 
-    public function test_buildCriteriaBuilder()
+    public function test_buildCriteriaBuilder(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderInterface', $CriteriaBuilder);
     }
 
-    public function test_CriteriaBuilderHasWorker()
+    public function test_CriteriaBuilderHasWorker(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface', $CriteriaBuilder->getCriteriaBuilderFactoryWorker());
     }
 
-    public function test_buildCriteriaCriterium()
+    public function test_buildCriteriaCriterium(): void
     {
         $CriteriaCriterium = $this->CriteriaBuilderFactoryWorker->buildCriteriaCriterium('column', '=', 'foobar');
 
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface', $CriteriaCriterium);
     }
 
-    public function test_buildCriteriaContainer()
+    public function test_buildCriteriaContainer(): void
     {
         $Criteria = Mockery::mock('Everon\Component\CriteriaBuilder\CriteriaInterface');
         /* @var CriteriaInterface  $Criteria */
@@ -95,7 +92,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\Criteria\ContainerInterface', $CriteriaContainer);
     }
 
-    public function test_buildCriteriaOperator()
+    public function test_buildCriteriaOperator(): void
     {
         $className = CriteriaBuilder::getOperatorClassNameBySqlOperator(Equal::TYPE_AS_SQL);
         $OperatorEqual = $this->CriteriaBuilderFactoryWorker->buildCriteriaOperator($className);
@@ -103,7 +100,7 @@ class CriteriaBuilderFactoryWorkerTest extends MockeryTest
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\OperatorInterface', $OperatorEqual);
     }
 
-    public function test_buildSqlPart()
+    public function test_buildSqlPart(): void
     {
         $SqlPart = $this->CriteriaBuilderFactoryWorker->buildSqlPart('foo = :foo_value', [
             'foo_value' => 'bar',

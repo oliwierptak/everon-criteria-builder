@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * This file is part of the Everon components.
  *
@@ -32,7 +32,7 @@ class CriteriaBuilderTest extends MockeryTest
      */
     protected $Factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $Container = new Container();
         $this->Factory = new FactoryStub($Container);
@@ -42,13 +42,13 @@ class CriteriaBuilderTest extends MockeryTest
         $this->CriteriaBuilderFactoryWorker = $this->Factory->getWorkerByName('CriteriaBuilderFactoryWorker');
     }
 
-    public function test_constructor()
+    public function test_constructor(): void
     {
         $Builder = new CriteriaBuilder();
         $this->assertInstanceOf('Everon\Component\CriteriaBuilder\CriteriaBuilderInterface', $Builder);
     }
 
-    public function test_where_or_and_should_build_criteria_and_advance_currentContainerIndex()
+    public function test_where_or_and_should_build_criteria_and_advance_currentContainerIndex(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -68,7 +68,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertCount(1, $CriteriaBuilder->getCurrentContainer()->getCriteria()->toArray());
     }
 
-    public function test_where_raw_should_use_raw_sql()
+    public function test_where_raw_should_use_raw_sql(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -83,7 +83,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertEmpty($SqlPart->getParameters());
     }
 
-    public function test_where_raw_with_parameters()
+    public function test_where_raw_with_parameters(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -101,7 +101,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertEquals($parameters['bar'], 'bar_value');
     }
 
-    public function test_glue()
+    public function test_glue(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -155,7 +155,7 @@ class CriteriaBuilderTest extends MockeryTest
          */
     }
 
-    public function test_to_sql_part_should_return_valid_sql_part()
+    public function test_to_sql_part_should_return_valid_sql_part(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -207,7 +207,7 @@ class CriteriaBuilderTest extends MockeryTest
         */
     }
 
-    public function test_to_string()
+    public function test_to_string(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -219,7 +219,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertEquals('WHERE (foo + bar AND 1=1 OR foo::bar())', (string) $CriteriaBuilder);
     }
 
-    public function test_to_array()
+    public function test_to_array(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -232,7 +232,7 @@ class CriteriaBuilderTest extends MockeryTest
         $this->assertCount(1, $CriteriaBuilder->toArray());
     }
 
-    public function test_limit_offset_group_by()
+    public function test_limit_offset_group_by(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
         $CriteriaBuilder
@@ -252,7 +252,7 @@ class CriteriaBuilderTest extends MockeryTest
 AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPart->getSql());
     }
 
-    public function test_merge_container_collection()
+    public function test_merge_container_collection(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -264,7 +264,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $this->assertCount(2, $CriteriaBuilder->getContainerCollection());
     }
 
-    public function test_register_custom_operator()
+    public function test_register_custom_operator(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -284,7 +284,7 @@ AND (1=1) GROUP BY name,id ORDER BY name DESC,id ASC LIMIT 10 OFFSET 5', $SqlPar
         $this->assertEquals([], $SqlPart->getParameters());
     }
 
-    public function test_sql_should_be_formatted_according_to_sqlTemplate()
+    public function test_sql_should_be_formatted_according_to_sqlTemplate(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -303,14 +303,14 @@ OR (session_id IS NULL))", $SqlPart->getSql());
         $this->assertEquals([], $SqlPart->getParameters());
     }
 
-    public function test_sqlTemplate_default()
+    public function test_sqlTemplate_default(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
         $this->assertEquals('WHERE %s', $CriteriaBuilder->getSqlTemplate());
     }
 
-    public function test_extraParameters_with_custom_sql()
+    public function test_extraParameters_with_custom_sql(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
@@ -329,7 +329,7 @@ OR (session_id IS NULL))", $SqlPart->getSql());
         ], $SqlPart->getParameters());
     }
 
-    public function test_extraParameterCollection_ensures_names_do_not_contain_dots()
+    public function test_extraParameterCollection_ensures_names_do_not_contain_dots(): void
     {
         $CriteriaBuilder = $this->CriteriaBuilderFactoryWorker->buildCriteriaBuilder();
 
