@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="tests/bootstrap.php"
+>
+    <php>
+        <ini name="error_reporting" value="E_ALL" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Unit Test Suite">
+            <directory>tests/unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-clover" target="./tests/logs/coverage.xml"/>
+        <log type="coverage-html" target="./tests/logs/coverage" />
+        <log type="testdox-html" target="./tests/logs/testdox.html" />
+    </logging>
+</phpunit>

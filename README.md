@@ -2,9 +2,7 @@
 Library to generate complete ```SQL WHERE``` statements, with simple, fluid and intuitive interface.
 
 ## Works with
-* Php 5.6+
-* Php 7
-* Hhvm
+* Php 7.2+
 
 ## Features
 * It's not a DQL
@@ -404,4 +402,4 @@ $data = $sth->fetchAll(PDO::FETCH_ASSOC);
 ```
 
 ### Test Driven
-[Check the tests for more examples of usage here](https://github.com/oliwierptak/everon-criteria-builder/tree/development/tests/unit)
+[Check the tests for more examples of usage here](https://github.com/oliwierptak/everon-criteria-builder/tree/master/tests/unit)
