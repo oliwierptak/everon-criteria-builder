@@ -15,21 +15,15 @@ trait CriteriaBuilderFactoryWorker
 {
 
     /**
-     * @var CriteriaBuilderFactoryWorkerInterface
+     * @var \Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface
      */
     protected $CriteriaBuilderFactoryWorker;
 
-    /**
-     * @return CriteriaBuilderFactoryWorkerInterface
-     */
-    public function getCriteriaBuilderFactoryWorker()
+    public function getCriteriaBuilderFactoryWorker(): CriteriaBuilderFactoryWorkerInterface
     {
         return $this->CriteriaBuilderFactoryWorker;
     }
 
-    /**
-     * @param CriteriaBuilderFactoryWorkerInterface $FactoryWorker
-     */
     public function setCriteriaBuilderFactoryWorker(CriteriaBuilderFactoryWorkerInterface $FactoryWorker)
     {
         $this->CriteriaBuilderFactoryWorker = $FactoryWorker;

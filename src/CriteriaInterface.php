@@ -7,69 +7,42 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
-use Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException;
 use Everon\Component\Utils\Collection\ArrayableInterface;
 
 interface CriteriaInterface extends ArrayableInterface
 {
+    public function where(CriteriumInterface $Criterium): CriteriaInterface;
 
     /**
      * @param CriteriumInterface $Criterium
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException
      */
-    public function where(CriteriumInterface $Criterium);
+    public function andWhere(CriteriumInterface $Criterium): CriteriaInterface;
 
     /**
      * @param CriteriumInterface $Criterium
      *
-     * @throws NoSubQueryFoundException
-     *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException
      */
-    public function andWhere(CriteriumInterface $Criterium);
+    public function orWhere(CriteriumInterface $Criterium): CriteriaInterface;
 
-    /**
-     * @param CriteriumInterface $Criterium
-     *
-     * @throws NoSubQueryFoundException
-     *
-     * @return self
-     */
-    public function orWhere(CriteriumInterface $Criterium);
+    public function getCriteriumCollection(): CollectionInterface;
 
-    /**
-     * @return CollectionInterface|CriteriumInterface[]
-     */
-    public function getCriteriumCollection();
-
-    /**
-     * @param CollectionInterface $CriteriumCollection
-     */
     public function setCriteriumCollection(CollectionInterface $CriteriumCollection);
 
-    /**
-     * @return string
-     */
-    public function getGlue();
+    public function getGlue(): ?string;
 
-    /**
-     * @return void
-     */
-    public function resetGlue();
+    public function resetGlue(): void;
 
-    /**
-     * @return void
-     */
-    public function glueByAnd();
+    public function glueByAnd(): void;
 
-    /**
-     * @return void
-     */
-    public function glueByOr();
-
+    public function glueByOr(): void;
 }

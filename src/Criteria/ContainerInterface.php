@@ -13,40 +13,18 @@ use Everon\Component\CriteriaBuilder\CriteriaInterface;
 
 interface ContainerInterface
 {
+    public function getCriteria(): CriteriaInterface;
 
-    /**
-     * @return CriteriaInterface
-     */
-    public function getCriteria();
-
-    /**
-     * @param CriteriaInterface $Criteria
-     */
     public function setCriteria(CriteriaInterface $Criteria);
 
-    /**
-     * @return string
-     */
-    public function getGlue();
+    public function getGlue(): ?string;
 
-    /**
-     * @param string $glue
-     */
-    public function setGlue($glue);
+    public function setGlue(?string $glue);
 
-    /**
-     * @return void
-     */
-    public function resetGlue();
+    public function resetGlue(): void;
 
-    /**
-     * @return void
-     */
-    public function glueByAnd();
+    public function glueByAnd(): void;
 
-    /**
-     * @return void
-     */
-    public function glueByOr();
+    public function glueByOr(): void;
 
 }

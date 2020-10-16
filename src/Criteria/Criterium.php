@@ -11,7 +11,6 @@ namespace Everon\Component\CriteriaBuilder\Criteria;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilder;
 use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorkerInterface;
-use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\CriteriaBuilder\Operator\Equal;
 use Everon\Component\CriteriaBuilder\Operator\Is;
 use Everon\Component\CriteriaBuilder\Operator\NotEqual;
@@ -36,7 +35,7 @@ class Criterium implements CriteriumInterface
     protected $column = null;
 
     /**
-     * @var string
+     * @var mixed
      */
     protected $value = null;
 
@@ -61,21 +60,18 @@ class Criterium implements CriteriumInterface
     protected $SqlPart = null;
 
     /**
-     * @param $column
-     * @param $value
-     * @param $operator_type
+     * @param string $column
+     * @param string $operator_type
+     * @param mixed $value
      */
-    public function __construct($column, $operator_type, $value)
+    public function __construct(string $column, string $operator_type, $value)
     {
         $this->column = $column;
         $this->operator_type = $operator_type;
         $this->value = $value;
     }
 
-    /**
-     * @return array
-     */
-    protected function getArrayableData()
+    protected function getArrayableData(): array
     {
         return [
             'column' => $this->getColumn(),
@@ -88,14 +84,13 @@ class Criterium implements CriteriumInterface
     }
 
     /**
-     * @param $operator
-     * @param $value
+     * @param string $operator
+     * @param mixed $value
      *
-     * @throws UnknownOperatorTypeException
-     *
-     * @return OperatorInterface
+     * @return \Everon\Component\CriteriaBuilder\OperatorInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException
      */
-    protected function buildOperatorWithValue($operator, $value)
+    protected function buildOperatorWithValue(string $operator, $value): OperatorInterface
     {
         $className = CriteriaBuilder::getOperatorClassNameBySqlOperator($operator);
         $Operator = $this->getFactoryWorker()->buildCriteriaOperator($className);
@@ -106,12 +101,13 @@ class Criterium implements CriteriumInterface
     /**
      * Replaces original Operators with null values by IS NULL / IS NOT NULL Operators
      *
-     * @param OperatorInterface $Operator
-     * @param $value
+     * @param \Everon\Component\CriteriaBuilder\OperatorInterface $Operator
+     * @param mixed $value
      *
-     * @return OperatorInterface
+     * @return \Everon\Component\CriteriaBuilder\OperatorInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException
      */
-    protected function replaceOperatorForNulLValue(OperatorInterface $Operator, $value)
+    protected function replaceOperatorForNulLValue(OperatorInterface $Operator, $value): OperatorInterface
     {
         if ($value === null) {
             if ($Operator->getType() === Equal::TYPE_NAME) {
@@ -126,74 +122,47 @@ class Criterium implements CriteriumInterface
         return $Operator;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getColumn()
+    public function getColumn(): string
     {
         return $this->column;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setColumn($column)
+    public function setColumn(string $column)
     {
         $this->column = $column;
     }
 
-    /**
-     * @return string
-     */
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setValue($value)
     {
         $this->value = $value;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getGlue()
+    public function getGlue(): ?string
     {
         return $this->glue;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function glueByAnd()
+    public function glueByAnd(): void
     {
         $this->glue = CriteriaBuilder::GLUE_AND;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function glueByOr()
+    public function glueByOr(): void
     {
         $this->glue = CriteriaBuilder::GLUE_OR;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function resetGlue()
+    public function resetGlue(): void
     {
         $this->glue = null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPlaceholder()
+    public function getPlaceholder(): string
     {
         if ($this->value === null) {
             return 'NULL';
@@ -207,64 +176,43 @@ class Criterium implements CriteriumInterface
         return $this->placeholder;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setPlaceholder($placeholder)
+    public function setPlaceholder(string $placeholder)
     {
         $this->placeholder = $placeholder;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPlaceholderAsParameter()
+    public function getPlaceholderAsParameter(): string
     {
         return ltrim($this->getPlaceholder(), ':');
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOperatorType()
+    public function getOperatorType(): string
     {
         return $this->operator_type;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setOperatorType($operator)
+    public function setOperatorType(string $operator)
     {
         $this->operator_type = $operator;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setSqlPart(SqlPartInterface $SqlPart)
     {
         $this->SqlPart = $SqlPart;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSqlPart()
+    public function getSqlPart(): SqlPartInterface
     {
         if ($this->SqlPart === null) {
             $Operator = $this->buildOperatorWithValue($this->getOperatorType(), $this->getValue());
-            list($sql, $parameters) = $Operator->toSqlPartData($this);
+            [$sql, $parameters] = $Operator->toSqlPartData($this);
             $this->SqlPart = $this->getFactoryWorker()->buildSqlPart($sql, $parameters);
         }
 
         return $this->SqlPart;
     }
 
-    /**
-     * @return CriteriaBuilderFactoryWorkerInterface
-     */
-    protected function getFactoryWorker()
+    protected function getFactoryWorker(): CriteriaBuilderFactoryWorkerInterface
     {
         return $this->getCriteriaBuilderFactoryWorker();
     }

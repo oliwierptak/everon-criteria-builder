@@ -10,16 +10,14 @@
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\CriteriaBuilder\Criteria\Container;
+use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Criteria\Criterium;
+use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 use Everon\Component\Factory\AbstractWorker;
 
 class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBuilderFactoryWorkerInterface
 {
-
-    /**
-     * @inheritdoc
-     */
-    public function buildCriteria()
+    public function buildCriteria(): CriteriaInterface
     {
         $Criteria = new Criteria();
         $this->getFactory()->injectDependencies(Criteria::class, $Criteria);
@@ -27,10 +25,7 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
         return $Criteria;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function buildCriteriaBuilder()
+    public function buildCriteriaBuilder(): CriteriaBuilderInterface
     {
         $CriteriaBuilder = new CriteriaBuilder();
         $this->getFactory()->injectDependencies(CriteriaBuilder::class, $CriteriaBuilder);
@@ -39,20 +34,25 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
     }
 
     /**
-     * @inheritdoc
+     * @param string $column
+     * @param string $operator
+     * @param array|string|null $value
+     *
+     * @return \Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildCriteriaCriterium($column, $operator, $value)
-    {
+    public function buildCriteriaCriterium(
+        string $column,
+        string $operator,
+        $value
+    ): CriteriumInterface {
         $Criterium = new Criterium($column, $operator, $value);
         $this->getFactory()->injectDependencies(Criterium::class, $Criterium);
 
         return $Criterium;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue)
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, ?string $glue): ContainerInterface
     {
         $Container = new Container($Criteria, $glue);
         $this->getFactory()->injectDependencies(Container::class, $Container);
@@ -60,18 +60,19 @@ class CriteriaBuilderFactoryWorker extends AbstractWorker implements CriteriaBui
         return $Container;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function buildCriteriaOperator($class_name)
+    public function buildCriteriaOperator(string $className): OperatorInterface
     {
-        return new $class_name();
+        return new $className();
     }
 
     /**
-     * @inheritdoc
+     * @param string $sql
+     * @param array $parameters
+     *
+     * @return \Everon\Component\CriteriaBuilder\SqlPartInterface
+     * @throws \Everon\Component\Factory\Exception\FailedToInjectDependenciesException
      */
-    public function buildSqlPart($sql, array $parameters)
+    public function buildSqlPart(string $sql, array $parameters): SqlPartInterface
     {
         $SqlPart = new SqlPart($sql, $parameters);
         $this->getFactory()->injectDependencies(SqlPart::class, $SqlPart);

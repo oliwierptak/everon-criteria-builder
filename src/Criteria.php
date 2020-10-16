@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\Collection\Collection;
@@ -17,31 +18,24 @@ use Everon\Component\Utils\Collection\ToArray;
 
 class Criteria implements CriteriaInterface
 {
-
     use ToArray;
 
     /**
-     * @var CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface
      */
-    protected $CriteriumCollection = null;
+    protected $CriteriumCollection;
 
     /**
      * @var string
      */
     protected $glue = CriteriaBuilder::GLUE_AND;
 
-    /**
-     * @return array
-     */
-    protected function getArrayableData($deep=false)
+    protected function getArrayableData($deep = false): array
     {
         return $this->getCriteriumCollection()->toArray($deep);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function where(CriteriumInterface $Criterium)
+    public function where(CriteriumInterface $Criterium): CriteriaInterface
     {
         $Criterium->resetGlue();
         $this->getCriteriumCollection()->append($Criterium);
@@ -49,10 +43,7 @@ class Criteria implements CriteriaInterface
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function andWhere(CriteriumInterface $Criterium)
+    public function andWhere(CriteriumInterface $Criterium): CriteriaInterface
     {
         if ($this->getCriteriumCollection()->isEmpty()) {
             throw new NoSubQueryFoundException();
@@ -64,10 +55,7 @@ class Criteria implements CriteriaInterface
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function orWhere(CriteriumInterface $Criterium)
+    public function orWhere(CriteriumInterface $Criterium): CriteriaInterface
     {
         if ($this->getCriteriumCollection()->isEmpty()) {
             throw new NoSubQueryFoundException();
@@ -79,10 +67,7 @@ class Criteria implements CriteriaInterface
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCriteriumCollection()
+    public function getCriteriumCollection(): CollectionInterface
     {
         if ($this->CriteriumCollection === null) {
             $this->CriteriumCollection = new Collection([]);
@@ -91,44 +76,28 @@ class Criteria implements CriteriaInterface
         return $this->CriteriumCollection;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setCriteriumCollection(CollectionInterface $CriteriumCollection)
     {
         $this->CriteriumCollection = $CriteriumCollection;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getGlue()
+    public function getGlue(): ?string
     {
         return $this->glue;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function resetGlue()
+    public function resetGlue(): void
     {
         $this->glue = null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function glueByAnd()
+    public function glueByAnd(): void
     {
         $this->glue = CriteriaBuilder::GLUE_AND;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function glueByOr()
+    public function glueByOr(): void
     {
         $this->glue = CriteriaBuilder::GLUE_OR;
     }
-
 }

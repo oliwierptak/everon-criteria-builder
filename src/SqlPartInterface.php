@@ -7,44 +7,31 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\Utils\Collection\ArrayableInterface;
 
 interface SqlPartInterface extends ArrayableInterface
 {
-
-    /**
-     * @return array
-     */
     public function getParameters();
 
-    /**
-     * @param array $parameters
-     */
-    public function setParameters($parameters);
+    public function setParameters(array $parameters);
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed $value
      */
-    public function setParameterValue($name, $value);
+    public function setParameterValue(string $name, $value): void;
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return mixed
      */
-    public function getParameterValue($name);
+    public function getParameterValue(string $name);
 
-    /**
-     * @return string
-     */
-    public function getSql();
+    public function getSql(): string;
 
-    /**
-     * @param string $sql
-     */
-    public function setSql($sql);
-
+    public function setSql(string $sql): void;
 }

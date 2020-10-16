@@ -16,79 +16,44 @@ use Everon\Component\Utils\Collection\ArrayableInterface;
 interface CriteriumInterface extends ArrayableInterface, CriteriaBuilderFactoryWorkerAwareInterface
 {
 
-    /**
-     * @return string
-     */
-    public function getColumn();
+    public function getColumn(): string;
 
-    /**
-     * @param string $column
-     */
-    public function setColumn($column);
+    public function setColumn(string $column);
 
-    /**
-     * @return string
-     */
-    public function getOperatorType();
+    public function getOperatorType(): string;
 
-    /**
-     * @param string
-     */
-    public function setOperatorType($operator);
-
-    /**
-     * @return string
-     */
-    public function getValue();
-
-    /**
-     * @param string $value
-     */
-    public function setValue($value);
-
-    /**
-     * @return string
-     */
-    public function getGlue();
-
-    /**
-     * @return void
-     */
-    public function glueByAnd();
-
-    /**
-     * @return void
-     */
-    public function glueByOr();
-
-    /**
-     * @return void
-     */
-    public function resetGlue();
+    public function setOperatorType(string $operator);
 
     /**
      * @return mixed
      */
-    public function getPlaceholder();
+    public function getValue();
 
     /**
-     * @param mixed $placeholder
+     * @param mixed $value
      */
-    public function setPlaceholder($placeholder);
+    public function setValue($value);
+
+    public function getGlue(): ?string;
+
+    public function glueByAnd(): void;
+
+    public function glueByOr(): void;
+
+    public function resetGlue(): void;
+
+    public function getPlaceholder(): string;
+
+    public function setPlaceholder(string $placeholder);
+
+    public function getPlaceholderAsParameter(): string;
 
     /**
-     * @return string
+     * @return \Everon\Component\CriteriaBuilder\SqlPartInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException
      */
-    public function getPlaceholderAsParameter();
+    public function getSqlPart(): SqlPartInterface;
 
-    /**
-     * @return SqlPartInterface
-     */
-    public function getSqlPart();
-
-    /**
-     * @param SqlPartInterface $SqlPart
-     */
     public function setSqlPart(SqlPartInterface $SqlPart);
 
 }

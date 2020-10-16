@@ -25,26 +25,17 @@ abstract class AbstractOperator implements OperatorInterface
      */
     protected $typeAsSql;
 
-    /**
-     * @inheritdoc
-     */
-    public function getType()
+    public function getType(): string
     {
         return static::TYPE_NAME;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getTypeAsSql()
+    public function getTypeAsSql(): string
     {
         return static::TYPE_AS_SQL;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function toSqlPartData(CriteriumInterface $Criterium)
+    public function toSqlPartData(CriteriumInterface $Criterium): array
     {
         $sql = sprintf('%s %s %s', $Criterium->getColumn(), $this->getTypeAsSql(), $Criterium->getPlaceholder());
         $params = [

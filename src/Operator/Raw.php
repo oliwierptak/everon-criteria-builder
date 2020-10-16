@@ -22,7 +22,7 @@ class Raw extends AbstractOperator implements OperatorInterface
     /**
      * @inheritdoc
      */
-    public function toSqlPartData(CriteriumInterface $Criterium)
+    public function toSqlPartData(CriteriumInterface $Criterium): array
     {
         $sql = sprintf('%s', $Criterium->getColumn());
 

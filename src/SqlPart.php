@@ -7,13 +7,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\Utils\Collection\ToArray;
 
 class SqlPart implements SqlPartInterface
 {
-
     use ToArray;
 
     /**
@@ -26,20 +26,13 @@ class SqlPart implements SqlPartInterface
      */
     protected $parameters = null;
 
-    /**
-     * @param $sql
-     * @param $parameters
-     */
     public function __construct($sql, $parameters)
     {
         $this->sql = $sql;
         $this->parameters = $parameters;
     }
 
-    /**
-     * @return array
-     */
-    protected function getArrayableData()
+    protected function getArrayableData(): array
     {
         return [
             'sql' => $this->getSql(),
@@ -47,52 +40,33 @@ class SqlPart implements SqlPartInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setParameterValue($name, $value)
+    public function setParameterValue(string $name, $value): void
     {
         $this->parameters[$name] = $value;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParameterValue($name)
+    public function getParameterValue(string $name)
     {
         return $this->parameters[$name];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getParameters()
     {
         return $this->parameters;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSql()
+    public function getSql(): string
     {
         return $this->sql;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setSql($sql)
+    public function setSql(string $sql): void
     {
         $this->sql = $sql;
     }
-
 }

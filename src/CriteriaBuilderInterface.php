@@ -7,51 +7,57 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\Collection\CollectionInterface;
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
 use Everon\Component\CriteriaBuilder\Dependency\CriteriaBuilderFactoryWorkerAwareInterface;
-use Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException;
 use Everon\Component\Utils\Collection\ArrayableInterface;
 use Everon\Component\Utils\Text\StringableInterface;
 
 interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterface, CriteriaBuilderFactoryWorkerAwareInterface
 {
-
     /**
      * Starts new sub set of conditions
      *
      * @param string $column
      * @param string $operator
-     * @param $value
+     * @param mixed $value
      * @param string $glue
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function where($column, $operator, $value, $glue = CriteriaBuilder::GLUE_AND);
+    public function where(
+        string $column,
+        string $operator,
+        $value,
+        string $glue = CriteriaBuilder::GLUE_AND
+    ): CriteriaBuilderInterface;
 
     /**
      * Appends another condition to current set, using AND operator
      *
      * @param string $column
      * @param string $operator
-     * @param $value
+     * @param mixed $value
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException
      */
-    public function andWhere($column, $operator, $value);
+    public function andWhere(string $column, string $operator, $value): CriteriaBuilderInterface;
 
     /**
      * Appends another condition to current set, using OR operator
      *
      * @param string $column
      * @param string $operator
-     * @param $value
+     * @param mixed $value
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException
      */
-    public function orWhere($column, $operator, $value);
+    public function orWhere(string $column, string $operator, $value): CriteriaBuilderInterface;
 
     /**
      * Starts new sub set of conditions using raw SQL string
@@ -61,9 +67,14 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      * @param string $customType
      * @param string $glue
      *
-     * @return self
+     * @return $this|\Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function whereRaw($sql, array $value = null, $customType = 'raw', $glue = CriteriaBuilder::GLUE_AND);
+    public function whereRaw(
+        string $sql,
+        ?array $value = null,
+        string $customType = 'raw',
+        string $glue = CriteriaBuilder::GLUE_AND
+    ): CriteriaBuilderInterface;
 
     /**
      * Appends another condition to current set, using AND operator with raw SQL string
@@ -72,221 +83,157 @@ interface CriteriaBuilderInterface extends ArrayableInterface, StringableInterfa
      * @param array|null $value
      * @param string $customType
      *
-     * @return self
+     * @return $this|\Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException
      */
-    public function andWhereRaw($sql, array $value = null, $customType = 'raw');
+    public function andWhereRaw(string $sql, array $value = null, string $customType = 'raw'): CriteriaBuilderInterface;
 
     /**
      * Appends another condition to current set, using OR operator with raw SQL string
      *
      * @param string $sql
-     * @param array $value
+     * @param array|null $value
      * @param string $customType
      *
-     * @return self
+     * @return $this|\Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\NoSubQueryFoundException
      */
-    public function orWhereRaw($sql, array $value = null, $customType = 'raw');
+    public function orWhereRaw(string $sql, array $value = null, string $customType = 'raw'): CriteriaBuilderInterface;
 
-    /**
-     * @return ContainerInterface
-     */
-    public function getCurrentContainer();
+    public function getCurrentContainer(): ContainerInterface;
 
-    /**
-     * @param ContainerInterface $Container
-     */
     public function setCurrentContainer(ContainerInterface $Container);
 
     /**
-     * @return CollectionInterface|CriteriaInterface[]
+     * @return \Everon\Component\CriteriaBuilder\CriteriaInterface[]|\Everon\Component\Collection\CollectionInterface
      */
-    public function getContainerCollection();
+    public function getContainerCollection(): CollectionInterface;
 
     /**
-     * @param CollectionInterface $ContainerCollection
+     * @param \Everon\Component\CriteriaBuilder\CriteriaInterface[]|\Everon\Component\Collection\CollectionInterface $ContainerCollection
+     *
+     * @return void
      */
-    public function setContainerCollection(CollectionInterface $ContainerCollection);
+    public function setContainerCollection(CollectionInterface $ContainerCollection): void;
 
     /**
      * Get operator joining current condition set
      *
      * @return string
      */
-    public function getGlue();
+    public function getGlue(): string;
 
     /**
      * Reset operator joining current condition set
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function resetGlue();
+    public function resetGlue(): CriteriaBuilderInterface;
 
     /**
      * Join set of conditions with another set using AND operator
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function glueByAnd();
+    public function glueByAnd(): CriteriaBuilderInterface;
 
     /**
      * Join set of conditions with another set using OR operator
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function glueByOr();
+    public function glueByOr(): CriteriaBuilderInterface;
 
-    /**
-     * @return string
-     */
-    public function getGroupBy();
+    public function getGroupBy(): ?string;
 
-    /**
-     * @param string $groupBy
-     *
-     * @return CriteriaBuilderInterface
-     */
-    public function setGroupBy($groupBy);
+    public function setGroupBy(?string $groupBy): CriteriaBuilderInterface;
 
-    /**
-     * @return int
-     */
-    public function getLimit();
+    public function getLimit(): ?int;
 
-    /**
-     * @param int|null $limit
-     *
-     * @return CriteriaBuilderInterface
-     */
-    public function setLimit($limit);
+    public function setLimit(?int $limit): CriteriaBuilderInterface;
 
-    /**
-     * @return int
-     */
-    public function getOffset();
+    public function getOffset(): ?int;
 
-    /**
-     * @param int|null $offset
-     *
-     * @return CriteriaBuilderInterface
-     */
-    public function setOffset($offset);
+    public function setOffset(?int $offset): CriteriaBuilderInterface;
 
-    /**
-     * @return array
-     */
-    public function getOrderBy();
+    public function getOrderBy(): array;
 
-    /**
-     * @param array $orderBy
-     *
-     * @return CriteriaBuilderInterface
-     */
-    public function setOrderBy(array $orderBy);
+    public function setOrderBy(array $orderBy): CriteriaBuilderInterface;
 
     /**
      * Get raw SQL template used to generate output, default is 'WHERE %s'
      *
      * @return string
      */
-    public function getSqlTemplate();
+    public function getSqlTemplate(): string;
 
     /**
      * Set raw SQL template used to generate output, default is 'WHERE %s'
      *
      * @param string $sqlTemplate
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function sql($sqlTemplate);
+    public function sql(string $sqlTemplate): CriteriaBuilderInterface;
 
     /**
-     * @return SqlPartInterface
+     * @return \Everon\Component\CriteriaBuilder\SqlPartInterface
+     * @throws \Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException
      */
-    public function toSqlPart();
+    public function toSqlPart(): SqlPartInterface;
 
-    /**
-     * @param CollectionInterface $ContainerCollectionToMerge
-     * @param string $glue
-     */
-    public function appendContainerCollection(CollectionInterface $ContainerCollectionToMerge, $glue=CriteriaBuilder::GLUE_AND);
+    public function appendContainerCollection(
+        CollectionInterface $ContainerCollectionToMerge,
+        ?string $glue = CriteriaBuilder::GLUE_AND
+    ): void;
 
     /**
      * @param string $sqlOperator
      *
-     * @throws UnknownOperatorTypeException
-     *
      * @return string
+     * @throws \Everon\Component\CriteriaBuilder\Exception\UnknownOperatorTypeException
      */
-    public static function getOperatorClassNameBySqlOperator($sqlOperator);
+    public static function getOperatorClassNameBySqlOperator(string $sqlOperator): string;
 
     /**
      * @param string $sqlType
      * @param string $operatorClassName
      *
      * @return void
+     * @throws \Everon\Component\CriteriaBuilder\Exception\OperatorTypeAlreadyRegisteredException
      */
-    public static function registerOperator($sqlType, $operatorClassName);
+    public static function registerOperator(string $sqlType, string $operatorClassName): void;
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public static function randomizeParameterName($name);
+    public static function randomizeParameterName(string $name): string;
 
-    /**
-     * @return string
-     */
-    public function getOffsetLimitSql();
+    public function getOffsetLimitSql(): string;
 
-    /**
-     * @return string
-     */
-    public function getOrderByAndSortSql();
+    public function getOrderByAndSortSql(): string;
 
-    /**
-     * @return string
-     */
-    public function getGroupBySql();
+    public function getGroupBySql(): string;
 
-    /**
-     * @return CollectionInterface
-     */
-    public static function getOperatorCollection();
+    public static function getOperatorCollection(): CollectionInterface;
 
-    /**
-     * @return void
-     */
-    public function resetParameterCollection();
+    public function resetParameterCollection(): void;
 
-    /**
-     * @return CollectionInterface
-     */
-    public function getParameterCollection();
+    public function getParameterCollection(): CollectionInterface;
 
-    /**
-     * @param array $parameterCollection
-     *
-     * @return self
-     */
-    public function setParameterCollection(array $parameterCollection);
+    public function setParameterCollection(array $parameterCollection): CriteriaBuilderInterface;
 
     /**
      * Replaces . with _
      *
      * @param string $name
-     * @param $value
+     * @param mixed $value
      *
-     * @return self
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function setParameter($name, $value);
+    public function setParameter(string $name, $value): CriteriaBuilderInterface;
 
     /**
      * @param string $name
-     * @param $value
      *
-     * @return mixed
+     * @return mixed|null
      */
-    public function getParameter($name);
-
+    public function getParameter(string $name);
 }

@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Everon\Component\CriteriaBuilder;
 
 use Everon\Component\CriteriaBuilder\Criteria\ContainerInterface;
@@ -15,47 +16,44 @@ use Everon\Component\Factory\FactoryWorkerInterface;
 
 interface CriteriaBuilderFactoryWorkerInterface extends FactoryWorkerInterface
 {
+    /**
+     * @return \Everon\Component\CriteriaBuilder\CriteriaInterface
+     */
+    public function buildCriteria(): CriteriaInterface;
 
     /**
-     * @return CriteriaInterface
+     * @return \Everon\Component\CriteriaBuilder\CriteriaBuilderInterface
      */
-    public function buildCriteria();
-
-    /**
-     * @return CriteriaBuilderInterface
-     */
-    public function buildCriteriaBuilder();
+    public function buildCriteriaBuilder(): CriteriaBuilderInterface;
 
     /**
      * @param string $column
      * @param string $operator
-     * @param string $value
+     * @param array|string|null $value
      *
-     * @return CriteriumInterface
+     * @return \Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface
      */
-    public function buildCriteriaCriterium($column, $operator, $value);
+    public function buildCriteriaCriterium(
+        string $column,
+        string $operator,
+        $value
+    ): CriteriumInterface;
 
     /**
-     * @param CriteriaInterface $Criteria
-     * @param string $glue
+     * @param \Everon\Component\CriteriaBuilder\CriteriaInterface $Criteria
+     * @param string|null $glue
      *
-     * @return ContainerInterface
+     * @return \Everon\Component\CriteriaBuilder\Criteria\ContainerInterface
      */
-    public function buildCriteriaContainer(CriteriaInterface $Criteria, $glue);
+    public function buildCriteriaContainer(CriteriaInterface $Criteria, ?string $glue): ContainerInterface;
 
-    /**
-     * @param string $class_name
-     *
-     * @return OperatorInterface
-     */
-    public function buildCriteriaOperator($class_name);
+    public function buildCriteriaOperator(string $className): OperatorInterface;
 
     /**
      * @param string $sql
      * @param array $parameters
      *
-     * @return SqlPartInterface
+     * @return \Everon\Component\CriteriaBuilder\SqlPartInterface
      */
-    public function buildSqlPart($sql, array $parameters);
-
+    public function buildSqlPart(string $sql, array $parameters): SqlPartInterface;
 }

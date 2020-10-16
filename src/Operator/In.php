@@ -22,9 +22,12 @@ class In extends AbstractOperator implements OperatorInterface
     const TYPE_AS_SQL = 'IN';
 
     /**
-     * @inheritdoc
+     * @param \Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface $Criterium
+     *
+     * @return array
+     * @throws \Everon\Component\CriteriaBuilder\Exception\ValueMustBeAnArrayException
      */
-    public function toSqlPartData(CriteriumInterface $Criterium)
+    public function toSqlPartData(CriteriumInterface $Criterium): array
     {
         $params = [];
         $data = $Criterium->getValue();
@@ -33,7 +36,6 @@ class In extends AbstractOperator implements OperatorInterface
             throw new ValueMustBeAnArrayException('Value must be an array');
         }
 
-        /** @var array $data */
         foreach ($data as $value) {
             $rand = CriteriaBuilder::randomizeParameterName($Criterium->getPlaceholderAsParameter());
             $params[$rand] = $value;

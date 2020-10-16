@@ -25,68 +25,43 @@ class Container implements ContainerInterface
      */
     protected $glue = null;
 
-    /**
-     * @param CriteriaInterface $Criteria
-     * @param $glue
-     */
-    public function __construct(CriteriaInterface $Criteria, $glue)
+    public function __construct(CriteriaInterface $Criteria, ?string $glue = null)
     {
         $this->Criteria = $Criteria;
         $this->glue = $glue;
     }
 
-    /**
-     * @return CriteriaInterface
-     */
-    public function getCriteria()
+    public function getCriteria(): CriteriaInterface
     {
         return $this->Criteria;
     }
 
-    /**
-     * @param CriteriaInterface $Criteria
-     */
     public function setCriteria(CriteriaInterface $Criteria)
     {
         $this->Criteria = $Criteria;
     }
 
-    /**
-     * @return string
-     */
-    public function getGlue()
+    public function getGlue(): ?string
     {
         return $this->glue;
     }
 
-    /**
-     * @param string $glue
-     */
-    public function setGlue($glue)
+    public function setGlue(?string $glue)
     {
         $this->glue = $glue;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function resetGlue()
+    public function resetGlue(): void
     {
         $this->glue = null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function glueByAnd()
+    public function glueByAnd(): void
     {
         $this->glue = CriteriaBuilder::GLUE_AND;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function glueByOr()
+    public function glueByOr(): void
     {
         $this->glue = CriteriaBuilder::GLUE_OR;
     }

@@ -13,22 +13,10 @@ use Everon\Component\CriteriaBuilder\Criteria\CriteriumInterface;
 
 interface OperatorInterface
 {
+    public function getType(): string;
 
-    /**
-     * @return string
-     */
-    public function getType();
+    public function getTypeAsSql(): string;
 
-    /**
-     * @return string
-     */
-    public function getTypeAsSql();
-
-    /**
-     * @param CriteriumInterface $Criterium
-     *
-     * @return array
-     */
-    public function toSqlPartData(CriteriumInterface $Criterium);
+    public function toSqlPartData(CriteriumInterface $Criterium): array;
 
 }
