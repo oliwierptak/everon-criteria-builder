@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "everon/collection",
-            "version": "2.0.0",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/everon-collection.git",
-                "reference": "fecd775ff5967d13cbc2b617cd6262b8731cb1e8"
+                "reference": "02a068956d6954e7b98c82b8c592756eec2f3916"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/everon-collection/zipball/fecd775ff5967d13cbc2b617cd6262b8731cb1e8",
-                "reference": "fecd775ff5967d13cbc2b617cd6262b8731cb1e8",
+                "url": "https://api.github.com/repos/oliwierptak/everon-collection/zipball/02a068956d6954e7b98c82b8c592756eec2f3916",
+                "reference": "02a068956d6954e7b98c82b8c592756eec2f3916",
                 "shasum": ""
             },
             "require": {
@@ -46,20 +46,20 @@
                 }
             ],
             "description": "Everon Collection Component",
-            "time": "2020-10-15T18:58:21+00:00"
+            "time": "2020-10-16T08:17:09+00:00"
         },
         {
             "name": "everon/factory",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/everon-factory.git",
-                "reference": "d34ad064f25da2e38b4bb15ae263b7457ad8e159"
+                "reference": "1aae85f6bd0373d7bd4fddec91cc2354ead36cde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/everon-factory/zipball/d34ad064f25da2e38b4bb15ae263b7457ad8e159",
-                "reference": "d34ad064f25da2e38b4bb15ae263b7457ad8e159",
+                "url": "https://api.github.com/repos/oliwierptak/everon-factory/zipball/1aae85f6bd0373d7bd4fddec91cc2354ead36cde",
+                "reference": "1aae85f6bd0373d7bd4fddec91cc2354ead36cde",
                 "shasum": ""
             },
             "require": {
@@ -89,20 +89,20 @@
                 }
             ],
             "description": "Everon Factory Component",
-            "time": "2020-10-15T19:15:49+00:00"
+            "time": "2020-10-15T21:52:29+00:00"
         },
         {
             "name": "everon/utils",
-            "version": "2.0.1",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/everon-utils.git",
-                "reference": "463327e593f822ed13bc1f5335e381c22f91336b"
+                "reference": "53ffb2d5689227a38503c0c2609494656d7828e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/everon-utils/zipball/463327e593f822ed13bc1f5335e381c22f91336b",
-                "reference": "463327e593f822ed13bc1f5335e381c22f91336b",
+                "url": "https://api.github.com/repos/oliwierptak/everon-utils/zipball/53ffb2d5689227a38503c0c2609494656d7828e4",
+                "reference": "53ffb2d5689227a38503c0c2609494656d7828e4",
                 "shasum": ""
             },
             "require": {
@@ -131,7 +131,7 @@
                 }
             ],
             "description": "Everon Utils Component",
-            "time": "2020-10-15T18:45:14+00:00"
+            "time": "2020-10-15T21:09:18+00:00"
         }
     ],
     "packages-dev": [
