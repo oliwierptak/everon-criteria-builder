@@ -1,8 +1,9 @@
 # Everon Criteria Builder
 Library to generate complete ```SQL WHERE``` statements, with simple, fluid and intuitive interface.
 
-## Works with
-* Php 7.2+
+### Versions
+- Use v1.x and v2.x with PHP 7.2+
+- Use v3.x with PHP 8+
 
 ## Features
 * It's not a DQL

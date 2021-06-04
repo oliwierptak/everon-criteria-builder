@@ -4,8 +4,7 @@
   "type": "library",
   "license": "MIT",
   "authors": [{
-    "name": "Oliwier Ptak",
-    "email": "everonphp@gmail.com"
+    "name": "Oliwier Ptak"
   }],
   "minimum-stability": "stable",
   "autoload": {
@@ -15,14 +14,17 @@
     }
   },
   "require": {
-    "php": "^7.2",
-    "everon/collection": "^2",
-    "everon/factory": "^2",
-    "everon/utils": "^2"
+    "php": "^8",
+    "everon/collection": "^3",
+    "everon/factory": "^3",
+    "everon/utils": "^3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5",
-    "mockery/mockery": "^1.3"
+    "phpunit/phpunit": "^9",
+    "mockery/mockery": "^1"
+  },
+  "scripts": {
+    "tests": "vendor/bin/phpunit --testdox --no-coverage"
   }
 }
 
